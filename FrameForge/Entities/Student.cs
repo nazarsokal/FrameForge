@@ -5,7 +5,7 @@ namespace Entities;
 public class Student
 {
     [Key]
-    public Guid UserId { get; set; }
+    public Guid StudentId { get; set; }
     [Required]
     public string? Username { get; set; }
     [Required]
