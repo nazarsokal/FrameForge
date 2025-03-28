@@ -13,5 +13,5 @@ public class Student
     [Required]
     public string? Password { get; set; }
     [Required]
-    public double? MoneyAmount { get; set; }
+    public double MoneyAmount { get; set; }
 }

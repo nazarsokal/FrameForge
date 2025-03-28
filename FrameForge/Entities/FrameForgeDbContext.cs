@@ -3,7 +3,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Entities;
 
 public class FrameForgeDbContext : DbContext
-{
+{     
+    public FrameForgeDbContext(DbContextOptions options) : base(options)
+    {
+        
+    }
+    
     public DbSet<Student> Students { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
