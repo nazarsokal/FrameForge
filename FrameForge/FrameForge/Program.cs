@@ -1,12 +1,15 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using ServiceContracts;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {
-    var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     if (string.IsNullOrEmpty(connectionString))
     {
