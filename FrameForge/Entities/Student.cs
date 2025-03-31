@@ -14,4 +14,14 @@ public class Student
     public string? Password { get; set; }
     [Required]
     public double MoneyAmount { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Student student)
+        {
+            return StudentId == student.StudentId;
+        }
+        
+        return false;
+    }
 }

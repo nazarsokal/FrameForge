@@ -23,4 +23,9 @@ public class RegistrationService : IRegistrationService
         _dbContext.Students.Add(student);
         _dbContext.SaveChanges();
     }
+
+    public List<Student> GetStudents()
+    {
+        return _dbContext.Students.ToList();
+    }
 }
