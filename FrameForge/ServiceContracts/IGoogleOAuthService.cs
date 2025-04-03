@@ -1,10 +1,10 @@
 namespace ServiceContracts;
 
-public interface IGoogleOAuthServie
+public interface IGoogleOAuthService
 {
     public string GenerateOAuthRequestUrl();
 
-    public object ExchangeCodeOnToken();
+    public object ExchangeCodeOnToken(string code);
     
     public object RefreshToke(string refreshToken);
 }
