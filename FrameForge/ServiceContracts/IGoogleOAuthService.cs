@@ -17,7 +17,7 @@ public interface IGoogleOAuthService
     /// <param name="code"></param>
     /// <param name="codeVerifier"></param>
     /// <returns></returns>
-    public Task<TokenResult> ExchangeCodeOnToken(string code, string codeVerifier);
+    public Task<TokenResult> ExchangeCodeOnToken(string code, string codeVerifier, string redirectUrl);
     
     public object RefreshToke(string refreshToken);
 }

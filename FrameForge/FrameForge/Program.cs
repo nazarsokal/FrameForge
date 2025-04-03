@@ -5,8 +5,10 @@ using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
 
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -27,5 +29,6 @@ if(builder.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllers();
+app.UseSession();
 
 app.Run();

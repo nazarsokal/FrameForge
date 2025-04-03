@@ -27,7 +27,7 @@ public class GoogleOAuthService : IGoogleOAuthService
         return url;
     }
 
-    public async Task<TokenResult> ExchangeCodeOnToken(string code, string codeVerifier)
+    public async Task<TokenResult> ExchangeCodeOnToken(string code, string codeVerifier, string redirectUrl)
     {
         var tokenEndpoint = $"https://oauth2.googleapis.com/token";
 
@@ -38,46 +38,16 @@ public class GoogleOAuthService : IGoogleOAuthService
             { "code", code },
             { "code_verifier", codeVerifier },
             { "grant_type", "authorization_code" },
-            { "redirect_uri", tokenEndpoint }
+            { "redirect_uri", redirectUrl },
+            {"Content-Type", "application/x-www-form-urlencoded" }
         };
         
-        var tokenResult = await SendPostRequestAsync<TokenResult>(tokenEndpoint, authParams);
+        var tokenResult = await HttpClientHelper.SendPostRequest<TokenResult>(tokenEndpoint, authParams);
         return tokenResult;
     }
 
     public object RefreshToke(string refreshToken)
     {
         throw new NotImplementedException();
-    }
-    
-    private static async Task<TokenResult> SendPostRequestAsync<T>(string url, Dictionary<string, string> data)
-    {
-        using (HttpClient httpClient = new HttpClient()) // Creating HttpClient directly
-        {
-            try
-            {
-                string jsonData = JsonSerializer.Serialize(data);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await httpClient.PostAsync(url, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<TokenResult>(responseBody, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                }
-                else
-                {
-                    throw new Exception($"Error: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Exception: {ex.Message}");
-            }
-        }
     }
 }
