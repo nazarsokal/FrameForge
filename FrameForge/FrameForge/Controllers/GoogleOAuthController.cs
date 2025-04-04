@@ -48,6 +48,6 @@ public class GoogleOAuthController : Controller
         
         _registrationService.RegisterStudent(student);
         
-        return Ok();
+        return RedirectToAction("Index", "Home", student);
     }
 }

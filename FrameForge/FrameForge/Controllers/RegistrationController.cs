@@ -5,7 +5,7 @@ namespace FrameForge.Controllers;
 public class RegistrationController : Controller
 {
     // GET
-    [Route("/")]
+    [Route("[action]")]
     public IActionResult Registration()
     {
         return View();

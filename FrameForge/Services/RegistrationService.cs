@@ -17,7 +17,9 @@ public class RegistrationService : IRegistrationService
     {
         ArgumentNullException.ThrowIfNull(student);
 
-        if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
+        if (CheckIfStudentExistsGoogle(student) == true)
+            return;
+        else if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
             throw new InvalidOperationException("Student already exists");
         
         _dbContext.Students.Add(student);
@@ -27,5 +29,14 @@ public class RegistrationService : IRegistrationService
     public List<Student> GetStudents()
     {
         return _dbContext.Students.ToList();
+    }
+
+    public bool CheckIfStudentExistsGoogle(Student student)
+    {
+        Student? stFromDb = _dbContext.Students.FirstOrDefault(st => st.GoogleId == student.GoogleId);
+        
+        if(stFromDb == null) return false;
+        
+        else return true;
     }
 }
