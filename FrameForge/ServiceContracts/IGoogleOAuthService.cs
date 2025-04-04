@@ -1,3 +1,5 @@
+using Entities;
+
 namespace ServiceContracts;
 
 public interface IGoogleOAuthService
@@ -21,5 +23,5 @@ public interface IGoogleOAuthService
     
     public object RefreshToke(string refreshToken);
 
-    public Task<string> GetUserInfo(string accessToken);
+    public Task<Student> GetUserInfo(string accessToken);
 }

@@ -1,7 +1,9 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Entities;
 using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using ServiceContracts;
 using ServiceContracts.Helpers;
 
@@ -54,14 +56,14 @@ public class GoogleOAuthService : IGoogleOAuthService
         throw new NotImplementedException();
     }
 
-    public async Task<string> GetUserInfo(string accessToken)
+    public async Task<Student> GetUserInfo(string accessToken)
     {
-        string UserInfoEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
-        var request = new HttpRequestMessage(HttpMethod.Get, UserInfoEndpoint);
+        string userInfoEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
+        var request = new HttpRequestMessage(HttpMethod.Get, userInfoEndpoint);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        
-        HttpClient _httpClient = new HttpClient();
-        var response = await _httpClient.SendAsync(request);
+
+        HttpClient httpClient = new HttpClient();
+        var response = await httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -69,8 +71,9 @@ public class GoogleOAuthService : IGoogleOAuthService
         }
 
         var jsonResponse = await response.Content.ReadAsStringAsync();
-        // var str = JsonSerializer.Deserialize<string>(jsonResponse);
+        Student? st = JsonConvert.DeserializeObject<Student>(jsonResponse);
+        if(st == null) throw new NullReferenceException();
         
-        return jsonResponse;
+        return st;
     }
 }

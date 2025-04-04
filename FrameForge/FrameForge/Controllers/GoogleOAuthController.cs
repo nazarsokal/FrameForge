@@ -1,3 +1,4 @@
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
 using ServiceContracts.Helpers;
@@ -9,10 +10,12 @@ namespace FrameForge.Controllers;
 public class GoogleOAuthController : Controller
 {
     private readonly IGoogleOAuthService _googleOAuthService;
-    
-    public GoogleOAuthController(IGoogleOAuthService googleOAuthService)
+    private readonly IRegistrationService _registrationService;
+
+    public GoogleOAuthController(IGoogleOAuthService googleOAuthService, IRegistrationService registrationService)
     {
         _googleOAuthService = googleOAuthService;
+        _registrationService = registrationService;
     }
 
     [Route("[action]")]
@@ -37,7 +40,14 @@ public class GoogleOAuthController : Controller
         
         string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
-        var UserResult = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
+        
+        Student? student = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
+        if (student == null) throw new NullReferenceException();
+        student.StudentId = Guid.NewGuid();
+        student.MoneyAmount = 10.0;
+        
+        _registrationService.RegisterStudent(student);
+        
         return Ok();
     }
 }
