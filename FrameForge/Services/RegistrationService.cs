@@ -17,7 +17,7 @@ public class RegistrationService : IRegistrationService
     {
         ArgumentNullException.ThrowIfNull(student);
 
-        if (_dbContext.Students.Any(st => st.Email == student.Email || st.Username == student.Username))
+        if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
             throw new InvalidOperationException("Student already exists");
         
         _dbContext.Students.Add(student);
