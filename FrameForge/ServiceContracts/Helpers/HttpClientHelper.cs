@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 
-namespace ServiceContracts;
+namespace ServiceContracts.Helpers;
 
 public static class HttpClientHelper
 {

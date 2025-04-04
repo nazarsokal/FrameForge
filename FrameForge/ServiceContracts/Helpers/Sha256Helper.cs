@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ServiceContracts;
+namespace ServiceContracts.Helpers;
 
 public static class Sha256Helper
 {

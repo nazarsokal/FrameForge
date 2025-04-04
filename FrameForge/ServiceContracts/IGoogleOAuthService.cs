@@ -20,4 +20,6 @@ public interface IGoogleOAuthService
     public Task<TokenResult> ExchangeCodeOnToken(string code, string codeVerifier, string redirectUrl);
     
     public object RefreshToke(string refreshToken);
+
+    public Task<string> GetUserInfo(string accessToken);
 }

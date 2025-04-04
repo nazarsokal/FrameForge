@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using ServiceContracts.Helpers;
 using Services;
 
 namespace FrameForge.Controllers;
@@ -36,6 +37,7 @@ public class GoogleOAuthController : Controller
         
         string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
+        var UserResult = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
         return Ok();
     }
 }
