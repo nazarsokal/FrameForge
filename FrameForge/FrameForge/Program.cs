@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {

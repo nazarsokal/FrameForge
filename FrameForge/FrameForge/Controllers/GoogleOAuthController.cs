@@ -41,12 +41,10 @@ public class GoogleOAuthController : Controller
         string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
         
-        Student? student = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
-        if (student == null) throw new NullReferenceException();
-        student.StudentId = Guid.NewGuid();
-        student.MoneyAmount = 10.0;
+        Student? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
+        if (studentInfo == null) throw new NullReferenceException();
         
-        _registrationService.RegisterStudent(student);
+        var student = _registrationService.RegisterStudentWithGoogle(studentInfo);
         
         return RedirectToAction("Index", "Home", student);
     }
