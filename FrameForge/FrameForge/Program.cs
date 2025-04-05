@@ -1,12 +1,18 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using ServiceContracts;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
 
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
+builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {
-    var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     if (string.IsNullOrEmpty(connectionString))
     {
@@ -24,5 +30,6 @@ if(builder.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllers();
+app.UseSession();
 
 app.Run();

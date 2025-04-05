@@ -1,3 +1,5 @@
+@model Entities.Student
+
 @{
     Layout = null;
 }
@@ -10,7 +12,8 @@
 </head>
 <body>
 <div>
-    <h1>Hello Slavko</h1>
+    <h1 style="font-size: 32px">Hello: @Model.Username</h1>
+    <h2 style="font-size: 32px">Hello: @Model.Email</h2>
 </div>
 </body>
 </html>
