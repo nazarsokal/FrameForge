@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+@model Entities.InputLoginData
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Увійти в акаунт</h2>
+
+<form asp-action="LoginWithLoginAndPassword" asp-controller="Login" method="get">
+
+    <div class="form-group">
+        <label asp-for="Username">Ім'я користувача</label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password">Пароль</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Увійти</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

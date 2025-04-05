@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameForge", "FrameForge\FrameForge.csproj", "{50EAFE1B-5D3F-4398-8E9C-C48A361EBBE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{EA071ACF-C9C6-46E4-B73E-7A5FB68FB822}"
@@ -9,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{FACD19D0-8E65-4CA1-B29F-40F68D0C102D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesTest", "ServicesTest\ServicesTest.csproj", "{BE839F3B-AB5F-4F5E-B077-8BC43738BCCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FEA115E5-DE94-4486-B7C9-6009DCB9F291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +41,8 @@ Global
 		{BE839F3B-AB5F-4F5E-B077-8BC43738BCCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE839F3B-AB5F-4F5E-B077-8BC43738BCCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE839F3B-AB5F-4F5E-B077-8BC43738BCCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

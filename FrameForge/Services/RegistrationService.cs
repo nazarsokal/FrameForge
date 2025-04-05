@@ -24,6 +24,10 @@ public class RegistrationService : IRegistrationService
         _dbContext.SaveChanges();
     }
 
+    public Student GetStudent(string username,string password)
+    {
+        return _dbContext.Students.FirstOrDefault(x=>x.Username == username && x.Password == password);
+    }
     public List<Student> GetStudents()
     {
         return _dbContext.Students.ToList();

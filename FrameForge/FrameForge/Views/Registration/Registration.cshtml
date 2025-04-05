@@ -10,8 +10,13 @@
 </head>
 <body>
 <div>
-    <a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="font-size: 32px">Зареєструватися</a>
-    <a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="font-size: 32px">Увійти</a>
+    <a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="font-size: 32px">Зареєструватися з google</a>
+    <a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="font-size: 32px">Увійти з google</a>
+    <a asp-controller="Registration" asp-action="RegistrationWithFormData" style="font-size: 32px">Зареєструватися без google</a>
+
+        <a asp-controller="Login" asp-action="Login" style="font-size: 32px">Увійти</a>
+
+
 </div>
 </body>
 </html>
