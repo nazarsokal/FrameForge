@@ -34,6 +34,7 @@ public class RegistrationController : Controller
         {
             student.GoogleId = null;
             student.MoneyAmount = 20.0;
+            student.Password = PasswordHelper.HashPassword(student.Password);
             _registrationService.RegisterStudent(student);
         }
         return RedirectToAction("Index", "Home", student);

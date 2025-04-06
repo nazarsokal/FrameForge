@@ -1,4 +1,5 @@
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 
 namespace Services;
@@ -26,7 +27,15 @@ public class RegistrationService : IRegistrationService
 
     public Student GetStudent(string username,string password)
     {
-        return _dbContext.Students.FirstOrDefault(x=>x.Username == username && x.Password == password);
+        var user = _dbContext.Students.SingleOrDefault(s => s.Username == username);
+        if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
+        {
+            return user;
+        }
+        else
+        {
+            return null;
+        }
     }
     public List<Student> GetStudents()
     {
