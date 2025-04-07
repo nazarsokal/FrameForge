@@ -33,4 +33,6 @@ public class ProgressMapService : IProgressMapService
     {
         throw new NotImplementedException();
     }
+
+    public List<LevelsEnrolled> GetUsersEnrolledLevels(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId).ToList();
 }
