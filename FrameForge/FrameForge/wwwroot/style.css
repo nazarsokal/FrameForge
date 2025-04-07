@@ -1,3 +1,28 @@
 h1{
     background-color: orange;
 }
+
+.leftContent {
+    width: 20vw;
+    background-color: #f8f8f8;
+    padding: 20px;
+    height: 70vh;
+  }
+  
+.leftContent ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+  
+.leftContent ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+  
+  /* .sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+  } */
