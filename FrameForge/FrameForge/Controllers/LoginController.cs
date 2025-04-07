@@ -16,8 +16,8 @@ namespace FrameForge.Controllers
         {
             return View("login_page");
         }
-        [HttpGet]
-        [Route("Login/LoginWithLoginAndPassword")]
+        [HttpPost]
+        [Route("[action]")]
 
         public IActionResult LoginWithLoginAndPassword(InputLoginData ld)
         {
