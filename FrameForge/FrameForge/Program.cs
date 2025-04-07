@@ -6,6 +6,7 @@ using Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddScoped<LeaderboardService>();
 
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.WebHost.UseUrls("http://*:5118", "https://*:7287");

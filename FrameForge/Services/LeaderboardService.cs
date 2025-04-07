@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    internal class LeaderboardService
+    public class LeaderboardService
     {
         private readonly FrameForgeDbContext _dbContext;
         public LeaderboardService(FrameForgeDbContext dbContext)

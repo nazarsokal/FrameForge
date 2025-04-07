@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceContracts;
+using Services;
 
 namespace FrameForge.Controllers
 {
     public class LeaderboardController : Controller
     {
-        public IActionResult Index()
+        LeaderboardService _leaderboardService;
+        public LeaderboardController(LeaderboardService leaderboardService)
         {
-            return View();
+            _leaderboardService = leaderboardService;
+        }
+        [Route("[action]")]
+        public IActionResult Leaderboard()
+        {
+            return View(_leaderboardService.GetAllSorted());
         }
     }
 }
