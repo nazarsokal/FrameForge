@@ -17,7 +17,7 @@ public class RegistrationController : Controller
     [Route("[action]")]
     public IActionResult Registration()
     {
-        return View();
+        return View("sing_up_page");
     }
     [Route("[action]")]
     public IActionResult RegistrationWithFormData()
