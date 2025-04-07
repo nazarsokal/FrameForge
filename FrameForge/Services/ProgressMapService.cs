@@ -1,5 +1,6 @@
 using Entities;
 using ServiceContracts;
+using ServiceContracts.Enums;
 
 namespace Services;
 
@@ -13,7 +14,7 @@ public class ProgressMapService : IProgressMapService
     }
     public void EnrolOnLevel(Student studentEnrolled, string levelTopicName)
     {
-        var levelEnrolled = new LevelsEnrolled() {StudentId = studentEnrolled.StudentId, State = "In Progress", LevelTopicName = levelTopicName, MoneyReward = 0.0, StarsReward = 0};
+        var levelEnrolled = new LevelsEnrolled() {StudentId = studentEnrolled.StudentId, State = States.InProgress.ToString(), LevelTopicName = levelTopicName, MoneyReward = 0.0, StarsReward = 0};
         
         _dbContext.LevelsEnrolled.Add(levelEnrolled);
         _dbContext.SaveChanges();
