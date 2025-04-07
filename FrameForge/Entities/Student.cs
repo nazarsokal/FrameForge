@@ -22,7 +22,9 @@ public class Student
     public string? GoogleId { get; set; }
     [Required]
     public double MoneyAmount { get; set; }
-    
+    public int StarsAmount { get; set; }
+
+
     [JsonProperty("picture")]
     public string? Picture { get; set; }
 
