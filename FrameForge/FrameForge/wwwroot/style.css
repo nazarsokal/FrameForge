@@ -67,6 +67,12 @@ body {
     transition: .5s;
 }
 
+/*Стилі для кнопок навігації*/
+.navButtons a{
+    text-decoration: none;
+    color: black;
+}
+
 /* Стилі для контейнера зі завданнями */
 .container {
     display: flex;
