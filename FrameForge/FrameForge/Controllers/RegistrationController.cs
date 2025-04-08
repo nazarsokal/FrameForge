@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using Services;
 using System.Drawing.Drawing2D;
+using System.Text.Json;
+
 namespace FrameForge.Controllers;
 public class RegistrationController : Controller
 {
@@ -36,8 +38,11 @@ public class RegistrationController : Controller
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
             _registrationService.RegisterStudent(student);
+            
+            string userString = JsonSerializer.Serialize(student);
+            HttpContext.Session.SetString("Student", userString);
         }
-        return RedirectToAction("Index", "Home", student);
+        return RedirectToAction("Index", "Home");
     }
 
 }
