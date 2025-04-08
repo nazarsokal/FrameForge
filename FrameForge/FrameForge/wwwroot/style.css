@@ -1,8 +1,16 @@
-body{
-    margin: 0px;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.header{
+body {
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+/*Стилі для хедера*/
+.header {
     background-color: orange;
     font-size: 10px;
     color: black;
@@ -13,10 +21,11 @@ body{
     width: 100%;
 }
 
-.leftText{
+.leftText {
     font-size: 15px;
 }
 
+/*Ліве навігаційне меню*/
 .leftContent {
     width: 20vw;
     background-color: #f8f8f8;
@@ -35,6 +44,7 @@ body{
     padding: 10px;
 }
 
+/*Стилі для контецнера зі завданнями*/
 .container {
     display: flex;
 }
@@ -42,6 +52,7 @@ body{
 .task {
     flex-grow: 1;
     padding: 20px;
+    max-width: 100%;
 }
 
 .bodyOfTask {
@@ -56,7 +67,8 @@ body{
     background-color: #a2c6ea;
     border: 1px solid #d3e0ea;
     border-radius: 10px;
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -71,7 +83,7 @@ body{
 }
 
 h2 {
-    background-color:  orange;
+    background-color: orange;
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 16px;
@@ -80,24 +92,22 @@ h2 {
     text-align: center;
     display: block;
     width: 100%;
-    box-sizing: border-box;
 }
 
-p{
+p {
     margin: 2px 0;
     font-size: 14px;
     color: #333;
 }
 
-
-/*Стилі для іконок профілю*/
-.accountIcon{
+/* Стилі для іконок профілю */
+.accountIcon {
     width: 40px;
     height: auto;
     margin-right: 10px;
 }
 
-.rightText{
+.rightText {
     display: flex;
     align-items: center;
     font-size: 25px;
@@ -105,7 +115,7 @@ p{
     margin-right: 10px;
 }
 
-.user-profile{
+.user-profile {
     position: relative;
     display: flex;
     align-items: center;
