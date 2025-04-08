@@ -2,13 +2,16 @@ using System.Text.Json;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using ServiceContracts.Enums;
 
 namespace FrameForge.Controllers;
 
 public class ProgressMapController : Controller
 {
     private readonly IProgressMapService _service;
-    private List<EnrolledLevels>? userLevelsEnrolled;
+    private List<EnrolledLevels>? userLevelsEnrolledInProgress;
+    private List<EnrolledLevels>? userLevelsEnrolledCompleted;
+    private readonly List<string> availableLevels = new List<string>() { "CG_IntroductionLevel",  "CG_Level2", "CG_Level3", "CG_Level4", "CG_Level5"}; 
     private Student? student;
 
     public ProgressMapController(IProgressMapService service)
@@ -19,9 +22,10 @@ public class ProgressMapController : Controller
     public IActionResult Map()
     {
         var student = GetStudentFromSession();
-        userLevelsEnrolled = _service.GetUsersEnrolledLevels(student);
-        ViewBag.CompletedLevels = userLevelsEnrolled;
-        
+        userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
+        userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
+        ViewBag.CompletedLevels = userLevelsEnrolledCompleted;
+        ViewBag.InProgressLevels = userLevelsEnrolledInProgress;
         return View();
     }
 
@@ -29,18 +33,30 @@ public class ProgressMapController : Controller
     public IActionResult ViewLevel(string levelName)
     {
         var student = GetStudentFromSession();
-        userLevelsEnrolled = _service.GetUsersEnrolledLevels(student);
-        if (userLevelsEnrolled == null)
-        {
-            userLevelsEnrolled = new List<EnrolledLevels>(); 
-        }
+        userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
+        userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
         
-        var isLevelEnrolled =
-            userLevelsEnrolled.Any(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
-        if (!isLevelEnrolled)
+        if (userLevelsEnrolledInProgress == null)
+            userLevelsEnrolledInProgress = new List<EnrolledLevels>(); 
+        if(userLevelsEnrolledCompleted == null)
+            userLevelsEnrolledCompleted = new List<EnrolledLevels>();
+        
+        EnrolledLevels? isLevelEnrolled =
+            userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
+        EnrolledLevels? isLevelCompleted =
+            userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
+        if (isLevelEnrolled == null && isLevelCompleted == null)
         {
-            _service.EnrolOnLevel(student, levelName);    
-            return View(levelName);
+            if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
+            {
+                _service.EnrolOnLevel(student, levelName);    
+                return View(levelName);
+            }
+            else
+            {
+                throw new Exception("Invalid level");
+                return RedirectToAction("Index", "Home");
+            }
         }
         
         return View(levelName);
@@ -53,5 +69,27 @@ public class ProgressMapController : Controller
         if(student == null) throw new NullReferenceException("Student is null");
         
         return student;
+    }
+
+    private bool isPreviousLevelCompleted(List<EnrolledLevels> userLevelsEnrolledCompleted, string levelName)
+    {
+        var student = GetStudentFromSession();
+        int indexAmount = 0;
+        foreach (var level in availableLevels)
+        {
+            bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.StudentId == l.StudentId);
+            if(isLevelContained) indexAmount++;
+        }
+
+        int indexOfLevelName = 0;
+        bool isLevelContainedAl = availableLevels.Any(l => l == levelName);
+        if (isLevelContainedAl)
+        {
+            indexOfLevelName = availableLevels.IndexOf(levelName);
+        }
+        
+        if((indexOfLevelName+1) - indexAmount > 1) return false;
+        
+        return true;
     }
 }

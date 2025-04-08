@@ -2,7 +2,7 @@
 @{
     Layout = null;
     var completedLevels = ViewBag.CompletedLevels as List<EnrolledLevels> ?? new List<EnrolledLevels>();
-    var a = 0;
+    var inProgressLevels = ViewBag.InProgressLevels as List<EnrolledLevels> ?? new List<EnrolledLevels>();
 }
 
 <!DOCTYPE html>
@@ -26,36 +26,49 @@
             font-weight: bold;
         }
 
-        /* Optional: Uncompleted link style */
-        a:not(.completed) {
-            color: blue;
+        /* Styling for in-progress levels */
+        a.in-progress,
+        a.in-progress:visited,
+        a.in-progress:hover,
+        a.in-progress:active {
+            color: lightblue !important;
+        }
+
+        /* Styling for uncompleted (not completed or in progress) levels */
+        a:not(.completed):not(.in-progress) {
+            color: lightgray !important;
         }
     </style>
 </head>
 <body>
 <div>
     <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_IntroductionLevel"
-       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_IntroductionLevel") ? "completed" : "")">
+       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_IntroductionLevel") ? "completed" :
+              inProgressLevels.Any( l => l.LevelTopicName == "CG_IntroductionLevel") ? "in-progress" : "")">
         Level 1
     </a>
 
     <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level2"
-       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level2") ? "completed" : "")">
+       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level2") ? "completed" :
+              inProgressLevels.Any( l => l.LevelTopicName == "CG_Level2") ? "in-progress" : "")">
         Level 2
     </a>
 
     <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level3"
-       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level3") ? "completed" : "")">
+       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level3") ? "completed" :
+              inProgressLevels.Any( l => l.LevelTopicName == "CG_Level3") ? "in-progress" : "")">
         Level 3
     </a>
 
     <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level4"
-       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level4") ? "completed" : "")">
+       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level4") ? "completed" :
+              inProgressLevels.Any( l => l.LevelTopicName == "CG_Level4") ? "in-progress" : "")">
         Level 4
     </a>
 
     <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level5"
-       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "completed" : "")">
+       class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "completed" :
+              inProgressLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "in-progress" : "")">
         Level 5
     </a>
 </div>
