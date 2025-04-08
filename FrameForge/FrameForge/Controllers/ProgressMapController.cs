@@ -8,7 +8,7 @@ namespace FrameForge.Controllers;
 public class ProgressMapController : Controller
 {
     private readonly IProgressMapService _service;
-    private List<LevelsEnrolled>? userLevelsEnrolled;
+    private List<EnrolledLevels>? userLevelsEnrolled;
     private Student? student;
 
     public ProgressMapController(IProgressMapService service)
@@ -32,7 +32,7 @@ public class ProgressMapController : Controller
         
         if (userLevelsEnrolled == null)
         {
-            userLevelsEnrolled = new List<LevelsEnrolled>(); 
+            userLevelsEnrolled = new List<EnrolledLevels>(); 
         }
         
         var isLevelEnrolled =

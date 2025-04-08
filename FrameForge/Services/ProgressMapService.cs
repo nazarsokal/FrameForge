@@ -14,7 +14,7 @@ public class ProgressMapService : IProgressMapService
     }
     public void EnrolOnLevel(Student studentEnrolled, string levelTopicName)
     {
-        var levelEnrolled = new LevelsEnrolled() {StudentId = studentEnrolled.StudentId, State = States.InProgress.ToString(), LevelTopicName = levelTopicName, MoneyReward = 0.0, StarsReward = 0};
+        var levelEnrolled = new EnrolledLevels() {LevelsEnrolledKey = Guid.NewGuid(), StudentId = studentEnrolled.StudentId, State = States.InProgress.ToString(), LevelTopicName = levelTopicName, MoneyReward = 0.0, StarsReward = 0};
         
         _dbContext.LevelsEnrolled.Add(levelEnrolled);
         _dbContext.SaveChanges();
@@ -34,5 +34,5 @@ public class ProgressMapService : IProgressMapService
         throw new NotImplementedException();
     }
 
-    public List<LevelsEnrolled> GetUsersEnrolledLevels(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId).ToList();
+    public List<EnrolledLevels> GetUsersEnrolledLevels(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId).ToList();
 }

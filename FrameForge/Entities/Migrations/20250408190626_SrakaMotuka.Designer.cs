@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    [Migration("20250407191308_LevelsEnrolledTableCreated")]
-    partial class LevelsEnrolledTableCreated
+    [Migration("20250408190626_SrakaMotuka")]
+    partial class SrakaMotuka
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,9 @@ namespace Entities.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.LevelsEnrolled", b =>
+            modelBuilder.Entity("Entities.EnrolledLevels", b =>
                 {
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("LevelsEnrolledKey")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -46,9 +46,12 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("StudentId");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("char(36)");
 
-                    b.ToTable("LevelsEnrolled", (string)null);
+                    b.HasKey("LevelsEnrolledKey");
+
+                    b.ToTable("EnrolledLevels", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Student", b =>
@@ -88,7 +91,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("c32655a7-b70a-4c0f-9a75-f5de92099776"),
+                            StudentId = new Guid("67f6a25d-51aa-4dd5-97de-8b0c010507e6"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",

@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities;
 
-public class LevelsEnrolled
+public class EnrolledLevels
 {
     [Key]
+    public Guid LevelsEnrolledKey { get; set; }
     public Guid StudentId { get; set; }
     
     [Required]
