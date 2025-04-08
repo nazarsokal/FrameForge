@@ -38,7 +38,8 @@
             <div class="user-profile">
                 <img src="~/images/account.png" alt="icon" class="accountIcon">
                 @* <span class="rightText">@Model.Username</span> *@
-                <button>Log In</button>
+                <a asp-controller="Login" asp-action="Login"><button>Log In</button></a>
+                <a asp-controller="Registration" asp-action="Registration"><button>Sign Up</button></a>
             </div>
         </div>
     }
