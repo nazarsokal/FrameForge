@@ -15,16 +15,33 @@
 
 <body>
     <!--Хедер-->
-    <div class="header">
-        <div class="leftText">
-            <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+    @if (@Model != null)
+    {
+        <div class="header">
+            <div class="leftText">
+                <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+            </div>
+            <div class="dropbutton"></div>
+            <div class="user-profile">
+                <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
+                <span class="rightText">@Model.Username</span>
+            </div>
         </div>
-        <div class="dropbutton"></div>
-        <div class="user-profile">
-            <img src="~/images/account.png" alt="icon" class="accountIcon">
-            <span class="rightText">Name Surname</span>
+    }
+    else
+    {
+        <div class="header">
+            <div class="leftText">
+                <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+            </div>
+            <div class="dropbutton"></div>
+            <div class="user-profile">
+                <img src="~/images/account.png" alt="icon" class="accountIcon">
+                @* <span class="rightText">@Model.Username</span> *@
+                <button>Log In</button>
+            </div>
         </div>
-    </div>
+    }
 
     <!--Навігаційне меню-->
     <div class="container">
