@@ -1,3 +1,5 @@
+@model Entities.Student
+
 <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -22,25 +24,31 @@
                     <br>
                     <br>
                   
-         <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Sing Up</h1>
-     <input type="text" placeholder="Username"          name="username">
-                    <br>
-                    <input type="password" placeholder="Password" name="password">
-                    <br>
-          <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
-                  
-                    <button type="button"><a href="main_page.html">Sing Up</a></button>
-                  
-                    <div class= "login-with">
-                      
-                        <ul>
-                            <li><i class="fa fa-facebook"></i></li>
-                            <li><a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer"><i class="fa fa-google"></i></a></li>
-                            <li><i class="fa fa-twitter"></i></li>
-                        </ul>
-                      
-                    </div>
-        <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Login</a></p>
+                    <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Sing Up</h1>
+                    <form method="post" asp-controller="Registration" asp-action="Create">
+                        <input asp-for="Username" type="text" placeholder="Username"          name="username">
+                        <br>
+                        <input asp-for="Email" type="email" placeholder="Email" name="email">
+                        <br>
+                        <br>
+                        <input asp-for="Password" type="password" placeholder="Password" name="password">
+                        <br>
+                        <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
+                        @* <a href="main_page.html">Sing Up</a> *@
+                        <button type="submit">Sign Up</button>
+
+                        <div class= "login-with">
+
+                            <ul>
+                                <li><i class="fa fa-facebook"></i></li>
+                                <li><a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer"><i class="fa fa-google"></i></a></li>
+                                <li><i class="fa fa-twitter"></i></li>
+                            </ul>
+
+                        </div>
+                    </form>
+                    
+                    <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Login</a></p>
                 </div>
             </div>
         </body>

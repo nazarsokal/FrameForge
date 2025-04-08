@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
@@ -46,6 +47,9 @@ public class GoogleOAuthController : Controller
         
         var student = _registrationService.RegisterStudentWithGoogle(studentInfo);
         
-        return RedirectToAction("Index", "Home", student);
+        string userString = JsonSerializer.Serialize(student);
+        HttpContext.Session.SetString("Student", userString);
+        
+        return RedirectToAction("Index", "Home");
     }
 }

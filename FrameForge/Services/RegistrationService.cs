@@ -30,6 +30,7 @@ public class RegistrationService : IRegistrationService
         var user = _dbContext.Students.SingleOrDefault(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
+            SaveProfileImageAsync(user.Picture, user.StudentId);
             return user;
         }
         else
@@ -49,6 +50,7 @@ public class RegistrationService : IRegistrationService
         if (CheckIfStudentExistsGoogle(student) == true)
         {
             var stFromDb = getStudentWithGoogle(student);
+            SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             return stFromDb;
         }
         
@@ -57,6 +59,8 @@ public class RegistrationService : IRegistrationService
         
         _dbContext.Students.Add(student);
         _dbContext.SaveChanges();
+        
+        SaveProfileImageAsync(student.Picture, student.StudentId);
         
         return student;
     }
@@ -74,5 +78,14 @@ public class RegistrationService : IRegistrationService
     private Student getStudentWithGoogle(Student student)
     {
         return _dbContext.Students.FirstOrDefault(st => st.GoogleId == student.GoogleId);
+    }
+    
+    private async Task SaveProfileImageAsync(string imageUrl, Guid userId)
+    {
+        using var httpClient = new HttpClient();
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        var filePath = Path.Combine("wwwroot/images/users", $"{userId}.jpg");
+        await File.WriteAllBytesAsync(filePath, imageBytes);
     }
 }
