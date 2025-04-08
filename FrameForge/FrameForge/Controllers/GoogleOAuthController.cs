@@ -45,7 +45,7 @@ public class GoogleOAuthController : Controller
         Student? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
         if (studentInfo == null) throw new NullReferenceException();
         
-        var student = _registrationService.RegisterStudentWithGoogle(studentInfo);
+        var student = await _registrationService.RegisterStudentWithGoogle(studentInfo);
         
         string userString = JsonSerializer.Serialize(student);
         HttpContext.Session.SetString("Student", userString);

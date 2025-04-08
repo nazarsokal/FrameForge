@@ -36,9 +36,10 @@
             </div>
             <div class="dropbutton"></div>
             <div class="user-profile">
-                <img src="~/images/account.png" alt="icon" class="accountIcon">
+                @* <img src="~/images/account.png" alt="icon" class="accountIcon"> *@
                 @* <span class="rightText">@Model.Username</span> *@
-                <button>Log In</button>
+                <a asp-controller="Login" asp-action="Login"><button >Log In</button></a>
+                <a asp-controller="Registration" asp-action="Registration"><button >Register</button></a>
             </div>
         </div>
     }
@@ -47,7 +48,7 @@
     <div class="container">
         <nav class="leftContent">
             <ul class="leftNavMenu">
-                <li>Карта</li>
+                <li><a asp-controller="ProgressMap" asp-action="Map">Карта</a></li>
                 <li>Батл</li>
                 <li>Магазин</li>
                 <li>Тести</li>

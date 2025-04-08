@@ -9,5 +9,5 @@ public interface IRegistrationService
     public List<Student> GetStudents();
 
     public Student GetStudent(string username, string password);
-    public Student RegisterStudentWithGoogle(Student? student);
+    public Task<Student> RegisterStudentWithGoogle(Student? student);
 }

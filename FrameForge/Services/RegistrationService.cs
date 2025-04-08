@@ -43,14 +43,14 @@ public class RegistrationService : IRegistrationService
         return _dbContext.Students.ToList();
     }
 
-    public Student RegisterStudentWithGoogle(Student? student)
+    public async Task<Student> RegisterStudentWithGoogle(Student? student)
     {
         if (student == null) throw new NullReferenceException();
 
         if (CheckIfStudentExistsGoogle(student) == true)
         {
             var stFromDb = getStudentWithGoogle(student);
-            SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
+            await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             return stFromDb;
         }
         
@@ -60,7 +60,7 @@ public class RegistrationService : IRegistrationService
         _dbContext.Students.Add(student);
         _dbContext.SaveChanges();
         
-        SaveProfileImageAsync(student.Picture, student.StudentId);
+        await SaveProfileImageAsync(student.Picture, student.StudentId);
         
         return student;
     }
