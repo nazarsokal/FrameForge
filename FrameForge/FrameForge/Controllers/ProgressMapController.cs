@@ -29,7 +29,7 @@ public class ProgressMapController : Controller
     public IActionResult ViewLevel(string levelName)
     {
         var student = GetStudentFromSession();
-        
+        userLevelsEnrolled = _service.GetUsersEnrolledLevels(student);
         if (userLevelsEnrolled == null)
         {
             userLevelsEnrolled = new List<EnrolledLevels>(); 
