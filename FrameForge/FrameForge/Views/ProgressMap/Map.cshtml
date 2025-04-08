@@ -1,20 +1,30 @@
 @{
     Layout = null;
+    var completedLevels = ViewBag.CompletedLevels as List<string> ?? new List<string>();
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>title</title>
+    <style>
+        .completed {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Introduction">Level 1</a>
-    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level2">Level 2</a>
-    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level3">Level 3</a>
-    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level4">Level 4</a>
-    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level5">Level 5</a>
+    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_IntroductionLevel"
+       class="@(completedLevels.Contains("CG_Introduction") ? "completed" : "")">Level 1</a>
+    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level2"
+       class="@(completedLevels.Contains("CG_Level2") ? "completed" : "")">Level 2</a>
+    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level3"
+       class="@(completedLevels.Contains("CG_Level3") ? "completed" : "")">Level 3</a>
+    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level4"
+       class="@(completedLevels.Contains("CG_Level4") ? "completed" : "")">Level 4</a>
+    <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level5"
+       class="@(completedLevels.Contains("CG_Level5") ? "completed" : "")">Level 5</a>
 </div>
 </body>
 </html>
