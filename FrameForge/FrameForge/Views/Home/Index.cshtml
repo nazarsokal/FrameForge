@@ -1,31 +1,59 @@
 @model Entities.Student?
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Frame Forge";
 }
 
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>title</title>
+    <title>Frame Forge</title>
+    <link rel="stylesheet" href="~/style.css">
 </head>
+
 <body>
-<div>
-    @if (@Model != null)
-    {
-        <h1 style="font-size: 32px">Hello: @Model.Username</h1>
-        <h2 style="font-size: 32px">Hello: @Model.Email</h2>
-        <img src="@Model.Picture" alt="Profile Picture" width="96" height="96" style="border-radius: 50%;" />
-        <h3 style="font-size: 32px">GoogleId: @Model.GoogleId</h3>
-        <h3 style="font-size: 32px">MoneyAmount: @Model.MoneyAmount</h3>
-        <h3 style="font-size: 32px">StarsAmount: @Model.StarsAmount</h3>
-    }
-    else
-    {
-        <h1 style="font-size: 32px"></h1>
-        <h2 style="font-size: 32px"></h2>
-    }
-</div>
+    <!--Хедер-->
+    <div class="header">
+        <div class="leftText">
+            <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+        </div>
+        <div class="dropbutton"></div>
+        <div class="user-profile">
+            <img src="~/images/account.png" alt="icon" class="accountIcon">
+            <span class="rightText">Name Surname</span>
+        </div>
+    </div>
+
+    <!--Навігаційне меню-->
+    <div class="container">
+        <nav class="leftContent">
+            <ul class="leftNavMenu">
+                <li>Карта</li>
+                <li>Батл</li>
+                <li>Магазин</li>
+                <li>Тести</li>
+                <li>Задачі</li>
+            </ul>
+        </nav>
+
+        <!--Тестові завданя-->
+        <div class="task">
+            <ul class="bodyOfTask">
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
+
 </html>

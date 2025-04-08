@@ -1,0 +1,114 @@
+body{
+    margin: 0px;
+}
+
+.header{
+    background-color: orange;
+    font-size: 10px;
+    color: black;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.leftText{
+    font-size: 15px;
+}
+
+.leftContent {
+    width: 20vw;
+    background-color: #f8f8f8;
+    padding: 20px;
+    height: 70vh;
+}
+
+.leftContent ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.leftContent ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+}
+
+.task {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.bodyOfTask {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    color: white;
+    gap: 20px;
+}
+
+.taskCard {
+    background-color: #a2c6ea;
+    border: 1px solid #d3e0ea;
+    border-radius: 10px;
+    width: 250px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.taskHeader {
+    position: relative;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h2 {
+    background-color:  orange;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+p{
+    margin: 2px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+
+/*Стилі для іконок профілю*/
+.accountIcon{
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.rightText{
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    color: black;
+    margin-right: 10px;
+}
+
+.user-profile{
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;
+}
