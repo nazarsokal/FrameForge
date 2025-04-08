@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Entities;
+using Newtonsoft.Json;
 using ServiceContracts;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+
 namespace FrameForge.Controllers
 {
     public class LoginController : Controller
@@ -19,14 +22,16 @@ namespace FrameForge.Controllers
         [HttpPost]
         [Route("[action]")]
 
-        public IActionResult LoginWithLoginAndPassword(InputLoginData ld)
+        public IActionResult LoginWithLoginAndPassword(InputLoginData? ld)
         {
             if (ld != null) 
             {
-                var student = _registrationService.GetStudent(ld.Username, ld.Password);
-                if (student!=null)
+                Student? student = _registrationService.GetStudent(ld.Username, ld.Password);
+                if (student != null)
                 {
-                     return RedirectToAction("Index", "Home", student);
+                     string userString = JsonSerializer.Serialize(student);
+                     HttpContext.Session.SetString("Student", userString);
+                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
