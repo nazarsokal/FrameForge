@@ -159,10 +159,12 @@ h3{
     padding: 5px 10px;
     border-radius: 50px;
     transition: .5s;
+    /*box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);*/
 }
 
 .buttonTask:hover{
-    background: #ab47bc;
+   /* background: linear-gradient(45deg, #ed31ab, #318ced);
+   */ background: #f7e018;
 }
 
 p {
