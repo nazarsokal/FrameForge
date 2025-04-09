@@ -1,0 +1,60 @@
+@model Entities.Student?
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/style.css">
+    <style>
+        .LoginRegButtons {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            margin-left: 10px;
+        }
+
+        .LoginRegButtons:hover {
+            background: linear-gradient(135deg, #5a7be0, #9b66dc);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+<!--Хедер-->
+@if (@Model != null)
+{
+    <div class="header">
+        <div class="leftText">
+            <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+        </div>
+        <div class="dropbutton"></div>
+        <div class="user-profile">
+            <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
+            <span class="rightText">@Model.Username</span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="header">
+        <div class="leftText">
+            <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
+        </div>
+        <div class="dropbutton"></div>
+        <div class="user-profile">
+            <img src="~/images/account.png" alt="icon" class="accountIcon">
+            @* <span class="rightText">@Model.Username</span> *@
+            <a asp-controller="Login" asp-action="Login"><button class="LoginRegButtons">Log In</button></a>
+            <a asp-controller="Registration" asp-action="Registration"><button class="LoginRegButtons">Sign Up</button></a>
+        </div>
+    </div>
+}
+@RenderBody()
+
+</body>
+</html>
