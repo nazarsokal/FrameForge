@@ -34,7 +34,14 @@
         </div>
         <div class="dropbutton"></div>
         <div class="user-profile">
-            <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
+            @if (string.IsNullOrEmpty(@Model.Picture))
+            {
+                <img src="~/images/account.png" alt="icon" class="accountIcon">
+            }
+            else
+            {
+                <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
+            }
             <span class="rightText">@Model.Username</span>
         </div>
     </div>
@@ -48,7 +55,6 @@ else
         <div class="dropbutton"></div>
         <div class="user-profile">
             <img src="~/images/account.png" alt="icon" class="accountIcon">
-            @* <span class="rightText">@Model.Username</span> *@
             <a asp-controller="Login" asp-action="Login"><button class="LoginRegButtons">Log In</button></a>
             <a asp-controller="Registration" asp-action="Registration"><button class="LoginRegButtons">Sign Up</button></a>
         </div>
