@@ -137,6 +137,34 @@ h2 {
     font-family: 'Montserrat', sans-serif;
 }
 
+h3{
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.buttonTask{
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: .5s;
+}
+
+.buttonTask:hover{
+    background: #ab47bc;
+}
+
 p {
     margin: 2px 0;
     font-size: 14px;
