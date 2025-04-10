@@ -32,6 +32,7 @@ public class ProgressMapController : Controller
     [Route("[action]")]
     public IActionResult ViewLevel(string levelName)
     {
+        ViewBag.LevelName = levelName;
         var student = GetStudentFromSession();
         userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
         userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
@@ -55,11 +56,20 @@ public class ProgressMapController : Controller
             else
             {
                 throw new Exception("Invalid level");
-                return RedirectToAction("Index", "Home");
             }
         }
         
         return View(levelName);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Route("[action]")]
+    public IActionResult CompleteLevel(string levelName, MoneyStarsResult moneyResult)
+    {
+        var studentCompleted = GetStudentFromSession();
+        _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
+        return RedirectToAction("Map");
     }
     
     private Student GetStudentFromSession()
