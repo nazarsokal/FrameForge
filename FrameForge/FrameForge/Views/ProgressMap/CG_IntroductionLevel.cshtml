@@ -1,12 +1,44 @@
-<!DOCTYPE html>
+@model Entities.MoneyStarsResult
 
+@{
+    var stars = RandomStars();
+    var money = RandomMoney();
+}
+
+@functions {
+    public int RandomStars()
+    {
+        Random rnd = new Random();
+        return rnd.Next(0, 4);
+    }
+
+    public double RandomMoney()
+    {
+        Random rnd = new Random();
+        return rnd.Next(10, 21);
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>title</title>
+    <title>Complete Level</title>
 </head>
 <body>
 <div>
     <h1>Introduction to Cg</h1>
+    <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="Stars" value="@stars" />
+        <input type="hidden" name="Money" value="@money" />
+        <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+
+        <p>Stars: @stars</p>
+        <p>Money: @money</p>
+
+        <button type="submit">Complete Level</button>
+    </form>
 </div>
 </body>
 </html>

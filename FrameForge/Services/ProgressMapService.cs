@@ -29,9 +29,15 @@ public class ProgressMapService : IProgressMapService
         _dbContext.SaveChanges();
     }
 
-    public void CompleteOnLevel(Student studentEnrolled, string levelTopicName)
+    public void CompleteOnLevel(Student studentEnrolled, string levelTopicName, int starsRewarded, double moneyRewarded)
     {
-        throw new NotImplementedException();
+        var levelFromDb = _dbContext.LevelsEnrolled.FirstOrDefault(x => x.StudentId == studentEnrolled.StudentId && x.LevelTopicName == levelTopicName);
+        if(levelFromDb == null) throw new NullReferenceException();
+        
+        levelFromDb.MoneyReward = moneyRewarded;
+        levelFromDb.StarsReward = starsRewarded;
+        levelFromDb.State = States.Completed.ToString();
+        _dbContext.SaveChanges();
     }
 
     public List<EnrolledLevels> GetUsersEnrolledLevelsInProgress(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId && x.State == States.InProgress.ToString()).ToList();
