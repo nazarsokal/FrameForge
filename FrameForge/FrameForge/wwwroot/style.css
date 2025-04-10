@@ -88,16 +88,28 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     background: transparent;
-    border-bottom: 2px solid lightskyblue;
+    border-radius: 10px;
+    background-color:  lightskyblue;
     color: #333;
     font-family: 'Montserrat', sans-serif;
     transition: .5s;
 }
 
 /*Стилі для кнопок навігації*/
+.navButtons {
+    width: 100%;
+}
 .navButtons a {
     text-decoration: none;
     color: black;
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+.leftContent ul li:hover{
+    font-size: 35px;
+   /* font-size: 20px;*/
 }
 
 /* Стилі для контейнера зі завданнями */
