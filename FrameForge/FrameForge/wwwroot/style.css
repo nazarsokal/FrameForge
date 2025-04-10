@@ -121,6 +121,7 @@ body {
 }
 
 .taskCard {
+    position: relative;
     background: #eeefff;
     border: none;
     border-radius: 10px;
@@ -142,6 +143,9 @@ body {
     padding: 10px;
     border-radius: 50px;
     color: white;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 h2 {
@@ -224,4 +228,35 @@ p {
 
 .user-profile:hover {
     background: rgba(255, 255, 255, 0.75);
+}
+
+
+/* Стилі для мітки рівня складності */
+.lvlMode {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: rotate(15deg);
+    transform-origin: top left;
+    z-index: 1;
+}
+
+.lvlMode.easy {
+    background-color: green; /* Зелений для Легкого */
+}
+
+.lvlMode.medium {
+    background-color: orange; /* Оранжевий для середнього*/
+}
+
+.lvlMode.hard {
+    background-color: red; /*Червоний для складного*/
 }
