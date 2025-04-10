@@ -35,6 +35,11 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+/*Стилі для кнопки виходу з профілю*/
+.logoutIcon {
+    margin-left: 10px;
+}
+
 /*Стилі для кнопок реєстрації*/
 .LoginRegButtons {
     font-family: 'Montserrat', sans-serif;
