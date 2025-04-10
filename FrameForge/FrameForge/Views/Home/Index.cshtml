@@ -11,26 +11,8 @@
 
 <head>
     <title>Frame Forge</title>
-    <link rel="stylesheet" href="~/style.css">
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
     <style>
-        .LoginRegButtons {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            margin-left: 10px;
-        }
-
-        .LoginRegButtons:hover {
-            background: linear-gradient(135deg, #5a7be0, #9b66dc);
-            transform: scale(1.05);
-        }
     </style>
 </head>
 
@@ -43,7 +25,7 @@
                 <li class="navButtons"><a href="#"> Батл </a></li>
                 <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
                 <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
-                <li class="navButtons"><a href="#" target="_blank"> Задачі </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Таблиця лідерів </a></li>
             </ul>
         </nav>
 
@@ -53,11 +35,20 @@
                 <li class="taskCard">
                     <div class="TaskHeader">
                         <h2>Відредагуйте код</h2>
+                        <span class="lvlMode easy">Easy</span>
                     </div>
                     <div class="taskDiscription">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
                             possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
                             voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
                     </div>
                     <div class="buttonTask">
                         <h3>Виконати завдання</h3>
@@ -66,11 +57,20 @@
                 <li class="taskCard">
                     <div class="TaskHeader">
                         <h2>Відредагуйте код</h2>
+                        <span class="lvlMode easy">Easy</span>
                     </div>
                     <div class="taskDiscription">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
                             possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
                             voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
                     </div>
                     <div class="buttonTask">
                         <h3>Виконати завдання</h3>
@@ -79,11 +79,43 @@
                 <li class="taskCard">
                     <div class="TaskHeader">
                         <h2>Відредагуйте код</h2>
+                        <div class="lvlMode medium">Medium</div>
                     </div>
                     <div class="taskDiscription">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
                             possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
                             voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
+                    </div>
+                </li>
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                        <div class="lvlMode medium">Medium</div>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
                     </div>
                     <div class="buttonTask">
                         <h3>Виконати завдання</h3>
@@ -92,24 +124,20 @@
                 <li class="taskCard">
                     <div class="TaskHeader">
                         <h2>Відредагуйте код</h2>
+                        <div class="lvlMode hard">Hard</div>
                     </div>
                     <div class="taskDiscription">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
                             possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
                             voluptatibus sunt.</p>
                     </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +50 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +1000 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
                     </div>
                     <div class="buttonTask">
                         <h3>Виконати завдання</h3>

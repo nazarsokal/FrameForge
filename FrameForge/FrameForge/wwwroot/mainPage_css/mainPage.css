@@ -34,6 +34,37 @@ body {
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
 }
+.leftText a{
+    text-decoration: none;
+    color: black;
+}
+
+/*Стилі для кнопки виходу з профілю*/
+.logoutIcon {
+    margin-left: 10px;
+}
+
+/*Стилі для кнопок реєстрації*/
+.LoginRegButtons {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    /*color: white;*/
+    color:  black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-left: 10px;
+}
+
+.LoginRegButtons:hover {
+   /* background: linear-gradient(135deg, #5a7be0, #9b66dc); */
+    background: #f7e018;
+    transform: scale(1.05);
+}
 
 /* Ліве навігаційне меню */
 .leftContent {
@@ -61,16 +92,34 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     background: transparent;
-    border-bottom: 2px solid lightskyblue;
+    border-radius: 10px;
+    /* background-color:  lightskyblue;
+    color: #333; */
+    /* background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: #fff; */
+    background-color: lightskyblue;
     color: #333;
     font-family: 'Montserrat', sans-serif;
     transition: .5s;
 }
 
 /*Стилі для кнопок навігації*/
+.navButtons {
+    width: 100%;
+}
 .navButtons a {
     text-decoration: none;
     color: black;
+    width: 100%;
+    display: block;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.leftContent ul li:hover{
+    font-size: 35px;
+   /* font-size: 20px;*/
+   background: linear-gradient(135deg, #318ced, #ed31ab);
 }
 
 /* Стилі для контейнера зі завданнями */
@@ -101,6 +150,7 @@ body {
 }
 
 .taskCard {
+    position: relative;
     background: #eeefff;
     border: none;
     border-radius: 10px;
@@ -122,6 +172,9 @@ body {
     padding: 10px;
     border-radius: 50px;
     color: white;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 h2 {
@@ -204,4 +257,49 @@ p {
 
 .user-profile:hover {
     background: rgba(255, 255, 255, 0.75);
+}
+
+
+/* Стилі для мітки рівня складності */
+.lvlMode {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: rotate(15deg);
+    transform-origin: top left;
+    z-index: 1;
+}
+
+.lvlMode.easy {
+    background-color: green; /* Зелений для Легкого */
+}
+
+.lvlMode.medium {
+    background-color: orange; /* Оранжевий для середнього*/
+}
+
+.lvlMode.hard {
+    background-color: red; /*Червоний для складного*/
+}
+
+/*Стилі для Зірочок і монеток*/
+.imgStar, .imgCoin{
+    width: 16px;
+    top: 100px;
+}
+
+.points{
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin-top: 35px;
+    margin-bottom: 10px;
 }
