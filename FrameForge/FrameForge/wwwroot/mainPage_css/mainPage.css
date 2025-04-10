@@ -34,6 +34,10 @@ body {
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
 }
+.leftText a{
+    text-decoration: none;
+    color: black;
+}
 
 /*Стилі для кнопки виходу з профілю*/
 .logoutIcon {
