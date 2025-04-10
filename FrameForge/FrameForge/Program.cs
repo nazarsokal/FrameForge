@@ -20,6 +20,7 @@ builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
 builder.Services.AddScoped<IProgressMapService, ProgressMapService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {

@@ -9,14 +9,16 @@ namespace FrameForge.Controllers;
 public class ProgressMapController : Controller
 {
     private readonly IProgressMapService _service;
+    private readonly IStudentService _studentService;
     private List<EnrolledLevels>? userLevelsEnrolledInProgress;
     private List<EnrolledLevels>? userLevelsEnrolledCompleted;
     private readonly List<string> availableLevels = new List<string>() { "CG_IntroductionLevel",  "CG_Level2", "CG_Level3", "CG_Level4", "CG_Level5"}; 
     private Student? student;
 
-    public ProgressMapController(IProgressMapService service)
+    public ProgressMapController(IProgressMapService service, IStudentService studentService)
     {
         _service = service;
+        _studentService = studentService;
     }
     [Route("[action]")]
     public IActionResult Map()
@@ -69,6 +71,15 @@ public class ProgressMapController : Controller
     {
         var studentCompleted = GetStudentFromSession();
         _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
+        
+        studentCompleted.MoneyAmount += moneyResult.Money;
+        studentCompleted.StarsAmount += moneyResult.Stars;
+        
+        var studentUpdated = _studentService.UpdateStudent(studentCompleted);
+        
+        string userString = JsonSerializer.Serialize(studentUpdated);
+        HttpContext.Session.SetString("Student", userString);
+        
         return RedirectToAction("Map");
     }
     
