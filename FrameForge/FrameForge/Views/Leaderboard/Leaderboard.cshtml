@@ -10,17 +10,26 @@
 
 <head>
     <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+    <link rel="stylesheet" href="~/LeaderBoard_css/Leaderboard.css">
 </head>
 
 <body>
+    <!--Навігаційне меню-->
+    <div class="container">
+        <nav class="leftContent">
+            <ul class="leftNavMenu">
+                <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                <li class="navButtons"><a href="#"> Батл </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+                <li class="navButtons" id="activebtn"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
+            </ul>
+        </nav>
+    </div>
 
 
 
-
-
-
-
-<!--Таблиця з лідерами-->
+    <!--Таблиця з лідерами-->
     <h2>Leaderboard</h2>
     <table border="1">
         <thead>
