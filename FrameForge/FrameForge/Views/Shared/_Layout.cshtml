@@ -22,7 +22,7 @@
             {
                 <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
             }
-            <span class="rightText">@Model.Username <img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></span>
+                <span class="rightText">@Model.Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
         </div>
     </div>
 }
