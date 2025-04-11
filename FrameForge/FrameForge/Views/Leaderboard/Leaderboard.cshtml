@@ -22,32 +22,42 @@
                 <li class="navButtons"><a href="#"> Батл </a></li>
                 <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
                 <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
-                <li class="navButtons" id="activebtn"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
+                <li class="navButtons" id="activebtn"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця
+                        лідерів </a></li>
             </ul>
         </nav>
+
+        <!-- Контейнер для вмісту -->
+        <div class="content-container">
+            <h2>Leaderboard</h2>
+            <div class="leaderboard-wrapper">
+                @if (Model != null && Model.Any())
+                {
+                    <table border="1" class="leaderBoard">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount of stars</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model)
+                            {
+                                <tr>
+                                    <td>@student.Username</td>
+                                    <td>@student.StarsAmount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No students found.</p>
+                }
+            </div>
+        </div>
     </div>
-
-
-
-    <!--Таблиця з лідерами-->
-    <h2>Leaderboard</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Amount of stars</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var student in Model)
-            {
-                <tr>
-                    <td>@student.Username</td>
-                    <td>@student.StarsAmount</td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </body>
 
 </html>
