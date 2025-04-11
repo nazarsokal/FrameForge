@@ -1,8 +1,8 @@
-﻿@model List<Entities.Student>
-
+﻿@using Entities
 @{
     ViewData["Title"] = "Leader Board";
     Layout = "_Layout";
+    var studentFromViewBag = ViewBag.StudentsLists as List<Student>;
 }
 
 
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
     <link rel="stylesheet" href="~/LeaderBoard_css/Leaderboard.css">
 </head>
-
+<html>
 <body>
     <!--Навігаційне меню-->
     <div class="container">
@@ -31,7 +31,7 @@
         <div class="content-container">
             <h2>Leaderboard</h2>
             <div class="leaderboard-wrapper">
-                @if (Model != null && Model.Any())
+                @if (studentFromViewBag != null && studentFromViewBag.Any())
                 {
                     <table border="1" class="leaderBoard">
                         <thead>
@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var student in Model)
+                            @foreach (var student in studentFromViewBag)
                             {
                                 <tr>
                                     <td>@student.Username</td>
