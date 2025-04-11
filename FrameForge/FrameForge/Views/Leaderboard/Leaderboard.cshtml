@@ -1,21 +1,44 @@
 ﻿@model List<Entities.Student>
 
-<h2>Leaderboard</h2>
+@{
+    ViewData["Title"] = "Leader Board";
+    Layout = "_Layout";
+}
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Amount of stars</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var student in Model)
-        {
+
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+</head>
+
+<body>
+
+
+
+
+
+
+
+<!--Таблиця з лідерами-->
+    <h2>Leaderboard</h2>
+    <table border="1">
+        <thead>
             <tr>
-                <td>@student.Username</td>
-                <td>@student.StarsAmount</td>
+                <th>Name</th>
+                <th>Amount of stars</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Username</td>
+                    <td>@student.StarsAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+</html>
