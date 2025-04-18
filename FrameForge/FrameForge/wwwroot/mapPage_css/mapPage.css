@@ -28,11 +28,17 @@ a:not(.completed):not(.in-progress) {
 
 
 
-
+/*стилі для островів*/
 .islandFirstLvl{
     width: 300px;
     margin-left: 500px;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    margin-top: 20px;
+    margin-top: 50px;
+    transition: transform 0.3s ease;
+}
+
+.islandFirstLvl:hover {
+    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));
+    transform: scale(1.1);
 }
 
