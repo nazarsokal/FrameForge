@@ -26,6 +26,9 @@ a:not(.completed):not(.in-progress) {
     color: lightgray !important;
 }
 
+.leftContent{
+    z-index: 10;
+}
 
 
 /*стилі для островів*/
@@ -47,7 +50,7 @@ a:not(.completed):not(.in-progress) {
     position: absolute;
     top: 35%;
     left: 80%; 
-    z-index: 2; 
+    z-index: 2;
     width: 50px; 
     height: auto; 
     transition: transform 0.3s ease;
