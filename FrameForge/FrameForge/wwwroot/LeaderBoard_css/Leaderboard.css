@@ -3,6 +3,23 @@
     background: #f7e018;
 }
 
+/* Стилі для h2 */
+.content-container h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px; 
+    font-weight: bold; 
+    color: #333; 
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, text-shadow 0.3s ease; 
+}
+
+h2:hover {
+    transform: scale(1.05); 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+}
 /* Основний контейнер */
 .container {
     display: flex;
@@ -22,12 +39,13 @@
 /* Обгортка таблиці */
 .leaderboard-wrapper {
     max-width: 600px; 
+    max-height: 400px;
     width: 100%;
     background: #eeefff;
     border-radius: 10px;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
     transition: box-shadow 0.5s;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .leaderboard-wrapper:hover {
@@ -75,7 +93,7 @@
 
 /*Стилі для іконки акаунта в таблиці*/
 .accountIconLeaderboard{
-    width: 18px;
-    text-align: center;
-    margin-right: 20px;
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
 }
