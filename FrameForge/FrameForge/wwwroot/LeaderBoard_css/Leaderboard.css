@@ -101,7 +101,7 @@ h2:hover {
 }
 
 /*Стилі для іконки акаунта в таблиці*/
-.accountIconLeaderboard{
+.accountIconLeaderboard, .medalIcon{
     height: 18px;
     vertical-align: middle;
     margin-right: 10px;
