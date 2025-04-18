@@ -1,30 +1,30 @@
-a {
-    text-decoration: none;
-    margin-right: 10px;
-    font-size: 24px;
-}
+/*a {*/
+/*    text-decoration: none;*/
+/*    margin-right: 10px;*/
+/*    font-size: 24px;*/
+/*}*/
 
-/* Styling for completed levels */
-a.completed,
-a.completed:visited,
-a.completed:hover,
-a.completed:active {
-    color: green !important;
-    font-weight: bold;
-}
+/*!* Styling for completed levels *!*/
+/*a.completed,*/
+/*a.completed:visited,*/
+/*a.completed:hover,*/
+/*a.completed:active {*/
+/*    color: green !important;*/
+/*    font-weight: bold;*/
+/*}*/
 
-/* Styling for in-progress levels */
-a.in-progress,
-a.in-progress:visited,
-a.in-progress:hover,
-a.in-progress:active {
-    color: lightblue !important;
-}
+/*!* Styling for in-progress levels *!*/
+/*a.in-progress,*/
+/*a.in-progress:visited,*/
+/*a.in-progress:hover,*/
+/*a.in-progress:active {*/
+/*    color: lightblue !important;*/
+/*}*/
 
-/* Styling for uncompleted (not completed or in progress) levels */
-a:not(.completed):not(.in-progress) {
-    color: lightgray !important;
-}
+/*!* Styling for uncompleted (not completed or in progress) levels *!*/
+/*a:not(.completed):not(.in-progress) {*/
+/*    color: lightgray !important;*/
+/*}*/
 
 .leftContent{
     z-index: 10;
@@ -40,8 +40,8 @@ a:not(.completed):not(.in-progress) {
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Фон на всю висоту */
-    background: linear-gradient(180deg, #6b73ff, #000dff); /* Ваш градієнт */
+    min-height: 100vh; 
+    background: linear-gradient(180deg, #6b73ff, #000dff);
 }
 
 /*стилі для островів*/
@@ -63,13 +63,23 @@ body {
     transition: transform 0.3s ease;
 }
 
+.islandThirdLvl{
+    position: relative;
+    margin-top: 50px;
+    z-index: 1;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+    width: 300px;
+    margin-left: 400px;
+    transition: transform 0.3s ease;
+}
+
 /*тут при збільшуванні острова додається тінь*/
 /*.islandFirstLvl:hover {*/
 /*    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));*/
 /*    transform: scale(1.1);*/
 /*}*/
 
-.islandLocationFirst,.islandLocationSecond {
+.islandLocationFirst,.islandLocationSecond,.islandLocationThird {
     position: absolute;
     top: 35%;
     left: 80%; 
@@ -96,7 +106,7 @@ body {
     transform: scale(1.1);
 }
 
-.firstIsland, .secondIsland {
+.firstIsland, .secondIsland, .thirdIsland {
     position: relative;
     display: inline-block;
     transition: transform 0.3s ease;
