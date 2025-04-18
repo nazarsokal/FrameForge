@@ -37,10 +37,11 @@ a:not(.completed):not(.in-progress) {
     transition: transform 0.3s ease;
 }
 
-.islandFirstLvl:hover {
-    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));
-    transform: scale(1.1);
-}
+/*тут при збільшуванні острова додається тінь*/
+/*.islandFirstLvl:hover {*/
+/*    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));*/
+/*    transform: scale(1.1);*/
+/*}*/
 
 .islandLocation {
     position: absolute;
@@ -52,19 +53,19 @@ a:not(.completed):not(.in-progress) {
     transition: transform 0.3s ease;
 }
 
-.islandLocation:hover {
-    transform: scale(1.1);
-}
-
-/*тут на вибір, або точка розширяється з островом або вони оремо розширяються*/
-/*.allIsland:hover{*/
+/*.islandLocation:hover {*/
 /*    transform: scale(1.1);*/
 /*}*/
+
+/*тут на вибір, або точка розширяється з островом або вони оремо розширяються*/
+.allIsland:hover{
+    transform: scale(1.1);
+}
 
 .allIsland {
     position: relative;
     display: inline-block;
-    /*transition: transform 0.3s ease;*/
+    transition: transform 0.3s ease;
 }
 
 
