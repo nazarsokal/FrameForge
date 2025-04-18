@@ -37,11 +37,13 @@
 
 
         <div class="firstLvl">
-            <img src="~/images/icons_mapPage/island_FirstLvl.png" alt="islandFirstLvl" class="islandFirstLvl">
-
+            <div class="allIsland">
+                <img src="~/images/icons_mapPage/island_FirstLvl.png" alt="islandFirstLvl" class="islandFirstLvl">
+                <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocation">
+            </div>
             <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_IntroductionLevel"
-                class="@(completedLevels.Any( l => l.LevelTopicName == "CG_IntroductionLevel") ? "completed" :
-                                                                                                                                        inProgressLevels.Any(l => l.LevelTopicName == "CG_IntroductionLevel") ? "in-progress" : "")">
+               class="@(completedLevels.Any(l => l.LevelTopicName == "CG_IntroductionLevel") ? "completed" :
+                      inProgressLevels.Any(l => l.LevelTopicName == "CG_IntroductionLevel") ? "in-progress" : "")">
                 Level 1
             </a>
         </div>
