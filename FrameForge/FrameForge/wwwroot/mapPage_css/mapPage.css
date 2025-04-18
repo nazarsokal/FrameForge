@@ -25,3 +25,14 @@ a.in-progress:active {
 a:not(.completed):not(.in-progress) {
     color: lightgray !important;
 }
+
+
+
+
+.islandFirstLvl{
+    width: 300px;
+    margin-left: 500px;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+    margin-top: 20px;
+}
+
