@@ -1,0 +1,27 @@
+a {
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+/* Styling for completed levels */
+a.completed,
+a.completed:visited,
+a.completed:hover,
+a.completed:active {
+    color: green !important;
+    font-weight: bold;
+}
+
+/* Styling for in-progress levels */
+a.in-progress,
+a.in-progress:visited,
+a.in-progress:hover,
+a.in-progress:active {
+    color: lightblue !important;
+}
+
+/* Styling for uncompleted (not completed or in progress) levels */
+a:not(.completed):not(.in-progress) {
+    color: lightgray !important;
+}
