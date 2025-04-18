@@ -44,7 +44,8 @@
                             @foreach (var student in studentFromViewBag)
                             {
                                 <tr>
-                                    <td>@student.Username</td>
+                                    <td><img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIconLeaderboard">
+                                    @student.Username</td>
                                     <td>@student.StarsAmount</td>
                                 </tr>
                             }

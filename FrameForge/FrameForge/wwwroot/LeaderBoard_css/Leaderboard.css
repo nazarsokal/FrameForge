@@ -72,3 +72,10 @@
 .leaderBoard td:first-child {
     font-weight: 500;
 }
+
+/*Стилі для іконки акаунта в таблиці*/
+.accountIconLeaderboard{
+    width: 18px;
+    text-align: center;
+    margin-right: 20px;
+}
