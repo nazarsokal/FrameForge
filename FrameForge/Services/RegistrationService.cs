@@ -14,7 +14,7 @@ public class RegistrationService : IRegistrationService
         _dbContext = dbContext;
     }
     
-    public void RegisterStudent(Student? student)
+    public async Task RegisterStudent(Student? student)
     {
         ArgumentNullException.ThrowIfNull(student);
         
@@ -22,12 +22,12 @@ public class RegistrationService : IRegistrationService
             throw new InvalidOperationException("Student already exists");
         
         _dbContext.Students.Add(student);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Student GetStudent(string username,string password)
+    public async Task<Student> GetStudent(string username,string password)
     {
-        var user = _dbContext.Students.SingleOrDefault(s => s.Username == username);
+        var user = await _dbContext.Students.SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
             SaveProfileImageAsync(user.Picture, user.StudentId);
@@ -38,18 +38,18 @@ public class RegistrationService : IRegistrationService
             return null;
         }
     }
-    public List<Student> GetStudents()
+    public async Task<List<Student>> GetStudents()
     {
-        return _dbContext.Students.ToList();
+        return await _dbContext.Students.ToListAsync();
     }
 
     public async Task<Student> RegisterStudentWithGoogle(Student? student)
     {
         if (student == null) throw new NullReferenceException();
 
-        if (CheckIfStudentExistsGoogle(student) == true)
+        if (await CheckIfStudentExistsGoogle(student) == true)
         {
-            var stFromDb = getStudentWithGoogle(student);
+            Student? stFromDb = await getStudentWithGoogle(student);
             await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             return stFromDb;
         }
@@ -58,26 +58,26 @@ public class RegistrationService : IRegistrationService
         student.MoneyAmount = 10.0;
         
         _dbContext.Students.Add(student);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         
         await SaveProfileImageAsync(student.Picture, student.StudentId);
         
         return student;
     }
 
-    public bool CheckIfStudentExistsGoogle(Student? student)
+    public async Task<bool> CheckIfStudentExistsGoogle(Student? student)
     {
         if (student == null) throw new NullReferenceException();
-        Student? stFromDb = _dbContext.Students.FirstOrDefault(st => st.GoogleId == student.GoogleId);
+        Student? stFromDb = await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
         
         if(stFromDb == null) return false;
         
         else return true;
     }
 
-    private Student getStudentWithGoogle(Student student)
+    private async Task<Student> getStudentWithGoogle(Student student)
     {
-        return _dbContext.Students.FirstOrDefault(st => st.GoogleId == student.GoogleId);
+        return await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
     }
     
     private async Task SaveProfileImageAsync(string imageUrl, Guid userId)

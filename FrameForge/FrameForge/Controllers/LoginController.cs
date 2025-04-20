@@ -22,11 +22,11 @@ namespace FrameForge.Controllers
         [HttpPost]
         [Route("[action]")]
 
-        public IActionResult LoginWithLoginAndPassword(InputLoginData? ld)
+        public async Task<IActionResult> LoginWithLoginAndPassword(InputLoginData? ld)
         {
             if (ld != null) 
             {
-                Student? student = _registrationService.GetStudent(ld.Username, ld.Password);
+                Student? student = await _registrationService.GetStudent(ld.Username, ld.Password);
                 if (student != null)
                 {
                      string userString = JsonSerializer.Serialize(student);
