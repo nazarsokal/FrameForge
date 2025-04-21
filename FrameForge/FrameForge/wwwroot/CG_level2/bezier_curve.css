@@ -1,0 +1,52 @@
+﻿*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+
+.task, .tests {
+
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    /* display: flex;
+    flex-wrap: wrap; */
+    gap: 20px;
+}
+
+
+.taskCard {
+    /* position: relative; */
+    width: 100%;
+    background: #eeefff;
+    border: none;
+    border-radius: 10px;
+    /* width: calc(33.33% - 13.33px); */
+    padding: 15px;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
+    /* display: flex;
+    flex-direction: column; */
+    transition: .5s;
+}
+#smallTitle {
+
+    font-size: 24px;
+}
+
+.taskCard p {
+    font-size: 18px;
+}
+
+/* .taskCard:hover {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+} */
