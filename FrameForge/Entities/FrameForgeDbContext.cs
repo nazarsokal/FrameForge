@@ -11,6 +11,7 @@ public class FrameForgeDbContext : DbContext
     
     public DbSet<Student> Students { get; set; }
     public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
+    public DbSet<MentorNpcQuotes> MentorQuotes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
