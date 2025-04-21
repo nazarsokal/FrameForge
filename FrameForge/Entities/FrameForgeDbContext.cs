@@ -16,6 +16,7 @@ public class FrameForgeDbContext : DbContext
     {
         modelBuilder.Entity<Student>().ToTable("Student");
         modelBuilder.Entity<EnrolledLevels>().ToTable("EnrolledLevels");
+        modelBuilder.Entity<MentorNpcQuotes>().ToTable("MentorNpcQuotes");
         
         //Seed data to Students
         modelBuilder.Entity<Student>().HasData(new Student() 
