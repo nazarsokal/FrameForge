@@ -102,6 +102,7 @@ h2:hover {
 
 /*Стилі для іконки акаунта в таблиці*/
 .accountIconLeaderboard, .medalIcon{
+    /*Якщо злетать іконки, то просто height заново вводити*/
     height: 18px;
     vertical-align: middle;
     margin-right: 10px;
