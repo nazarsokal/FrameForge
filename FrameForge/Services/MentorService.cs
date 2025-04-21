@@ -15,6 +15,7 @@ public class MentorService : IMentorService
     
     public async Task<List<MentorNpcQuotes>> GetMentorQuotesByLevelNumber(int levelNumber) => await _dbContext.MentorQuotes
         .Where(m => m.LevelNumber == levelNumber)
+        .OrderBy(m => m.OrderNumber)
         .ToListAsync();
     
 

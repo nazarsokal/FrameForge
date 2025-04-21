@@ -21,6 +21,7 @@ builder.Services.AddScoped<IProgressMapService, ProgressMapService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IMentorService, MentorService>();
 
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {

@@ -8,51 +8,60 @@ namespace FrameForge.Controllers;
 
 public class ProgressMapController : Controller
 {
-    private readonly IProgressMapService _service;
+    private readonly IProgressMapService _progressMapService;
     private readonly IStudentService _studentService;
-    private List<EnrolledLevels>? userLevelsEnrolledInProgress;
-    private List<EnrolledLevels>? userLevelsEnrolledCompleted;
-    private readonly List<string> availableLevels = new List<string>() { "CG_IntroductionLevel",  "CG_Level2", "CG_Level3", "CG_Level4", "CG_Level5"}; 
-    private Student? student;
+    private readonly IMentorService _mentorService;
+    private List<EnrolledLevels>? _userLevelsEnrolledInProgress;
+    private List<EnrolledLevels>? _userLevelsEnrolledCompleted;
+    private readonly Dictionary<int, string> _availableLevels = new Dictionary<int, string>(); 
+    private Student? _student;
 
-    public ProgressMapController(IProgressMapService service, IStudentService studentService)
+    public ProgressMapController(IProgressMapService progressMapService, IStudentService studentService, IMentorService mentorService)
     {
-        _service = service;
+        _progressMapService = progressMapService;
         _studentService = studentService;
+        _mentorService = mentorService;
+        _availableLevels = new Dictionary<int, string>() {
+            { 1, "CG_IntroductionLevel" }, { 2, "CG_BezierCurveLevel" }, { 3, "CG_FractalsLevel" }, { 4, "CG_ColorModelsLevel" }, {5 ,"CG_MovingImagesLevel" }};
     }
     [Route("[action]")]
     public IActionResult Map()
     {
         var student = GetStudentFromSession();
-        userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
-        userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
-        ViewBag.CompletedLevels = userLevelsEnrolledCompleted;
-        ViewBag.InProgressLevels = userLevelsEnrolledInProgress;
+        _userLevelsEnrolledInProgress = _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+        _userLevelsEnrolledCompleted = _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+        ViewBag.CompletedLevels = _userLevelsEnrolledCompleted;
+        ViewBag.InProgressLevels = _userLevelsEnrolledInProgress;
         return View();
     }
 
     [Route("[action]")]
-    public IActionResult ViewLevel(string levelName)
+    public async  Task<IActionResult> ViewLevel(string levelName)
     {
         ViewBag.LevelName = levelName;
         var student = GetStudentFromSession();
-        userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
-        userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
+        _userLevelsEnrolledInProgress = _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+        _userLevelsEnrolledCompleted = _progressMapService.GetUsersEnrolledLevelsCompleted(student);
         
-        if (userLevelsEnrolledInProgress == null)
-            userLevelsEnrolledInProgress = new List<EnrolledLevels>(); 
-        if(userLevelsEnrolledCompleted == null)
-            userLevelsEnrolledCompleted = new List<EnrolledLevels>();
+        if (_userLevelsEnrolledInProgress == null)
+            _userLevelsEnrolledInProgress = new List<EnrolledLevels>(); 
+        if(_userLevelsEnrolledCompleted == null)
+            _userLevelsEnrolledCompleted = new List<EnrolledLevels>();
         
         EnrolledLevels? isLevelEnrolled =
-            userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
+            _userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
         EnrolledLevels? isLevelCompleted =
-            userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
+            _userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
+        
+        var levelKey = _availableLevels.Where(kvp => kvp.Value == levelName).Select(kvp => kvp.Key).FirstOrDefault();
+        List<MentorNpcQuotes> quotesList = await _mentorService.GetMentorQuotesByLevelNumber(levelKey);
+        ViewBag.Quotes = quotesList;
+        
         if (isLevelEnrolled == null && isLevelCompleted == null)
         {
-            if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
+            if (isPreviousLevelCompleted(_userLevelsEnrolledCompleted, levelName))
             {
-                _service.EnrolOnLevel(student, levelName);    
+                _progressMapService.EnrolOnLevel(student, levelName);
                 return View(levelName);
             }
             else
@@ -70,7 +79,7 @@ public class ProgressMapController : Controller
     public IActionResult CompleteLevel(string levelName, MoneyStarsResult moneyResult)
     {
         var studentCompleted = GetStudentFromSession();
-        _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
+        _progressMapService.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
         
         studentCompleted.MoneyAmount += moneyResult.Money;
         studentCompleted.StarsAmount += moneyResult.Stars;
@@ -86,30 +95,30 @@ public class ProgressMapController : Controller
     private Student GetStudentFromSession()
     {
         var studentJson = HttpContext.Session.GetString("Student");
-        if (studentJson != null) student = JsonSerializer.Deserialize<Student>(studentJson);
-        if(student == null) throw new NullReferenceException("Student is null");
+        if (studentJson != null) _student = JsonSerializer.Deserialize<Student>(studentJson);
+        if(_student == null) throw new NullReferenceException("Student is null");
         
-        return student;
+        return _student;
     }
 
     private bool isPreviousLevelCompleted(List<EnrolledLevels> userLevelsEnrolledCompleted, string levelName)
     {
         var student = GetStudentFromSession();
         int indexAmount = 0;
-        foreach (var level in availableLevels)
+        foreach (var level in _availableLevels.Values)
         {
             bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.StudentId == l.StudentId);
             if(isLevelContained) indexAmount++;
         }
 
         int indexOfLevelName = 0;
-        bool isLevelContainedAl = availableLevels.Any(l => l == levelName);
+        bool isLevelContainedAl = _availableLevels.Values.Any(l => l == levelName);
         if (isLevelContainedAl)
         {
-            indexOfLevelName = availableLevels.IndexOf(levelName);
+            indexOfLevelName = _availableLevels.FirstOrDefault(kvp => kvp.Value == levelName).Key;
         }
         
-        if((indexOfLevelName+1) - indexAmount > 1) return false;
+        if(indexOfLevelName - indexAmount > 1) return false;
         
         return true;
     }
