@@ -7,11 +7,13 @@ namespace Services;
 public class RegistrationService : IRegistrationService
 {
     private readonly FrameForgeDbContext _dbContext;
+    private readonly IAzureStorageService _azureStorageService;
 
 
-    public RegistrationService(FrameForgeDbContext dbContext)
+    public RegistrationService(FrameForgeDbContext dbContext, IAzureStorageService azureStorageService)
     {
         _dbContext = dbContext;
+        _azureStorageService = azureStorageService;
     }
     
     public async Task RegisterStudent(Student? student)
@@ -84,8 +86,7 @@ public class RegistrationService : IRegistrationService
     {
         using var httpClient = new HttpClient();
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
-
-        var filePath = Path.Combine("wwwroot/images/users", $"{userId}.jpg");
-        await File.WriteAllBytesAsync(filePath, imageBytes);
+        
+        await _azureStorageService.UploadUserPhoto(imageBytes, userId);
     }
 }
