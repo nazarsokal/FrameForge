@@ -28,7 +28,7 @@ public class ProgressMapController : Controller
         userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
         ViewBag.CompletedLevels = userLevelsEnrolledCompleted;
         ViewBag.InProgressLevels = userLevelsEnrolledInProgress;
-        return View();
+        return View(student);
     }
 
     [Route("[action]")]
