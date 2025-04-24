@@ -110,7 +110,7 @@ MIT License. See `LICENSE` for more information.
 ## 📧 Contact
 
 Built with 💻 by: 
-[Nazar Sokalchuk](https://github.com/nazarsokal)
-[Nazar Novosilets](https://github.com/NazarNovosilets) 
-[Oleksandr Herhel](https://github.com/smurfik1488) 
-[Serhiy Matrohin](https://github.com/serhiy28) .
+[Nazar Sokalchuk](https://github.com/nazarsokal)    
+[Nazar Novosilets](https://github.com/NazarNovosilets)   
+[Oleksandr Herhel](https://github.com/smurfik1488)   
+[Serhiy Matrohin](https://github.com/serhiy28)  
