@@ -100,9 +100,16 @@ h2:hover {
     font-weight: 500;
 }
 
+/*!*Стилі для іконки акаунта в таблиці*!
+.accountIconLeaderboard{
+    !*Якщо злетать іконки, то просто height заново вводити*!
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+}*/
+
 /*Стилі для іконки акаунта в таблиці*/
-.accountIconLeaderboard, .medalIcon{
-    /*Якщо злетать іконки, то просто height заново вводити*/
+td img{
     height: 18px;
     vertical-align: middle;
     margin-right: 10px;
