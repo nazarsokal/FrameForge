@@ -62,19 +62,22 @@
                 <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level3"
                    class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level3") ? "completed" :
                           inProgressLevels.Any(l => l.LevelTopicName == "CG_Level3") ? "in-progress" : "")">
-                <img src="~/images/icons_mapPage/island_ThirdLvl.png" alt="islandThirdLvl" class="islandThirdLvl">
-                <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationThird">
+                    <img src="~/images/icons_mapPage/island_ThirdLvl.png" alt="islandThirdLvl" class="islandThirdLvl">
+                    <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationThird">
                 </a>
             </div>
         </div>
         
-        
-        @* <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level4" *@
-        @*     class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level4") ? "completed" : *@
-        @*     inProgressLevels.Any(l => l.LevelTopicName == "CG_Level4") ? "in-progress" : "")"> *@
-        @*     Level 4 *@
-        @* </a> *@
-        @* *@
+        <div class="fourthLvl">
+            <div class="fourthIsland">
+                <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level4"
+                   class="@(completedLevels.Any(l => l.LevelTopicName == "CG_Level4") ? "completed" :
+                          inProgressLevels.Any(l => l.LevelTopicName == "CG_Level4") ? "in-progress" : "")">
+                    <img src="~/images/icons_mapPage/island_FourthLvl.png" alt="islandFourthLvl" class="islandFourthLvl">
+                    <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationFourth">
+                </a>
+            </div>
+        </div>
         @* <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level5" *@
         @*     class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "completed" : *@
         @*     inProgressLevels.Any(l => l.LevelTopicName == "CG_Level5") ? "in-progress" : "")"> *@

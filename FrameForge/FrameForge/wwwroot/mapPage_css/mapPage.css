@@ -73,13 +73,23 @@ body {
     transition: transform 0.3s ease;
 }
 
+.islandFourthLvl{
+    position: relative;
+    margin-top: 50px;
+    z-index: 1;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+    width: 400px;
+    margin-left: 1000px;
+    transition: transform 0.3s ease;
+}
+
 /*тут при збільшуванні острова додається тінь*/
 /*.islandFirstLvl:hover {*/
 /*    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));*/
 /*    transform: scale(1.1);*/
 /*}*/
 
-.islandLocationFirst,.islandLocationSecond,.islandLocationThird {
+.islandLocationFirst,.islandLocationSecond,.islandLocationThird,.islandLocationFourth {
     position: absolute;
     top: 35%;
     left: 80%; 
@@ -98,15 +108,15 @@ body {
 /*}*/
 
 /*тут на вибір, або точка розширяється з островом або вони оремо розширяються*/
-.islandFirstLvl:hover, .islandSecondLvl:hover, .islandThirdLvl:hover{
+.islandFirstLvl:hover, .islandSecondLvl:hover, .islandThirdLvl:hover, .islandFourthLvl:hover{
     transform: scale(1.1);
 }
 
-.islandLocationFirst:hover, .islandLocationSecond:hover, .islandLocationThird:hover{
+.islandLocationFirst:hover, .islandLocationSecond:hover, .islandLocationThird:hover, .islandLocationFourth:hover{
     transform: scale(1.1);
 }
 
-.firstIsland, .secondIsland, .thirdIsland {
+.firstIsland, .secondIsland, .thirdIsland, .fourthIsland {
     position: relative;
     display: inline-block;
     transition: transform 0.3s ease;
