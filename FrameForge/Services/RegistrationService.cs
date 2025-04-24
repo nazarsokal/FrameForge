@@ -23,6 +23,17 @@ public class RegistrationService : IRegistrationService
         if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
             throw new InvalidOperationException("Student already exists");
         
+        student.StudentId = Guid.NewGuid();
+
+        if (student.Picture == null)
+        {
+            var path = @"wwwroot/images/icons_mainPage/account.png";
+            await SaveDefaultProfileImageAsync(path, student.StudentId);
+            
+            var img = await _azureStorageService.GetUserPhoto(student.StudentId);
+            student.Picture = Convert.ToBase64String(img);
+        }
+        
         _dbContext.Students.Add(student);
         await _dbContext.SaveChangesAsync();
     }
@@ -32,7 +43,8 @@ public class RegistrationService : IRegistrationService
         var user = await _dbContext.Students.SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
-            SaveProfileImageAsync(user.Picture, user.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            user.Picture = Convert.ToBase64String(studentImage);
             return user;
         }
         else
@@ -52,9 +64,11 @@ public class RegistrationService : IRegistrationService
         if (await CheckIfStudentExistsGoogle(student) == true)
         {
             Student? stFromDb = await getStudentWithGoogle(student);
+            
             await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
             stFromDb.Picture = Convert.ToBase64String(studentImage);
+            
             return stFromDb;
         }
         
@@ -91,5 +105,12 @@ public class RegistrationService : IRegistrationService
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
         
         return await _azureStorageService.UploadUserPhoto(imageBytes, userId);
+    }
+
+    private async Task<string> SaveDefaultProfileImageAsync(string path, Guid userId)
+    {
+        byte[] byteArray = File.ReadAllBytes(path);
+        
+        return await _azureStorageService.UploadUserPhoto(byteArray, userId);
     }
 }
