@@ -29,23 +29,29 @@
 
         <!-- Контейнер для вмісту -->
         <div class="content-container">
-            <h2>Leaderboard</h2>
+            <h2>Таблиця лідерів</h2>
             <div class="leaderboard-wrapper">
                 @if (studentFromViewBag != null && studentFromViewBag.Any())
                 {
                     <table border="1" class="leaderBoard">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Amount of stars</th>
+                                <th>Ім'я</th>
+                                <th>Кількість зірочок</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var student in studentFromViewBag)
                             {
                                 <tr>
-                                    <td>@student.Username</td>
-                                    <td>@student.StarsAmount</td>
+                                    <td>
+                                        <img src="~/images/icons_LeaderBoard/medal_FirstPlace.png" alt="medal" class="medalIcon1" id="medalIcon">
+                                        <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIconLeaderboard">   
+                                        @student.Username
+                                    </td>
+                                    <td>
+                                        @student.StarsAmount
+                                    </td>
                                 </tr>
                             }
                         </tbody>
