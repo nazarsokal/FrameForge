@@ -122,4 +122,40 @@ body {
     transition: transform 0.3s ease;
 }
 
+.firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted {
+    transform: translateX(-300px);
+}
 
+/*Стилі для модального бокового вікна*/
+/* Стилі для модального бокового вікна */
+.modalWindow {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #f1f1f1;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000; /* Додаємо z-index */
+}
+
+.modalWindow.active {
+    right: 0;
+}
+
+.modalWindow.active {
+    right: 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
