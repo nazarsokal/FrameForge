@@ -2,8 +2,8 @@ namespace ServiceContracts;
 
 public interface IAzureStorageService
 {
-    public Task UploadUserPhoto(byte[] photoUrl, Guid userId);
+    public Task<string> UploadUserPhoto(byte[] photoUrl, Guid userId);
     
-    public Task<string> GetUserPhoto(Guid userId);
+    public Task<byte[]> GetUserPhoto(Guid userId);
     
 }

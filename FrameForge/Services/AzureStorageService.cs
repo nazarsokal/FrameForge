@@ -17,7 +17,7 @@ public class AzureStorageService : IAzureStorageService
         _shareClient = new ShareClient(SasToken, "frameforgefilestorage");
     }
 
-    public async Task UploadUserPhoto(byte[] photoData, Guid userId)
+    public async Task<string> UploadUserPhoto(byte[] photoData, Guid userId)
     {
         try
         {
@@ -37,6 +37,8 @@ public class AzureStorageService : IAzureStorageService
                 new Azure.HttpRange(0, photoData.Length),
                 stream
             );
+            
+            return targetFileName;
         }
         catch (Exception ex)
         {
@@ -45,8 +47,31 @@ public class AzureStorageService : IAzureStorageService
         }
     }
 
-    public Task<string> GetUserPhoto(Guid userId)
+    public async Task<byte[]> GetUserPhoto(Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
+            ShareDirectoryClient folder = rootDir.GetSubdirectoryClient("UserImages");
+            string targetFileName = $"{userId}.jpg";
+            ShareFileClient fileClient = folder.GetFileClient(targetFileName);
+
+            bool fileExists = await fileClient.ExistsAsync();
+            if (!fileExists)
+            {
+                throw new FileNotFoundException($"Image for user {userId} not found.");
+            }
+
+            var response = await fileClient.DownloadAsync();
+            using Stream contentStream = response.Value.Content;
+            using MemoryStream memoryStream = new MemoryStream();
+            await contentStream.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving photo: {ex.Message}");
+            throw;
+        }
     }
 }

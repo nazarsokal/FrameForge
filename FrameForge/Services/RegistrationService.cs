@@ -53,16 +53,19 @@ public class RegistrationService : IRegistrationService
         {
             Student? stFromDb = await getStudentWithGoogle(student);
             await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
+            stFromDb.Picture = Convert.ToBase64String(studentImage);
             return stFromDb;
         }
         
         student.StudentId = Guid.NewGuid();
         student.MoneyAmount = 10.0;
+        var imagePath = await SaveProfileImageAsync(student.Picture, student.StudentId);
+        student.Picture = imagePath;
         
         _dbContext.Students.Add(student);
         await _dbContext.SaveChangesAsync();
         
-        await SaveProfileImageAsync(student.Picture, student.StudentId);
         
         return student;
     }
@@ -82,11 +85,11 @@ public class RegistrationService : IRegistrationService
         return await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
     }
     
-    private async Task SaveProfileImageAsync(string imageUrl, Guid userId)
+    private async Task<string> SaveProfileImageAsync(string imageUrl, Guid userId)
     {
         using var httpClient = new HttpClient();
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
         
-        await _azureStorageService.UploadUserPhoto(imageBytes, userId);
+        return await _azureStorageService.UploadUserPhoto(imageBytes, userId);
     }
 }
