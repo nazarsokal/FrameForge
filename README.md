@@ -109,8 +109,8 @@ MIT License. See `LICENSE` for more information.
 
 ## 📧 Contact
 
-Built with 💻 by: 
-[Nazar Sokalchuk](https://github.com/nazarsokal)    
-[Nazar Novosilets](https://github.com/NazarNovosilets)   
-[Oleksandr Herhel](https://github.com/smurfik1488)   
-[Serhiy Matrohin](https://github.com/serhiy28)  
+Built with 💻 by:   
+[Nazar Sokalchuk](https://github.com/nazarsokal) - BackEnd      
+[Nazar Novosilets](https://github.com/NazarNovosilets) - FrontEnd     
+[Oleksandr Herhel](https://github.com/smurfik1488) - BackEnd     
+[Serhiy Matrohin](https://github.com/serhiy28) - FrontEnd    
