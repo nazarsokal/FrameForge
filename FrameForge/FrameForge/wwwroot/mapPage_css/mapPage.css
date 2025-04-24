@@ -26,6 +26,7 @@
 /*    color: lightgray !important;*/
 /*}*/
 
+
 .leftContent{
     z-index: 10;
 }
@@ -121,5 +122,4 @@ body {
     display: inline-block;
     transition: transform 0.3s ease;
 }
-
 
