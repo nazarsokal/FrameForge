@@ -17,17 +17,20 @@
             case 'secondIsland':
                 return {
                     title: 'Другий рівень',
-                    description: 'Опис другого рівня'
+                    description: 'Опис другого рівня',
+                    link: '/ProgressMap/ViewLevel?levelName=CG_Level2'
                 };
             case 'thirdIsland':
                 return {
                     title: 'Третій рівень',
-                    description: 'Опис третього рівня'
+                    description: 'Опис третього рівня',
+                    link: '/ProgressMap/ViewLevel?levelName=CG_Level3'
                 };
             case 'fourthIsland':
                 return {
                     title: 'Четвертий рівень',
-                    description: 'Опис четвертого рівня'
+                    description: 'Опис четвертого рівня',
+                    link: '/ProgressMap/ViewLevel?levelName=CG_Level4'
                 };
         }
     };
