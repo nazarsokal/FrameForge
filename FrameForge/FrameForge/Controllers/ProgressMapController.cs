@@ -31,7 +31,7 @@ public class ProgressMapController : Controller
         return View(student);
     }
 
-    [Route("[action]")]
+    [Route("[controller]/[action]")]
     public IActionResult ViewLevel(string levelName)
     {
         ViewBag.LevelName = levelName;

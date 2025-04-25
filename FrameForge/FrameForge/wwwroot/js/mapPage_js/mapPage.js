@@ -12,7 +12,7 @@
                     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque mollitia quisquam quo sequi similique! Earum hic\n' +
                         '    iure odio sit. Ex rerum soluta voluptas. Culpa eaque hic illum molestiae optio tenetur voluptate voluptatum? Aut\n' +
                         '    consequuntur distinctio enim eveniet exercitationem illum incidunt inventore ipsam iure, maxime officiis\n',
-                    link: '/ProgressMap/ViewLevel?id=CG_IntroductionLevel'
+                    link: '/ProgressMap/ViewLevel?levelName=CG_IntroductionLevel'
                 };
             case 'secondIsland':
                 return {
