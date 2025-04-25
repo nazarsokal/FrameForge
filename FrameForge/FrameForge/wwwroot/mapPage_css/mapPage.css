@@ -26,10 +26,10 @@
 /*    color: lightgray !important;*/
 /*}*/
 
-.leftContent{
+.leftContent {
     z-index: 10;
 }
-.container{
+.container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -40,12 +40,12 @@
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; 
+    min-height: 100vh;
     background: linear-gradient(180deg, #6b73ff, #000dff);
 }
 
-/*стилі для островів*/
-.islandFirstLvl{
+/* Стилі для островів */
+.islandFirstLvl {
     position: relative;
     width: 300px;
     margin-left: 500px;
@@ -53,7 +53,7 @@ body {
     margin-top: 50px;
     transition: transform 0.3s ease;
 }
-.islandSecondLvl{
+.islandSecondLvl {
     position: relative;
     margin-top: 100px;
     z-index: 1;
@@ -62,8 +62,7 @@ body {
     margin-left: 1100px;
     transition: transform 0.3s ease;
 }
-
-.islandThirdLvl{
+.islandThirdLvl {
     position: relative;
     margin-top: 50px;
     z-index: 1;
@@ -72,8 +71,7 @@ body {
     margin-left: 400px;
     transition: transform 0.3s ease;
 }
-
-.islandFourthLvl{
+.islandFourthLvl {
     position: relative;
     margin-top: 50px;
     z-index: 1;
@@ -83,22 +81,44 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Стили для всіх островів залежно від стану */
+.firstIsland a:not(.completed):not(.in-progress) .islandFirstLvl,
+.secondIsland a:not(.completed):not(.in-progress) .islandSecondLvl,
+.thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl,
+.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl {
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) grayscale(100%) !important;
+}
+
+.firstIsland a.completed .islandFirstLvl,
+.secondIsland a.completed .islandSecondLvl,
+.thirdIsland a.completed .islandThirdLvl,
+.fourthIsland a.completed .islandFourthLvl {
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) hue-rotate(1deg) !important;
+}
+
+.firstIsland a.in-progress .islandFirstLvl,
+.secondIsland a.in-progress .islandSecondLvl,
+.thirdIsland a.in-progress .islandThirdLvl,
+.fourthIsland a.in-progress .islandFourthLvl {
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) hue-rotate(30deg) brightness(1.2) !important;
+}
+
 /*тут при збільшуванні острова додається тінь*/
 /*.islandFirstLvl:hover {*/
 /*    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));*/
 /*    transform: scale(1.1);*/
 /*}*/
 
-.islandLocationFirst,.islandLocationSecond,.islandLocationThird,.islandLocationFourth {
+.islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth {
     position: absolute;
     top: 35%;
-    left: 80%; 
+    left: 80%;
     z-index: 2;
-    width: 50px; 
+    width: 50px;
     height: auto;
     transition: transform 0.3s ease;
 }
-.islandLocationSecond{
+.islandLocationSecond {
     top: 50%;
     left: 85%;
 }
@@ -107,12 +127,12 @@ body {
 /*    transform: scale(1.1);*/
 /*}*/
 
-/*тут на вибір, або точка розширяється з островом або вони оремо розширяються*/
-.islandFirstLvl:hover, .islandSecondLvl:hover, .islandThirdLvl:hover, .islandFourthLvl:hover{
+/*тут на вибір, або точка розширяється з островом або вони окремо розширяються*/
+.islandFirstLvl:hover, .islandSecondLvl:hover, .islandThirdLvl:hover, .islandFourthLvl:hover {
     transform: scale(1.1);
 }
 
-.islandLocationFirst:hover, .islandLocationSecond:hover, .islandLocationThird:hover, .islandLocationFourth:hover{
+.islandLocationFirst:hover, .islandLocationSecond:hover, .islandLocationThird:hover, .islandLocationFourth:hover {
     transform: scale(1.1);
 }
 
@@ -145,11 +165,7 @@ body {
     right: 0;
 }
 
-.modalWindow.active {
-    right: 0;
-}
-
-/*розташування елементів на модальному вікні*/
+/* розташування елементів на модальному вікні */
 .modalWindowContent {
     display: flex;
     flex-direction: column;
@@ -177,20 +193,20 @@ body {
     border: none;
 }
 
-/*Стилі для кнопки старту рівня*/
+/* Стилі для кнопки старту рівня */
 .acceptButton {
     background: linear-gradient(45deg, #318ced, #ed31ab);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 20px; 
+    font-size: 20px;
     padding: 10px;
     border-radius: 50px;
     transition: background 0.5s;
     margin-top: auto;
     text-align: center;
 }
-.acceptButton:hover{
+.acceptButton:hover {
     background: #f7e018;
 }

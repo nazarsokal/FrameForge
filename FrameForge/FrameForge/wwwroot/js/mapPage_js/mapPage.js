@@ -17,13 +17,18 @@
             case 'secondIsland':
                 return {
                     title: 'Другий рівень',
-                    description: 'Опис другого рівня',
+                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci aliquam, debitis dignissimos dolor\n' +
+                        '    dolores ex excepturi explicabo fugiat ipsum iusto laborum magnam molestias nihil obcaecati perferendis quibusdam\n' +
+                        '    recusandae rerum sed totam. Aliquam consequuntur eligendi eos eum illo minus nihil totam vitae? Consectetur cum ea,\n' +
+                        '    est id incidunt ipsum minima, necessitatibus neque nihil nobis obcaecati odit tempore temporibus ut veniam.',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level2'
                 };
             case 'thirdIsland':
                 return {
                     title: 'Третій рівень',
-                    description: 'Опис третього рівня',
+                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad, deserunt ea esse iusto magni natus placeat\n' +
+                        '    praesentium tempore. Accusantium alias dolorem illo inventore itaque iusto necessitatibus perspiciatis porro\n' +
+                        '    veritatis',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level3'
                 };
             case 'fourthIsland':
