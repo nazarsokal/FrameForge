@@ -126,7 +126,6 @@ body {
     transform: translateX(-300px);
 }
 
-/*Стилі для модального бокового вікна*/
 /* Стилі для модального бокового вікна */
 .modalWindow {
     position: fixed;
@@ -139,7 +138,7 @@ body {
     transition: right 0.3s ease-in-out;
     padding: 20px;
     box-sizing: border-box;
-    z-index: 1000; /* Додаємо z-index */
+    z-index: 1000;
 }
 
 .modalWindow.active {
