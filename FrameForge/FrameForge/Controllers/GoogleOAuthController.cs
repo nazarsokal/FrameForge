@@ -23,7 +23,7 @@ public class GoogleOAuthController : Controller
     public IActionResult RedirectOnOAuthServer()
     {
         string scope = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
-        string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
+        string redirectUrl = $"https://d63e-5-199-232-97.ngrok-free.app/GoogleOAuth/Code";
         var codeVerifier = $"{Guid.NewGuid()}{Guid.NewGuid()}";
         
         HttpContext.Session.SetString("codeVerifier", codeVerifier);
@@ -39,7 +39,7 @@ public class GoogleOAuthController : Controller
     {
         string? codeVerifier = HttpContext.Session.GetString("codeVerifier");
         
-        string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
+        string redirectUrl = $"https://d63e-5-199-232-97.ngrok-free.app/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
         
         Student? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);

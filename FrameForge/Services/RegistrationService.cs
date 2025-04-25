@@ -31,7 +31,6 @@ public class RegistrationService : IRegistrationService
             await SaveDefaultProfileImageAsync(path, student.StudentId);
             
             var img = await _azureStorageService.GetUserPhoto(student.StudentId);
-            student.Picture = Convert.ToBase64String(img);
         }
         
         _dbContext.Students.Add(student);
