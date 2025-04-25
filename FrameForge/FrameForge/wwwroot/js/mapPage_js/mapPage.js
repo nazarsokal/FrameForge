@@ -76,7 +76,7 @@
         if (
             sidebar.classList.contains('active') &&
             !sidebar.contains(e.target) &&
-            !e.target.closest('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland')
+            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl')
         ) {
             closeSidebar();
         }
