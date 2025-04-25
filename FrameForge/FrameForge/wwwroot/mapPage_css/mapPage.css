@@ -87,6 +87,7 @@ body {
 .thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl,
 .fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) grayscale(100%) !important;
+    cursor: not-allowed;
 }
 
 .firstIsland a.completed .islandFirstLvl,
@@ -102,6 +103,23 @@ body {
 .fourthIsland a.in-progress .islandFourthLvl {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) hue-rotate(30deg) brightness(1.2) !important;
 }
+
+/*видалення масштабування для закритих островів*/
+.firstIsland a:not(.completed):not(.in-progress) .islandFirstLvl:hover,
+.secondIsland a:not(.completed):not(.in-progress) .islandSecondLvl:hover,
+.thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl:hover,
+.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl:hover {
+    transform: none; 
+}
+
+/*Видалив значок  локації для закритих островів*/
+.firstIsland a:not(.completed):not(.in-progress) .islandLocationFirst,
+.secondIsland a:not(.completed):not(.in-progress) .islandLocationSecond,
+.thirdIsland a:not(.completed):not(.in-progress) .islandLocationThird,
+.fourthIsland a:not(.completed):not(.in-progress) .islandLocationFourth {
+    visibility: hidden;
+}
+
 
 /*тут при збільшуванні острова додається тінь*/
 /*.islandFirstLvl:hover {*/

@@ -48,6 +48,11 @@
                 const island = islands[index];
                 const islandClass = island.classList[0];
                 
+                const link = island.querySelector('a');
+                if (!link.classList.contains('completed') && !link.classList.contains('in-progress')) {
+                    return;
+                }
+                
                 //Для кожного остврова свій текст
                 const content = getModalContent(islandClass);
                 document.querySelector('.modalWindowContent h1').textContent = content.title;
