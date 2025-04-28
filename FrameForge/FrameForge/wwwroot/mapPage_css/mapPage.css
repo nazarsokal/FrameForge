@@ -225,6 +225,10 @@ body {
     margin-top: auto;
     text-align: center;
 }
+.acceptButton a{
+    text-decoration: none;
+}
+
 .acceptButton:hover {
     background: #f7e018;
 }
