@@ -34,12 +34,14 @@ public class RegistrationController : Controller
     {
         if (student != null)
         {
+            var password = student.Password;
             student.GoogleId = null;
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
             await _registrationService.RegisterStudent(student);
-            
-            string userString = JsonSerializer.Serialize(student);
+
+            Student studentFromDb = await _registrationService.GetStudent(student.Username, password);
+            string userString = JsonSerializer.Serialize(studentFromDb);
             HttpContext.Session.SetString("Student", userString);
         }
         return RedirectToAction("Index", "Home");
