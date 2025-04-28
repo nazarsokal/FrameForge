@@ -25,11 +25,11 @@ public class HomeController : Controller
         }
         else
         {
-            Student student = await _studentService.GetStudentById(Guid.Parse("08dd7510-39f5-4501-8dd4-9587800680c0"));
-            string userString = JsonSerializer.Serialize(student);
-            HttpContext.Session.SetString("Student", userString);
-            return View(student);
+            // Student student = await _studentService.GetStudentById(Guid.Parse("08dd7510-39f5-4501-8dd4-9587800680c0"));
+            // string userString = JsonSerializer.Serialize(student);
+            // HttpContext.Session.SetString("Student", userString);
         }
+        return View();
         
     }
 }
