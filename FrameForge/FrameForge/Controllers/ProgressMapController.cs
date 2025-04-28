@@ -21,11 +21,12 @@ public class ProgressMapController : Controller
         _studentService = studentService;
     }
     [Route("[action]")]
-    public IActionResult Map()
+    public async Task<IActionResult> Map()
     {
         var student = GetStudentFromSession();
         userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
         userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
+
         ViewBag.CompletedLevels = userLevelsEnrolledCompleted;
         ViewBag.InProgressLevels = userLevelsEnrolledInProgress;
         return View(student);
@@ -67,10 +68,17 @@ public class ProgressMapController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("[action]")]
-    public IActionResult CompleteLevel(string levelName, MoneyStarsResult moneyResult)
+    public async Task<IActionResult> CompleteLevel(string levelName, MoneyStarsResult moneyResult)
     {
         var studentCompleted = GetStudentFromSession();
         _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
+        
+        var index = availableLevels.IndexOf(levelName);
+        
+        if (index != availableLevels.Count - 1)
+        {
+            await _service.SetNextLevel(studentCompleted, availableLevels[index+1]);
+        }
         
         studentCompleted.MoneyAmount += moneyResult.Money;
         studentCompleted.StarsAmount += moneyResult.Stars;
