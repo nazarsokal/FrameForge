@@ -2,6 +2,7 @@ using Azure.Storage.Files.Shares;
 using ServiceContracts;
 using System.IO;
 using System.Threading.Tasks;
+using ServiceContracts.Enums;
 
 namespace Services;
 
@@ -73,5 +74,29 @@ public class AzureStorageService : IAzureStorageService
             Console.WriteLine($"Error retrieving photo: {ex.Message}");
             throw;
         }
+    }
+
+    public async Task<Dictionary<FileExtensions, string>> DownloadAlgorithm(string algorithmName)
+    {
+        Dictionary<FileExtensions, string> algorithmFiles = new Dictionary<FileExtensions, string>();
+        ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient($"Algorithms/{algorithmName}");
+        var list = new List<string>() {"index.html", "style.css", "script.js"};
+        foreach (var file in list)
+        {
+            ShareFileClient fileClient = folder.GetFileClient(file);
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content);
+            string content = await reader.ReadToEndAsync();
+            string ext = Path.GetExtension(file).TrimStart('.');
+
+            if (Enum.TryParse<FileExtensions>(ext, true, out var fileExtension))
+            {
+                algorithmFiles.Add(fileExtension, content);
+            }
+
+        }
+        
+        return algorithmFiles;
     }
 }

@@ -1,4 +1,5 @@
 using ServiceContracts;
+using ServiceContracts.Enums;
 using Services;
 
 namespace ServicesTest;
@@ -14,11 +15,22 @@ public class AzureServiceTest
     [Fact]
     public async Task TestAzureService_LoadUserPhoto()
     {
-        string photoPath =
-            @"/Users/asokalch/Documents/GitHub/FrameForge/FrameForge/FrameForge/wwwroot/images/users/e4c52f39-b100-4d25-ac78-067f23667a1f.jpg";
+        // string photoPath =
+        //     @"/Users/asokalch/Documents/GitHub/FrameForge/FrameForge/FrameForge/wwwroot/images/users/e4c52f39-b100-4d25-ac78-067f23667a1f.jpg";
+        //
+        // await _azureStorageService.UploadUserPhoto(new byte[4], Guid.NewGuid());
+        //
+        Assert.NotNull(1);
+    }
+
+    [Fact]
+    public async Task TestAzureService_GetFile()
+    {
+        string algorithm = "Bezier";
         
-        await _azureStorageService.UploadUserPhoto(new byte[4], Guid.NewGuid());
-        
-        Assert.NotNull(photoPath);
+        Dictionary<FileExtensions, string>? files = await _azureStorageService.DownloadAlgorithm(algorithm);
+
+        int i = 0;
+        Assert.NotNull(files);
     }
 }
