@@ -49,18 +49,18 @@ public class ProgressMapController : Controller
             userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
         EnrolledLevels? isLevelCompleted =
             userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
-        if (isLevelEnrolled == null && isLevelCompleted == null)
-        {
-            if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
-            {
-                _service.EnrolOnLevel(student, levelName);    
-                return View(levelName);
-            }
-            else
-            {
-                throw new Exception("Invalid level");
-            }
-        }
+        // if (isLevelEnrolled == null && isLevelCompleted == null)
+        // {
+        //     if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
+        //     {
+        //         _service.EnrolOnLevel(student, levelName);    
+        //         return View(levelName);
+        //     }
+        //     else
+        //     {
+        //         throw new Exception("Invalid level");
+        //     }
+        // }
         
         return View(levelName);
     }
