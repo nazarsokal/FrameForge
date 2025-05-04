@@ -85,10 +85,10 @@ body {
 }
 .islandFourthLvl {
     position: relative;
-    margin-top: 50px;
+    margin-top: 60px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    width: 400px;
+    width: 200px;
     margin-left: 1000px;
     transition: transform 0.3s ease;
 }
@@ -144,7 +144,7 @@ body {
     top: 35%;
     left: 80%;
     z-index: 2;
-    width: 50px;
+    width: 40px;
     height: auto;
     transition: transform 0.3s ease;
 }
@@ -173,7 +173,7 @@ body {
 }
 
 .firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted {
-    transform: translateX(-100px);
+    transform: translateX(-150px);
     
 }
 
@@ -189,7 +189,7 @@ body {
     transform-origin: left center;
 }
 
-.secondIsland.zoomed, .thirdIsland.zoomed {
+.secondIsland.zoomed, .fourthIsland.zoomed {
     transform: scale(1.1) translateX(-150px);
 }
 
