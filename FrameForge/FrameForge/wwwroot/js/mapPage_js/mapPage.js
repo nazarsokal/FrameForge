@@ -1,7 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    const islands = document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland');
+    const islands = document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland, .fifthIsland');
     const sidebar = document.querySelector('#modalWindow');
-    const islandImages = document.querySelectorAll('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl');
+    const islandImages = document.querySelectorAll('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl');
 
     // Функція для визначення тексту залежно від острова
     const getModalContent = (islandClass) => {
@@ -37,6 +37,12 @@
                     description: 'Опис четвертого рівня',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level4'
                 };
+            case 'fifthIsland':
+                return {
+                    title: "П'ятий рівень",
+                    description: "Опис п'ятого рівня",
+                    link: '/ProgressMap/ViewLevel?levelName=CG_Level5'
+                }
         }
     };
 
@@ -95,7 +101,7 @@
         if (
             sidebar.classList.contains('active') &&
             !sidebar.contains(e.target) &&
-            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl')
+            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFourthLvl')
         ) {
             closeSidebar();
             islands.forEach(img => {
