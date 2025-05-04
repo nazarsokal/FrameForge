@@ -47,20 +47,20 @@
                 e.preventDefault();
                 const island = islands[index];
                 const islandClass = island.classList[0];
-                
+
                 const link = island.querySelector('a');
                 if (!link.classList.contains('completed') && !link.classList.contains('in-progress')) {
                     return;
                 }
-                
-                //Для кожного остврова свій текст
+
+                //Для кожного острова свій текст
                 const content = getModalContent(islandClass);
                 document.querySelector('.modalWindowContent h1').textContent = content.title;
                 document.querySelector('.modalWindowContent p').textContent = content.description;
 
                 const startButton = document.querySelector('#startLevelButton');
                 startButton.setAttribute('href', content.link);
-                
+
                 sidebar.classList.add('active');
 
                 //Зміщення островів
@@ -70,11 +70,17 @@
                         island.classList.add('shifted');
                     }
                 });
+
+                islands.forEach(island => {
+                    island.classList.remove('zoomed');
+                });
+
+                island.classList.add('zoomed');
             });
         });
     }
 
-    //Закриття модального вікна
+    // Закриття модального вікна
     window.closeSidebar = function () {
         if (sidebar) {
             sidebar.classList.remove('active');
@@ -84,14 +90,7 @@
         }
     };
 
-
-
-    document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland').forEach(img => {
-        img.addEventListener('click', () => {
-            img.classList.toggle('zoomed');
-        });
-    });
-    //Закриття при кліку поза модальним вікном
+    // Закриття при кліку поза модальним вікном
     document.addEventListener('click', (e) => {
         if (
             sidebar.classList.contains('active') &&
@@ -99,10 +98,9 @@
             !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl')
         ) {
             closeSidebar();
-                // Видаляємо клас zoomed з усіх зображень
-                document.querySelectorAll('.firstIsland.zoomed , .secondIsland, .thirdIsland, .fourthIsland').forEach(img => {
-                    img.classList.remove('zoomed');
-                });
+            islands.forEach(img => {
+                img.classList.remove('zoomed');
+            });
         }
     });
 });
