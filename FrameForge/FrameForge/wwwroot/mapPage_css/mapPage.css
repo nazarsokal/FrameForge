@@ -45,14 +45,15 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: linear-gradient(180deg, #6b73ff, #000dff);
-   /* background: deepskyblue;*/
+    /*background: linear-gradient(180deg, #6b73ff, #000dff);*/
+    background: deepskyblue;
 }
 
 /* Стилі для островів */
 .islandFirstLvl {
     position: relative;
-    width: 300px;
+    /*width: 300px;*/
+    width: 230px;
     margin-left: 500px;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
     margin-top: 50px;
@@ -60,20 +61,26 @@ body {
 }
 .islandSecondLvl {
     position: relative;
-    margin-top: 100px;
+/*    margin-top: 100px;*/
+    margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    width: 300px;
-    margin-left: 1100px;
+    /*width: 300px;*/
+    width: 230px;
+/*    margin-left: 1100px;*/
+    margin-left: 990px;
     transition: transform 0.3s ease;
 }
 .islandThirdLvl {
     position: relative;
-    margin-top: 50px;
+    /*margin-top: 50px;*/
+    margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    width: 280px;
-    margin-left: 400px;
+/*    width: 280px;*/
+    width: 240px;
+    /*margin-left: 400px;*/
+    margin-left: 500px;
     transition: transform 0.3s ease;
 }
 .islandFourthLvl {
@@ -166,7 +173,24 @@ body {
 }
 
 .firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted {
-    transform: translateX(-300px);
+    transform: translateX(-100px);
+    
+}
+
+
+.firstIsland.zoomed, .secondIsland.zoomed, .thirdIsland.zoomed, .fourthIsland.zoomed {
+    transform: scale(1.2);
+    
+    /*Стилі для активих островів, хз який вибрати*/
+    /*filter: drop-shadow(5px 5px 10px rgba(255, 255, 0, 0.5));*/
+    /*filter: drop-shadow(5px 5px 10px rgba(128, 0, 128, 0.5));*/
+    filter: drop-shadow(5px 5px 10px rgba(0, 128, 0, 0.6));
+
+    transform-origin: left center;
+}
+
+.secondIsland.zoomed, .thirdIsland.zoomed {
+    transform: scale(1.1) translateX(-150px);
 }
 
 /* Стилі для модального бокового вікна */

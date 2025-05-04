@@ -84,6 +84,13 @@
         }
     };
 
+
+
+    document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland').forEach(img => {
+        img.addEventListener('click', () => {
+            img.classList.toggle('zoomed');
+        });
+    });
     //Закриття при кліку поза модальним вікном
     document.addEventListener('click', (e) => {
         if (
@@ -92,6 +99,10 @@
             !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl')
         ) {
             closeSidebar();
+                // Видаляємо клас zoomed з усіх зображень
+                document.querySelectorAll('.firstIsland.zoomed , .secondIsland, .thirdIsland, .fourthIsland').forEach(img => {
+                    img.classList.remove('zoomed');
+                });
         }
     });
 });
