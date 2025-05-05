@@ -40,7 +40,13 @@ public class RegistrationController : Controller
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
             await _registrationService.RegisterStudent(student);
-            await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+
+            var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+            var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+            if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+            {
+                await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+            }
             
             string userString = JsonSerializer.Serialize(student);
             HttpContext.Session.SetString("Student", userString);
