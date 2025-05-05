@@ -140,11 +140,15 @@
         <div id="stars" class="stars"></div>
         <p><strong>Зароблено монет:</strong> <span id="money">0</span> 💰</p>
         <form id="completeLevelForm" method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-            <input type="hidden" name="Stars" id="starsInput">
-            <input type="hidden" name="Money" id="moneyInput">
-            <input type="hidden" name="LevelName" value="Основи комп'ютерної графіки">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="moneyResult.StarsAmount" id="starsInput">
+            <input type="hidden" name="moneyResult.MoneyAmount" id="moneyInput">
+            <input type="hidden" name="levelName" value="CG_IntroductionLevel">
+
             <button type="submit" class="submit-btn">Завершити рівень!</button>
         </form>
+
     </section>
 </main>
 
@@ -152,7 +156,7 @@
     <div class="modal-content">
         <h2>Супер!</h2>
         <p>Ти завершив рівень! Готовий до наступного?</p>
-        <button id="closeModal" class="modal-btn">Гаразд!</button>
+        <a id="closeModal" class="modal-btn">Гаразд!</a>
     </div>
 </div>
 

@@ -83,7 +83,7 @@ public class ProgressMapController : Controller
         studentCompleted.MoneyAmount += moneyResult.Money;
         studentCompleted.StarsAmount += moneyResult.Stars;
         
-        var studentUpdated = _studentService.UpdateStudent(studentCompleted);
+        var studentUpdated =  await _studentService.UpdateStudent(studentCompleted);
         
         string userString = JsonSerializer.Serialize(studentUpdated);
         HttpContext.Session.SetString("Student", userString);
