@@ -58,7 +58,17 @@
                 if (!link.classList.contains('completed') && !link.classList.contains('in-progress')) {
                     return;
                 }
+                
+                //Стилі для виконаного рівня
+                const img = document.getElementById('complete')
+                if(link.classList.contains('completed')) {
 
+                    img.style.display = 'inline-block';
+                }
+                else{
+                    img.style.display = 'none'
+                }
+                
                 //Для кожного острова свій текст
                 const content = getModalContent(islandClass);
                 document.querySelector('.modalWindowContent h1').textContent = content.title;

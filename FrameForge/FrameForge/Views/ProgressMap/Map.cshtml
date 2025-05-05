@@ -29,7 +29,7 @@
             <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
             <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
             <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця
-                    лідерів </a></li>
+                лідерів </a></li>
         </ul>
     </nav>
 
@@ -82,8 +82,8 @@
     <div class="fifthLvl">
         <div class="fifthIsland">
             <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_Level5"
-                class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "completed" :
-                inProgressLevels.Any(l => l.LevelTopicName == "CG_Level5") ? "in-progress" : "")">
+               class="@(completedLevels.Any( l => l.LevelTopicName == "CG_Level5") ? "completed" :
+                      inProgressLevels.Any(l => l.LevelTopicName == "CG_Level5") ? "in-progress" : "")">
                 <img src="~/images/icons_mapPage/island_FifthLvl.png" alt="islandFifthLvl" class="islandFifthLvl">
                 <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationFifth">
             </a>
@@ -92,16 +92,19 @@
 </div>
 
 
+
+
 <!--Модальне вікно для островів-->
 <div class="modalWindow" id="modalWindow">
     <button class="close-btn" onclick="closeSidebar()">×</button>
     <div class="modalWindowContent">
+        <img src="/images/icons_mapPage/checked.png" alt="Complete" class="complete" id="complete">
         <h1> </h1>
         <p> </p>
-        
-        
-            <a  class="acceptButton" id="startLevelButton" href="#"><h2>Розпочати рівень</h2></a>
-    
+
+
+        <a class="acceptButton" id="startLevelButton" href="#">
+            <h2>Розпочати рівень</h2></a>
     </div>
 
 </div>

@@ -281,3 +281,9 @@ a{
 .startLvlButton{
     position: absolute;
 }
+
+/*Стилі для іконки виконаного лвла*/
+.complete{
+    width: 40px;
+    margin-bottom: 10px;
+}
