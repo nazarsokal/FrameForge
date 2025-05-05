@@ -1,0 +1,46 @@
+using Entities;
+using Microsoft.EntityFrameworkCore;
+using ServiceContracts;
+
+namespace Services;
+
+public class StudentService : IStudentService
+{
+    private readonly FrameForgeDbContext _context;
+
+    public StudentService(FrameForgeDbContext context)
+    {
+        _context = context;
+    }
+    
+    public async Task<Student> GetStudentById(Guid id)
+    {
+        Student? stById = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);
+        if(stById == null) throw new NullReferenceException();
+        
+        return stById;
+    }
+
+    public Student UpdateStudent(Student student)
+    {
+        var studentFromDb = _context.Students.FirstOrDefault(st => st.StudentId == student.StudentId);
+        
+        if (studentFromDb == null) throw new NullReferenceException();
+        
+        studentFromDb.MoneyAmount = student.MoneyAmount;
+        studentFromDb.StarsAmount = student.StarsAmount;
+        _context.SaveChanges();
+        
+        return studentFromDb;
+    }
+
+    public Student CreateStudent(Student student)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Student DeleteStudent(int id)
+    {
+        throw new NotImplementedException();
+    }
+}

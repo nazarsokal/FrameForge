@@ -1,21 +1,69 @@
-﻿@model List<Entities.Student>
+﻿@using Entities
+@{
+    ViewData["Title"] = "Leader Board";
+    Layout = "_Layout";
+    var studentFromViewBag = ViewBag.StudentsLists as List<Student>;
+}
 
-<h2>Leaderboard</h2>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Amount of stars</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var student in Model)
-        {
-            <tr>
-                <td>@student.Username</td>
-                <td>@student.StarsAmount</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+    <link rel="stylesheet" href="~/LeaderBoard_css/Leaderboard.css">
+</head>
+<html>
+<body>
+    <!--Навігаційне меню-->
+    <div class="container">
+        <nav class="leftContent">
+            <ul class="leftNavMenu">
+                <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                <li class="navButtons"><a href="#"> Батл </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+                <li class="navButtons" id="activebtn"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця
+                        лідерів </a></li>
+            </ul>
+        </nav>
+
+        <!-- Контейнер для вмісту -->
+        <div class="content-container">
+            <h2>Таблиця лідерів</h2>
+            <div class="leaderboard-wrapper">
+                @if (studentFromViewBag != null && studentFromViewBag.Any())
+                {
+                    <table border="1" class="leaderBoard">
+                        <thead>
+                            <tr>
+                                <th>Ім'я</th>
+                                <th>Кількість зірочок</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in studentFromViewBag)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="~/images/icons_LeaderBoard/medal_FirstPlace.png" alt="medal" class="medalIcon1" id="medalIcon">
+                                        <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIconLeaderboard">   
+                                        @student.Username
+                                    </td>
+                                    <td>
+                                        @student.StarsAmount
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No students found.</p>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

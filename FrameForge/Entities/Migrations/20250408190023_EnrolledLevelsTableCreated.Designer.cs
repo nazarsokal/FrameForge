@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    partial class FrameForgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408190023_EnrolledLevelsTableCreated")]
+    partial class EnrolledLevelsTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("67f6a25d-51aa-4dd5-97de-8b0c010507e6"),
+                            StudentId = new Guid("b9f8e385-4841-4eb6-b762-c48b8eaf5a0c"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",

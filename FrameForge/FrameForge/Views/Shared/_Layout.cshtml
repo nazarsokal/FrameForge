@@ -1,0 +1,46 @@
+@model Entities.Student?
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+</head>
+<body>
+<!--Хедер-->
+@if (@Model != null)
+{
+    <div class="header">
+        <div class="leftText">
+            <h1><a asp-controller="Home" asp-action="Index">Frame Forge <img src="~/images/icons_mainPage/FrameForge.png" width="30px" alt="FrameForge Logo"></a></h1>
+        </div>
+        <div class="dropbutton"></div>
+        <div class="user-profile">
+            @if (string.IsNullOrEmpty(@Model.Picture))
+            {
+                <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon">
+            }
+            else
+            {
+                <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
+            }
+                <span class="rightText">@Model.Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="header">
+        <div class="leftText">
+           <h1><a asp-controller="Home" asp-action="Index">Frame Forge <img src="~/images/icons_mainPage/FrameForge.png" width="30px" alt="FrameForge Logo"></a></h1>
+        </div>
+        <div class="dropbutton"></div>
+        <div class="user-profile">
+            <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon">
+            <a asp-controller="Login" asp-action="Login"><button class="LoginRegButtons">Log In</button></a>
+            <a asp-controller="Registration" asp-action="Registration"><button class="LoginRegButtons">Sign Up</button></a>
+        </div>
+    </div>
+}
+@RenderBody()
+
+</body>
+</html>

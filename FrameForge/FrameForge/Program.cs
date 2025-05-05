@@ -5,12 +5,23 @@ using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession();
 builder.Services.AddScoped<LeaderboardService>();
 
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(2);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
 builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
+
+builder.Services.AddScoped<IProgressMapService, ProgressMapService>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

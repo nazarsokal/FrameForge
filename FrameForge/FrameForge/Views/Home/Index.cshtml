@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
 }
 
 
@@ -10,48 +11,21 @@
 
 <head>
     <title>Frame Forge</title>
-    <link rel="stylesheet" href="~/style.css">
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+    <style>
+    </style>
 </head>
 
 <body>
-    <!--Хедер-->
-    @if (@Model != null)
-    {
-        <div class="header">
-            <div class="leftText">
-                <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
-            </div>
-            <div class="dropbutton"></div>
-            <div class="user-profile">
-                <img src="images/users/@(Model.StudentId).jpg" alt="icon" class="accountIcon" style="border-radius: 50%;">
-                <span class="rightText">@Model.Username</span>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="header">
-            <div class="leftText">
-                <h1>Frame Forge <img src="~/images/FrameForge.png" width="30px" alt="FrameForge Logo"></h1>
-            </div>
-            <div class="dropbutton"></div>
-            <div class="user-profile">
-                <img src="~/images/account.png" alt="icon" class="accountIcon">
-                @* <span class="rightText">@Model.Username</span> *@
-                <button>Log In</button>
-            </div>
-        </div>
-    }
-
     <!--Навігаційне меню-->
     <div class="container">
         <nav class="leftContent">
             <ul class="leftNavMenu">
-                <li>Карта</li>
-                <li>Батл</li>
-                <li>Магазин</li>
-                <li>Тести</li>
-                <li>Задачі</li>
+                <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                <li class="navButtons"><a href="#"> Батл </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+                <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
             </ul>
         </nav>
 
@@ -61,11 +35,112 @@
                 <li class="taskCard">
                     <div class="TaskHeader">
                         <h2>Відредагуйте код</h2>
+                        <span class="lvlMode easy">Easy</span>
                     </div>
                     <div class="taskDiscription">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
                             possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
                             voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
+                    </div>
+                </li>
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                        <span class="lvlMode easy">Easy</span>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
+                    </div>
+                </li>
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                        <div class="lvlMode medium">Medium</div>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
+                    </div>
+                </li>
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                        <div class="lvlMode medium">Medium</div>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
+                    </div>
+                </li>
+                <li class="taskCard">
+                    <div class="TaskHeader">
+                        <h2>Відредагуйте код</h2>
+                        <div class="lvlMode hard">Hard</div>
+                    </div>
+                    <div class="taskDiscription">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
+                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
+                            voluptatibus sunt.</p>
+                    </div>
+                    <div class="points">
+                        <div class="starPoint">
+                            <div>StarPoint: +50 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
+                        </div>
+                        <div class="moneyForTask">
+                            <div>Money For Task: +1000 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
+                        </div>
+                    </div>
+                    <div class="buttonTask">
+                        <h3>Виконати завдання</h3>
                     </div>
                 </li>
             </ul>
