@@ -63,23 +63,29 @@ public class RegistrationService : IRegistrationService
         {
             Student? stFromDb = await getStudentWithGoogle(student);
             
-            await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
+            // await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
             stFromDb.Picture = Convert.ToBase64String(studentImage);
             
+            _dbContext.Entry(stFromDb).State = EntityState.Detached;
             return stFromDb;
         }
         
         student.StudentId = Guid.NewGuid();
         student.MoneyAmount = 10.0;
+
         var imagePath = await SaveProfileImageAsync(student.Picture, student.StudentId);
-        student.Picture = imagePath;
-        
+        student.Picture = imagePath; // Записується шлях до зображення
+
         _dbContext.Students.Add(student);
-        await _dbContext.SaveChangesAsync();
-        
-        
+        await _dbContext.SaveChangesAsync(); // У БД записано imagePath
+        _dbContext.Entry(student).State = EntityState.Detached;
+
+        var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
+        student.Picture = Convert.ToBase64String(stImage); // Для повернення, не зберігається в БД
+
         return student;
+
     }
 
     public async Task<bool> CheckIfStudentExistsGoogle(Student? student)
