@@ -10,10 +10,12 @@ namespace FrameForge.Controllers;
 public class RegistrationController : Controller
 {
     private readonly IRegistrationService _registrationService;
+    private readonly IProgressMapService _progressMapService;
 
-    public RegistrationController(IGoogleOAuthService googleOAuthService, IRegistrationService registrationService)
+    public RegistrationController(IGoogleOAuthService googleOAuthService, IRegistrationService registrationService, IProgressMapService progressMapService)
     {
         _registrationService = registrationService;
+        _progressMapService = progressMapService;
     }
     // GET
     [Route("[action]")]
@@ -37,7 +39,8 @@ public class RegistrationController : Controller
             student.GoogleId = null;
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
-            await _registrationService.RegisterStudent(student);
+            _registrationService.RegisterStudent(student);
+            _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
             
             string userString = JsonSerializer.Serialize(student);
             HttpContext.Session.SetString("Student", userString);
