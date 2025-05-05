@@ -67,7 +67,6 @@ public class RegistrationService : IRegistrationService
             var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
             stFromDb.Picture = Convert.ToBase64String(studentImage);
             
-            _dbContext.Entry(stFromDb).State = EntityState.Detached;
             return stFromDb;
         }
         
@@ -79,7 +78,6 @@ public class RegistrationService : IRegistrationService
 
         _dbContext.Students.Add(student);
         await _dbContext.SaveChangesAsync(); // У БД записано imagePath
-        _dbContext.Entry(student).State = EntityState.Detached;
 
         var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
         student.Picture = Convert.ToBase64String(stImage); // Для повернення, не зберігається в БД
