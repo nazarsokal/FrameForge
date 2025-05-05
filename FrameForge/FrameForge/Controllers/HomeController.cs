@@ -23,13 +23,7 @@ public class HomeController : Controller
             // Use your student object!
             return View(student);
         }
-        else
-        {
-            Student student = await _studentService.GetStudentById(Guid.Parse("54bcaafb-1814-4de0-b929-95f58096085c"));
-            string userString = JsonSerializer.Serialize(student);
-            HttpContext.Session.SetString("Student", userString);
-            return View(student);
-        }
         
+        return View();
     }
 }
