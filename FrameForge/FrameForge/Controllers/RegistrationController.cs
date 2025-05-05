@@ -39,8 +39,8 @@ public class RegistrationController : Controller
             student.GoogleId = null;
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
-            _registrationService.RegisterStudent(student);
-            _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+            await _registrationService.RegisterStudent(student);
+            await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
             
             string userString = JsonSerializer.Serialize(student);
             HttpContext.Session.SetString("Student", userString);
