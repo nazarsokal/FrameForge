@@ -1,4 +1,5 @@
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 
 namespace Services;
@@ -12,9 +13,12 @@ public class StudentService : IStudentService
         _context = context;
     }
     
-    public Student GetStudentById(int id)
+    public async Task<Student> GetStudentById(Guid id)
     {
-        throw new NotImplementedException();
+        Student? stById = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);
+        if(stById == null) throw new NullReferenceException();
+        
+        return stById;
     }
 
     public Student UpdateStudent(Student student)

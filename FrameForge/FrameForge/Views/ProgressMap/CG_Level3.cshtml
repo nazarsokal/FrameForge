@@ -1,12 +1,188 @@
+
+@model Entities.Student?
+@{
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Level_3</title>
+    <link rel="stylesheet" href="~/CG_level2/bezier_curve.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div>
-    <h1>Level 3</h1>
+
+<div class="task">
+    <div class="taskCard">
+        <p id="smallTitle"><strong>Фрактали</strong></p>
+        <p> Що таке фрактал?
+            Фрактали — це геометричні об'єкти, які мають самоподібність, тобто їхня структура повторюється на різних рівнях масштабування. 
+            Вони часто характеризуються дробовою розмірністю (нецілочисельною) і можуть бути згенеровані ітераційними процесами, такими як множина Мандельброта чи крива Коха. 
+            Фрактали широко застосовуються в математиці, комп'ютерній графіці та моделюванні природних явищ (наприклад, узбережжя, хмари, рослини).
+            <br>
+            Фрактали — це як магічні малюнки, які виглядають однаково, якщо їх розглядати дуже близько чи здалеку!
+            Уяви, що ти малюєш сніжинку: якщо подивитися на її маленьку частину, вона схожа на всю сніжинку.
+            <br>
+          
+            <img src="~/images/level3/fractal.jpg" class="bezier_curve_image">
+            <br><br>
+           
+        </p>
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5231432%2Fmod_resource%2Fcontent%2F1%2FЗавдання%20лаб3.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a href="../Views/ProgressMap/CG_Level2_tryBezierCurve.cshtml">спробувати</a></p>
+
+    </div>
+
+</div>
+
+<div class="tests">
+    <div class="taskCard">
+        <p id="smallTitle"><strong>Тести</strong></p>
+        <div class="question">
+            <p><strong>Запитання 1:</strong> Що таке фрактал?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q1a" name="q1" value="a">
+                    <label for="q1a">a) Проста пряма лінія</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q1b" name="q1" value="b">
+                    <label for="q1b">b) Геометричний об’єкт із самоподібністю, який повторює свою структуру на різних масштабах</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q1c" name="q1" value="c">
+                    <label for="q1c">c) Коло, яке завжди має однаковий розмір</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q1d" name="q1" value="d">
+                    <label for="q1d">d) Тривимірний куб із фіксованими сторонами</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="question">
+            <p><strong>Запитання 2:</strong> Яка властивість є ключовою для фракталів?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q2a" name="q2" value="a">
+                    <label for="q2a">a) Вони завжди мають цілочисельну розмірність</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q2b" name="q2" value="b">
+                    <label for="q2b">b) Вони мають самоподібність</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q2c" name="q2" value="c">
+                    <label for="q2c">c) Вони складаються лише з прямих ліній</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q2d" name="q2" value="d">
+                    <label for="q2d">d) Вони завжди замкнені</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="question">
+            <p><strong>Запитання 3:</strong> Який із наведених прикладів є відомим фракталом?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q3a" name="q3" value="a">
+                    <label for="q3a">a) Прямокутник</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q3b" name="q3" value="b">
+                    <label for="q3b">b) Множина Мандельброта</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q3c" name="q3" value="c">
+                    <label for="q3c">c) Коло</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q3d" name="q3" value="d">
+                    <label for="q3d">d) Трапеція</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="question">
+            <p><strong>Запитання 4:</strong> Як часто генеруються фрактали?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q4a" name="q4" value="a">
+                    <label for="q4a">a) За допомогою однієї прямої лінії</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q4b" name="q4" value="b">
+                    <label for="q4b">b) За допомогою ітераційних процесів або рекурсії</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q4c" name="q4" value="c">
+                    <label for="q4c">c) Малюванням випадкових фігур</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q4d" name="q4" value="d">
+                    <label for="q4d">d) Обертанням трикутника навколо осі</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="question">
+            <p><strong>Запитання 5:</strong> Що означає дробова розмірність фрактала?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q5a" name="q5" value="a">
+                    <label for="q5a">a) Розмірність фрактала завжди дорівнює 2</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q5b" name="q5" value="b">
+                    <label for="q5b">b) Розмірність фрактала є нецілочисельною, наприклад, 1.5</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q5c" name="q5" value="c">
+                    <label for="q5c">c) Фрактал завжди тривимірний</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q5d" name="q5" value="d">
+                    <label for="q5d">d) Розмірність фрактала завжди цілочисельна</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="question">
+            <p><strong>Запитання 6:</strong> Де часто застосовуються фрактали?</p>
+            <form class="answers">
+                <div class="answer">
+                    <input type="radio" id="q6a" name="q6" value="a">
+                    <label for="q6a">a) У створенні прямих ліній</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q6b" name="q6" value="b">
+                    <label for="q6b">b) У комп’ютерній графіці для моделювання природних об’єктів, таких як дерева чи хмари</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q6c" name="q6" value="c">
+                    <label for="q6c">c) У створенні ідеальних кіл</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="q6d" name="q6" value="d">
+                    <label for="q6d">d) У малюванні квадратів</label>
+                </div>
+            </form>
+        </div>
+        <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
+            @Html.AntiForgeryToken()
+
+
+            <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+
+
+            <button type="submit">Complete Level</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

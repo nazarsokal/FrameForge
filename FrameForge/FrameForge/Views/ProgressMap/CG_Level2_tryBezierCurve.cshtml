@@ -1,0 +1,381 @@
+﻿@model Entities.Student?
+@{
+ViewData["Title"] = "Frame Forge";
+Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор кривої Безьє</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { border: 2px solid black; background-color: white; }
+        .controls { margin: 10px; }
+        input { width: 60px; }
+        .point-row { margin: 5px 0; }
+        #pointsContainer { margin: 20px 0; }
+        #matrixInfo { margin-top: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<h2>Редактор кривої Безьє</h2>
+
+<div class="controls">
+    <label>Колір характеристичного багатокутника: <input type="color" id="polyColorPicker" value="#ff0000"></label>
+    <label>Колір вершин: <input type="color" id="vertexColorPicker" value="#0000ff"></label>
+    <label>Колір кривої Безьє: <input type="color" id="curveColorPicker" value="#008000"></label>
+    <br><br>
+    <label>Проміжок t: від 0 до 1 (фіксований)</label>
+    <br>
+    <label>Крок t: <input type="number" id="tStep" value="0.01" step="0.01"></label>
+    <br><br>
+    <div id="pointsContainer">
+        <div class="point-row">
+            <label>Точка 1 (x, y): <input type="number" class="x" value="0"> <input type="number" class="y" value="0"></label>
+        </div>
+        <div class="point-row">
+            <label>Точка 2 (x, y): <input type="number" class="x" value="1"> <input type="number" class="y" value="2"></label>
+        </div>
+        <div class="point-row">
+            <label>Точка 3 (x, y): <input type="number" class="x" value="2"> <input type="number" class="y" value="0"></label>
+        </div>
+        <!-- <div class="point-row">
+            <label>Точка 4 (x, y): <input type="number" class="x" value="4"> <input type="number" class="y" value="-2"></label>
+        </div> -->
+    </div>
+    <button onclick="addPoint()">Додати точку</button>
+    <button onclick="drawBezierCurve()">Побудувати криву</button>
+</div>
+
+<canvas id="canvas" width="840" height="840"></canvas>
+<div id="matrixInfo"></div>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const matrixInfoDiv = document.getElementById("matrixInfo");
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const scale = 40; // Масштаб: 1 одиниця = 40 пікселів
+
+    // Перетворення координат у екранні
+    function toScreen(x, y) {
+        return { x: width / 2 + x * scale, y: height / 2 - y * scale };
+    }
+
+    // Малювання осей координат із нумерацією, підписами та стрілочками
+    function drawAxes() {
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        // Малювання осі X (горизонтальна)
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
+        ctx.lineTo(width, height / 2);
+        ctx.stroke();
+
+        // Малювання осі Y (вертикальна)
+        ctx.beginPath();
+        ctx.moveTo(width / 2, 0);
+        ctx.lineTo(width / 2, height);
+        ctx.stroke();
+
+        // Нумерація осі X (від -10 до 10, крім 0)
+        for (let x = -10; x <= 10; x++) {
+            if (x === 0) continue; // Пропускаємо 0, щоб не малювати його на осі
+            let screenX = toScreen(x, 0).x;
+            ctx.fillText(x, screenX, height / 2 + 20); // Підпис під віссю X
+            ctx.beginPath();
+            ctx.moveTo(screenX, height / 2 - 5);
+            ctx.lineTo(screenX, height / 2 + 5);
+            ctx.stroke();
+        }
+
+        // Нумерація осі Y (від -10 до 10, крім 0)
+        for (let y = -10; y <= 10; y++) {
+            if (y === 0) continue; // Пропускаємо 0, щоб не малювати його на осі
+            let screenY = toScreen(0, y).y;
+            ctx.fillText(y, width / 2 + 25, screenY); // Підпис праворуч від осі Y
+            ctx.beginPath();
+            ctx.moveTo(width / 2 - 5, screenY);
+            ctx.lineTo(width / 2 + 5, screenY);
+            ctx.stroke();
+        }
+
+        // Малювання єдиного 0 (збоку від початку координат)
+        ctx.fillText("0", width / 2 - 25, height / 2 + 20); // Збоку від точки (0,0)
+
+        // Підпис осі X (зверху, протилежно від чисел)
+        ctx.fillText("x", width - 20, height / 2 - 20);
+
+        // Підпис осі Y (зліва, протилежно від чисел)
+        ctx.fillText("y", width / 2 - 20, 20);
+
+        // Стрілочка на осі X (справа)
+        ctx.beginPath();
+        ctx.moveTo(width - 15, height / 2 - 5);
+        ctx.lineTo(width, height / 2);
+        ctx.lineTo(width - 15, height / 2 + 5);
+        ctx.fill();
+
+        // Стрілочка на осі Y (вгорі)
+        ctx.beginPath();
+        ctx.moveTo(width / 2 - 5, 15);
+        ctx.lineTo(width / 2, 0);
+        ctx.lineTo(width / 2 + 5, 15);
+        ctx.fill();
+    }
+
+    // Малювання лінії між двома точками
+    function drawLine(p1, p2, color) {
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        let pt1 = toScreen(p1.x, p1.y);
+        let pt2 = toScreen(p2.x, p2.y);
+        ctx.moveTo(pt1.x, pt1.y);
+        ctx.lineTo(pt2.x, pt2.y);
+        ctx.stroke();
+    }
+
+    // Малювання точки (вершини)
+    function drawVertex(p, color) {
+        ctx.fillStyle = color;
+        let pt = toScreen(p.x, p.y);
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    // Функція для обчислення біноміального коефіцієнта
+    function binomial(n, k) {
+        if (k < 0 || k > n) return 0;
+        let result = 1;
+        for (let i = 0; i < k; i++) {
+            result *= (n - i) / (i + 1);
+        }
+        return result;
+    }
+
+    // Обчислення точки на кривій Безьє за параметричною формулою
+    function bezierPoint(points, t) {
+        let n = points.length - 1;
+        let x = 0, y = 0;
+        for (let i = 0; i <= n; i++) {
+            let b = binomial(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
+            x += points[i].x * b;
+            y += points[i].y * b;
+        }
+        return { x, y };
+    }
+
+    // Обчислення матриці коефіцієнтів для кривої Безьє
+    function getBezierMatrix(n) {
+        let matrix = [];
+        for (let i = 0; i <= n; i++) {
+            let row = [];
+            for (let j = 0; j <= n; j++) {
+                let coef = 0;
+                if (j <= i) {
+                    coef = binomial(n, i) * binomial(i, j) * Math.pow(-1, i - j);
+                }
+                row.push(coef);
+            }
+            matrix.push(row);
+        }
+        return matrix;
+    }
+
+    // Обчислення точки на кривій Безьє за матричною формулою B(t) = T * M * P
+    function bezierPointMatrix(points, t) {
+        const n = points.length - 1;
+        const T = [];
+        for (let i = 0; i <= n; i++) {
+            T.push(Math.pow(t, i));
+        }
+
+        const M = getBezierMatrix(n);
+
+        // Помножимо T на M
+        const TM = [];
+        for (let i = 0; i <= n; i++) {
+            let sum = 0;
+            for (let j = 0; j <= n; j++) {
+                sum += T[j] * M[j][i];
+            }
+            TM.push(sum);
+        }
+
+        // Отримаємо координати P_x та P_y
+        let x = 0, y = 0;
+        for (let i = 0; i <= n; i++) {
+            x += TM[i] * points[i].x;
+            y += TM[i] * points[i].y;
+        }
+
+        return { x, y };
+    }
+
+    // Виведення інформації про матрицю
+    function displayMatrixInfo(matrix) {
+        let nonZeroElements = [];
+        let diagonalSum = 0; // Сума головної діагоналі
+        let secondaryDiagonalSum = 0; // Сума другої діагоналі
+        let matrixHTML = "<strong>Матриця:</strong><br><pre>";
+
+        const n = matrix.length - 1; // Розмірність матриці (n+1) - 1
+
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[i].length; j++) {
+                // Додаємо елемент до HTML
+                matrixHTML += matrix[i][j] + "\t";
+
+                // Ненульові елементи
+                if (matrix[i][j] !== 0) {
+                    nonZeroElements.push(`[${i}][${j}] = ${matrix[i][j]}`);
+                }
+
+                // Головна діагональ (i === j)
+                if (i === j) {
+                    diagonalSum += matrix[i][j];
+                }
+
+                // Друга діагональ (i + j === n)
+                if (i + j === n) {
+                    secondaryDiagonalSum += matrix[i][j];
+                }
+            }
+            matrixHTML += "\n"; // Переходимо на новий рядок
+        }
+        matrixHTML += "</pre>";
+
+        matrixInfoDiv.innerHTML = `
+        ${matrixHTML}
+        <strong>Ненульові елементи матриці:</strong> ${nonZeroElements.join(", ")}<br>
+        <strong>Сума головної діагоналі:</strong> ${diagonalSum}<br>
+        <strong>Сума другої діагоналі:</strong> ${secondaryDiagonalSum}
+    `;
+    }
+
+    // Додавання нової точки
+    function addPoint() {
+        let pointsContainer = document.getElementById("pointsContainer");
+        let pointCount = pointsContainer.getElementsByClassName("point-row").length + 1;
+        let newRow = document.createElement("div");
+        newRow.className = "point-row";
+        newRow.innerHTML = `
+                <label>Точка ${pointCount} (x, y): 
+                    <input type="number" class="x" value="0"> 
+                    <input type="number" class="y" value="0">
+                </label>
+            `;
+        pointsContainer.appendChild(newRow);
+    }
+
+    // Отримання точок із введених даних
+    function getPoints() {
+        let pointRows = document.getElementsByClassName("point-row");
+        let points = [];
+        for (let row of pointRows) {
+            let x = parseFloat(row.querySelector(".x").value);
+            let y = parseFloat(row.querySelector(".y").value);
+            points.push({ x, y });
+        }
+        return points;
+    }
+
+    // Перевірка коректності введених даних
+    function validateInputs(points, tStep) {
+        if (points.length < 2) {
+            alert("Потрібно принаймні 2 точки для побудови кривої!");
+            return false;
+        }
+        if (points.some(p => isNaN(p.x) || isNaN(p.y))) {
+            alert("Будь ласка, введіть усі координати!");
+            return false;
+        }
+        if (points.some(p => p.x < -10 || p.x > 10 || p.y < -10 || p.y > 10)) {
+            alert("Координати повинні бути в межах [-10, 10]!");
+            return false;
+        }
+        if (isNaN(tStep)) {
+            alert("Будь ласка, введіть коректне значення для tStep!");
+            return false;
+        }
+        if (tStep <= 0) {
+            alert("Крок t має бути більшим за 0!");
+            return false;
+        }
+        // Перевірка, чи tStep не перевищує проміжок t (1 - 0 = 1)
+        if (tStep > 1) {
+            alert("Крок t не може бути більшим за проміжок t (1 - 0 = 1)!");
+            return false;
+        }
+        return true;
+    }
+
+
+
+    // Побудова кривої Безьє
+    function drawBezierCurve() {
+        let points = getPoints();
+        const tMin = 0;
+        const tMax = 1;
+        let tStep = parseFloat(document.getElementById("tStep").value);
+
+        if (!validateInputs(points, tStep)) return;
+
+        ctx.clearRect(0, 0, width, height);
+        drawAxes();
+
+        let polyColor = document.getElementById("polyColorPicker").value;
+        let vertexColor = document.getElementById("vertexColorPicker").value;
+        let curveColor = document.getElementById("curveColorPicker").value;
+
+        for (let i = 0; i < points.length - 1; i++) {
+            drawLine(points[i], points[i + 1], polyColor);
+        }
+        points.forEach(p => drawVertex(p, vertexColor));
+
+        let n = points.length - 1;
+        let matrix = getBezierMatrix(n);
+        displayMatrixInfo(matrix);
+
+        // Малювання кривої Безьє
+        ctx.strokeStyle = curveColor;
+        ctx.beginPath();
+        let firstPoint = bezierPoint(points, tMin);
+        let pt = toScreen(firstPoint.x, firstPoint.y);
+        ctx.moveTo(pt.x, pt.y);
+
+        for (let t = tMin; t <= tMax; t += tStep) {
+            let point = bezierPoint(points, t);
+            pt = toScreen(point.x, point.y);
+            ctx.lineTo(pt.x, pt.y);
+        }
+        let lastPoint = bezierPoint(points, tMax);
+        pt = toScreen(lastPoint.x, lastPoint.y);
+        ctx.lineTo(pt.x, pt.y);
+        ctx.stroke();
+
+        // Малювання точок із більшим кроком (наприклад, 0.1)
+        // let pointStep = 0.1; // Окремий крок для точок
+        // for (let t = tMin; t <= tMax; t += pointStep) {
+        //     let point = bezierPointMatrix(points, t);
+        //     drawVertex(point, "#ff00ff"); // Пурпуровий колір для наочності
+        // }
+    }
+
+    // Початкове малювання осей
+    drawAxes();
+</script>
+
+</body>
+</html>

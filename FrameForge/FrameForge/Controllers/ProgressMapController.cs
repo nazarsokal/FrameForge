@@ -21,17 +21,18 @@ public class ProgressMapController : Controller
         _studentService = studentService;
     }
     [Route("[action]")]
-    public IActionResult Map()
+    public async Task<IActionResult> Map()
     {
         var student = GetStudentFromSession();
         userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
         userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
+
         ViewBag.CompletedLevels = userLevelsEnrolledCompleted;
         ViewBag.InProgressLevels = userLevelsEnrolledInProgress;
-        return View();
+        return View(student);
     }
 
-    [Route("[action]")]
+    [Route("[controller]/[action]")]
     public IActionResult ViewLevel(string levelName)
     {
         ViewBag.LevelName = levelName;
@@ -48,18 +49,18 @@ public class ProgressMapController : Controller
             userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
         EnrolledLevels? isLevelCompleted =
             userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
-        if (isLevelEnrolled == null && isLevelCompleted == null)
-        {
-            if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
-            {
-                _service.EnrolOnLevel(student, levelName);    
-                return View(levelName);
-            }
-            else
-            {
-                throw new Exception("Invalid level");
-            }
-        }
+        // if (isLevelEnrolled == null && isLevelCompleted == null)
+        // {
+        //     if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
+        //     {
+        //         _service.EnrolOnLevel(student, levelName);    
+        //         return View(levelName);
+        //     }
+        //     else
+        //     {
+        //         throw new Exception("Invalid level");
+        //     }
+        // }
         
         return View(levelName);
     }
@@ -67,10 +68,17 @@ public class ProgressMapController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("[action]")]
-    public IActionResult CompleteLevel(string levelName, MoneyStarsResult moneyResult)
+    public async Task<IActionResult> CompleteLevel(string levelName, MoneyStarsResult moneyResult)
     {
         var studentCompleted = GetStudentFromSession();
         _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
+        
+        var index = availableLevels.IndexOf(levelName);
+        
+        if (index != availableLevels.Count - 1)
+        {
+            await _service.SetNextLevel(studentCompleted, availableLevels[index+1]);
+        }
         
         studentCompleted.MoneyAmount += moneyResult.Money;
         studentCompleted.StarsAmount += moneyResult.Stars;
