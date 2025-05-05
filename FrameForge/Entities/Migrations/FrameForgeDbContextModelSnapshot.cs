@@ -59,16 +59,16 @@ namespace Entities.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<string>("GoogleId")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<double>("MoneyAmount")
                         .HasColumnType("double");
 
                     b.Property<string>("Password")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Picture")
                         .HasColumnType("longtext");
@@ -88,7 +88,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("67f6a25d-51aa-4dd5-97de-8b0c010507e6"),
+                            StudentId = new Guid("afbfb446-a78a-406d-8ce1-3d2522e8bd1e"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",

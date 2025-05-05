@@ -32,7 +32,7 @@ public class RegistrationController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("Registration/Create")]
-    public IActionResult Create(Student student)
+    public async Task<IActionResult> Create(Student student)
     {
         if (student != null)
         {
@@ -41,6 +41,7 @@ public class RegistrationController : Controller
             student.Password = PasswordHelper.HashPassword(student.Password);
             _registrationService.RegisterStudent(student);
             _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+            
             string userString = JsonSerializer.Serialize(student);
             HttpContext.Session.SetString("Student", userString);
         }
