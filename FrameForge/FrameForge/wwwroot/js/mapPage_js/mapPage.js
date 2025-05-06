@@ -1,7 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    const islands = document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland');
+    const islands = document.querySelectorAll('.firstIsland, .secondIsland, .thirdIsland, .fourthIsland, .fifthIsland');
     const sidebar = document.querySelector('#modalWindow');
-    const islandImages = document.querySelectorAll('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl');
+    const islandImages = document.querySelectorAll('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl');
 
     // Функція для визначення тексту залежно від острова
     const getModalContent = (islandClass) => {
@@ -37,6 +37,12 @@
                     description: 'Опис четвертого рівня',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level4'
                 };
+            case 'fifthIsland':
+                return {
+                    title: "П'ятий рівень",
+                    description: "Опис п'ятого рівня",
+                    link: '/ProgressMap/ViewLevel?levelName=CG_Level5'
+                }
         }
     };
 
@@ -47,20 +53,30 @@
                 e.preventDefault();
                 const island = islands[index];
                 const islandClass = island.classList[0];
-                
+
                 const link = island.querySelector('a');
                 if (!link.classList.contains('completed') && !link.classList.contains('in-progress')) {
                     return;
                 }
                 
-                //Для кожного остврова свій текст
+                //Стилі для виконаного рівня
+                const img = document.getElementById('complete')
+                if(link.classList.contains('completed')) {
+
+                    img.style.display = 'inline-block';
+                }
+                else{
+                    img.style.display = 'none'
+                }
+                
+                //Для кожного острова свій текст
                 const content = getModalContent(islandClass);
                 document.querySelector('.modalWindowContent h1').textContent = content.title;
                 document.querySelector('.modalWindowContent p').textContent = content.description;
 
                 const startButton = document.querySelector('#startLevelButton');
                 startButton.setAttribute('href', content.link);
-                
+
                 sidebar.classList.add('active');
 
                 //Зміщення островів
@@ -70,11 +86,17 @@
                         island.classList.add('shifted');
                     }
                 });
+
+                islands.forEach(island => {
+                    island.classList.remove('zoomed');
+                });
+
+                island.classList.add('zoomed');
             });
         });
     }
 
-    //Закриття модального вікна
+    // Закриття модального вікна
     window.closeSidebar = function () {
         if (sidebar) {
             sidebar.classList.remove('active');
@@ -84,14 +106,17 @@
         }
     };
 
-    //Закриття при кліку поза модальним вікном
+    // Закриття при кліку поза модальним вікном
     document.addEventListener('click', (e) => {
         if (
             sidebar.classList.contains('active') &&
             !sidebar.contains(e.target) &&
-            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl')
+            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFourthLvl')
         ) {
             closeSidebar();
+            islands.forEach(img => {
+                img.classList.remove('zoomed');
+            });
         }
     });
 });

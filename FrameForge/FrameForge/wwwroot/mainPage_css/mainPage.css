@@ -9,6 +9,7 @@ body {
     overflow-x: hidden;
     background: linear-gradient(45deg, #318ced, #ed31ab);
     background-repeat: no-repeat;
+    /*background: darkslategray;*/
     min-height: 100vh;
 }
 
