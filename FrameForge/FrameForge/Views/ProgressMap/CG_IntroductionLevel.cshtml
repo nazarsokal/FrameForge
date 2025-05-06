@@ -142,8 +142,8 @@
         <form id="completeLevelForm" method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
             @Html.AntiForgeryToken()
 
-            <input type="hidden" name="moneyResult.StarsAmount" id="starsInput">
-            <input type="hidden" name="moneyResult.MoneyAmount" id="moneyInput">
+            <input type="hidden" name="moneyResult.Stars" id="starsInput">
+            <input type="hidden" name="moneyResult.Money" id="moneyInput">
             <input type="hidden" name="levelName" value="CG_IntroductionLevel">
 
             <button type="submit" class="submit-btn">Завершити рівень!</button>

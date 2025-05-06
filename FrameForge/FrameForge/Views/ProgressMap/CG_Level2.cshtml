@@ -194,13 +194,21 @@
         <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
             @Html.AntiForgeryToken()
 
-           
-            <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
-            
+
+            <input type="hidden" name="moneyResult.Stars" id="starsInput">
+            <input type="hidden" name="moneyResult.Money" id="moneyInput">
+            <input type="hidden" name="levelName" value="CG_Level2">
 
             <button type="submit">Complete Level</button>
         </form>
     </div>
 </div>
+<script>
+    // Assign random star count (1 to 5)
+    document.getElementById("starsInput").value = Math.floor(Math.random() * 5) + 1;
+
+    // Assign random money amount (100 to 1000)
+    document.getElementById("moneyInput").value = Math.floor(Math.random() * 901) + 100;
+</script>
 </body>
 </html>

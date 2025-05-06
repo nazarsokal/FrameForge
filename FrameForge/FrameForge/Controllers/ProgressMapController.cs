@@ -62,7 +62,7 @@ public class ProgressMapController : Controller
         //     }
         // }
         
-        return View(levelName);
+        return View(levelName, student);
     }
 
     [HttpPost]
