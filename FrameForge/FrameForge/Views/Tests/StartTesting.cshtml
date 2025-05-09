@@ -1,0 +1,61 @@
+﻿@using Entities
+
+@model Entities.TestQuestionModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@(Model?.Title ?? "Test")</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .variants {
+            margin-bottom: 20px;
+        }
+        .variant {
+            margin: 10px 0;
+        }
+        .error {
+            color: red;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+@if (Model != null)
+{
+    <h1>@Model.Title</h1>
+    <div class="question">@Model.Question</div>
+    <form>
+        <div class="variants">
+            @foreach (var variant in Model.AnswerVariants)
+            {
+                <div class="variant">
+                    <input type="radio" name="answer" id="@variant" value="@variant">
+                    <label for="@variant">@variant</label>
+                </div>
+            }
+        </div>
+    </form>
+}
+else
+{
+    <div class="error">Тест не завантажено. Спробуйте ще раз.</div>
+}
+</body>
+</html>
