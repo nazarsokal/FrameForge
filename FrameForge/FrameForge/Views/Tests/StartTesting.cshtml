@@ -13,49 +13,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@(Model?.Title ?? "Test")</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .question {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .variants {
-            margin-bottom: 20px;
-        }
-        .variant {
-            margin: 10px 0;
-        }
-        .error {
-            color: red;
-            font-size: 1.2em;
-        }
-    </style>
+    <link rel="stylesheet" href="~/Tests_css/test-styles.css" />
 </head>
 <body>
-@if (Model != null)
-{
-    <h1>@Model.Title</h1>
-    <div class="question">@Model.Question</div>
-    <form>
-        <div class="variants">
-            @foreach (var variant in Model.AnswerVariants)
+    <div class="container">
+        @if (Model != null)
+        {
+            <div class="header">
+                <h1>@Model.Title</h1>
+                <div class="progress-bar">
+                    <div class="progress" style="width: @((ViewBag.Counter * 100) / ViewBag.Count)%"></div>
+                </div>
+                <div style="display: none;">
+                    Counter: @ViewBag.Counter, Count: @ViewBag.Count, Progress: @((ViewBag.Counter * 100) / ViewBag.Count)%
+                </div>
+            </div>
+
+            @if (ViewBag.PreviousAnswer != null)
             {
-                <div class="variant">
-                    <input type="radio" name="answer" id="@variant" value="@variant">
-                    <label for="@variant">@variant</label>
+                <div class="previous-answer @(ViewBag.PreviousAnswer.Contains("Правильно") ? "correct" : "incorrect")">
+                    @ViewBag.PreviousAnswer
                 </div>
             }
-        </div>
-    </form>
-}
-else
-{
-    <div class="error">Тест не завантажено. Спробуйте ще раз.</div>
-}
+
+            <div class="question">@Model.Question</div>
+            <form method="post" asp-controller="Tests" asp-action="CheckAnswer">
+                <input type="hidden" name="counter" value="@ViewBag.Counter" />
+                <div class="variants">
+                    @foreach (var variant in Model.AnswerVariants)
+                    {
+                        <div class="variant">
+                            <input type="radio" name="answer" id="@variant" value="@variant" required>
+                            <label for="@variant">@variant</label>
+                        </div>
+                    }
+                </div>
+                <div class="button-container">
+                    <button type="submit">Наступне питання</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="error">
+                <p>Тест не завантажено. Спробуйте ще раз.</p>
+            </div>
+        }
+    </div>
 </body>
 </html>
