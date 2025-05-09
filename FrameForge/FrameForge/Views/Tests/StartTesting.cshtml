@@ -24,6 +24,16 @@
                 <div class="progress-bar">
                     <div class="progress" style="width: @((ViewBag.Counter * 100) / ViewBag.Count)%"></div>
                 </div>
+                <div class="rewards">
+                    <div class="stars">
+                        <span class="star-icon">⭐</span>
+                        <span class="star-count">@ViewBag.Stars</span>
+                    </div>
+                    <div class="money">
+                        <span class="money-icon">💰</span>
+                        <span class="money-count">@ViewBag.Money</span>
+                    </div>
+                </div>
                 <div style="display: none;">
                     Counter: @ViewBag.Counter, Count: @ViewBag.Count, Progress: @((ViewBag.Counter * 100) / ViewBag.Count)%
                 </div>

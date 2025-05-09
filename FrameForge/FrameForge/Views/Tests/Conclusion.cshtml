@@ -1,0 +1,51 @@
+﻿@model Entities.Student
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест завершено</title>
+    <link rel="stylesheet" href="~/Tests_css/test-styles.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="conclusion-content">
+            <h1>Вітаємо! Тест завершено</h1>
+            
+            <div class="results">
+                <div class="result-item">
+                    <span class="star-icon">⭐</span>
+                    <span class="result-text">Зароблено зірочок: @ViewBag.Stars</span>
+                </div>
+                <div class="result-item">
+                    <span class="money-icon">💰</span>
+                    <span class="result-text">Зароблено монет: @ViewBag.Money</span>
+                </div>
+            </div>
+
+            <div class="total-balance">
+                <h2>Ваш баланс:</h2>
+                <div class="balance-items">
+                    <div class="balance-item">
+                        <span class="star-icon">⭐</span>
+                        <span class="balance-text">@Model.StarsAmount зірочок</span>
+                    </div>
+                    <div class="balance-item">
+                        <span class="money-icon">💰</span>
+                        <span class="balance-text">@Model.MoneyAmount монет</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <a asp-controller="Home" asp-action="Index" class="button">На головну</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
