@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Services;
 
@@ -34,8 +35,7 @@ public class TestsServise
             if (!string.IsNullOrEmpty(test.AnswerVariants))
             {
                 // Remove leading/trailing brackets and split by "]["
-                var variants = test.AnswerVariants.Trim('[', ']')
-                    .Split("][", StringSplitOptions.RemoveEmptyEntries);
+                var variants = JsonSerializer.Deserialize<List<string>>(test.AnswerVariants);   
                 answerVariants.AddRange(variants);
             }
 
