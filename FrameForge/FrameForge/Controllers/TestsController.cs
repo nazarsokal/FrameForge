@@ -96,7 +96,7 @@ namespace FrameForge.Controllers
         [HttpGet]
         [HttpPost]
         [Route("[action]")]
-        public IActionResult FinishTest()
+        public async Task<IActionResult> FinishTest()
         {
             ViewBag.Stars = HttpContext.Session.GetInt32("Stars") ?? 0;
             ViewBag.Money = HttpContext.Session.GetInt32("Money") ?? 0;
@@ -104,7 +104,7 @@ namespace FrameForge.Controllers
             var st = JsonSerializer.Deserialize<Student>(userString);
             st.MoneyAmount += HttpContext.Session.GetInt32("Money") ?? 0;
             st.StarsAmount += HttpContext.Session.GetInt32("Stars") ?? 0;
-            var updatedStudent = _studentService.UpdateStudent(st);
+            var updatedStudent = await _studentService.UpdateStudent(st);
             
             // Оновлюємо дані в сесії
             string updatedUserString = JsonSerializer.Serialize(updatedStudent);
