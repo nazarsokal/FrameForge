@@ -6,6 +6,7 @@ using Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<LeaderboardService>();
+builder.Services.AddScoped<TestsServise>();
 
 builder.Services.AddSession(options =>
 {
