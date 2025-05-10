@@ -165,8 +165,18 @@ body {
     transition: transform 0.3s ease;
 }
 .islandLocationSecond {
-    top: 50%;
-    left: 85%;
+    top: 40%;
+    left: 87%;
+}
+
+.islandLocationFourth {
+    margin-top: 30px;
+    left: 90%;
+}
+
+.islandLocationFifth {
+    top: 40%;
+    left: 87%;
 }
 
 /*.islandLocation:hover {*/
