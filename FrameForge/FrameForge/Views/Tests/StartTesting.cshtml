@@ -14,6 +14,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@(Model?.Title ?? "Test")</title>
     <link rel="stylesheet" href="~/Tests_css/test-styles.css" />
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
 </head>
 <body>
     <div class="container">
@@ -46,7 +50,7 @@
                 </div>
             }
 
-            <div class="question">@Model.Question</div>
+            <div class="question">@Html.Raw(Model.Question)</div>
             <form method="post" asp-controller="Tests" asp-action="CheckAnswer">
                 <input type="hidden" name="counter" value="@ViewBag.Counter" />
                 <div class="variants">
@@ -54,7 +58,7 @@
                     {
                         <div class="variant">
                             <input type="radio" name="answer" id="@variant" value="@variant" required>
-                            <label for="@variant">@variant</label>
+                            <label for="@variant">@Html.Raw(variant)</label>
                         </div>
                     }
                 </div>
