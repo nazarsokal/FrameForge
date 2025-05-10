@@ -1,4 +1,5 @@
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 
 namespace Services;
@@ -6,18 +7,21 @@ namespace Services;
 public class StudentService : IStudentService
 {
     private readonly FrameForgeDbContext _context;
-
+    private readonly IAzureStorageService _azureStorageService = new AzureStorageService();
     public StudentService(FrameForgeDbContext context)
     {
         _context = context;
     }
     
-    public Student GetStudentById(int id)
+    public async Task<Student> GetStudentById(Guid id)
     {
-        throw new NotImplementedException();
+        Student? stById = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);
+        if(stById == null) throw new NullReferenceException();
+        
+        return stById;
     }
 
-    public Student UpdateStudent(Student student)
+    public async Task<Student> UpdateStudent(Student student)
     {
         var studentFromDb = _context.Students.FirstOrDefault(st => st.StudentId == student.StudentId);
         
@@ -25,7 +29,9 @@ public class StudentService : IStudentService
         
         studentFromDb.MoneyAmount = student.MoneyAmount;
         studentFromDb.StarsAmount = student.StarsAmount;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        
+        _context.Entry(student).State = EntityState.Detached;
         
         return studentFromDb;
     }

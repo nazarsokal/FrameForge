@@ -5,8 +5,14 @@
     <title>title</title>
 </head>
 <body>
-<div>
-    <h1>Level 4</h1>
-</div>
+<form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
+    @Html.AntiForgeryToken()
+
+
+    <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+
+
+    <button type="submit">Complete Level</button>
+</form>
 </body>
 </html>
