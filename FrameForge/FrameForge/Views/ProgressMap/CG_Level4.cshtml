@@ -5,11 +5,10 @@
     <title>title</title>
 </head>
 <body>
-<form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-    @Html.AntiForgeryToken()
 
 
-    <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+
+    @* <input type="hidden" name="LevelName" value="@ViewBag.LevelName" /> *@
     <div class="taskCard">
 
         <form method="get" asp-controller="Tests" asp-action="StartTesting">
@@ -19,8 +18,6 @@
 
 
     </div>
-
-    <button type="submit">Complete Level</button>
-</form>
+    
 </body>
 </html>
