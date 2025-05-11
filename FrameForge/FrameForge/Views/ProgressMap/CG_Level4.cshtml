@@ -1,12 +1,64 @@
+
+@model Entities.Student?
+@{
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Level_4</title>
+    <link rel="stylesheet" href="~/CG_level4/colors.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div>
-    <h1>Level 4</h1>
+
+<div class="task">
+    <div class="taskCard">
+        <p id="smallTitle"><strong>Колірні моделі</strong></p>
+        <p> Що таке колірна модель?
+            Колірні моделі — це системи або методи представлення кольорів у числовому вигляді, які використовуються для опису, 
+            обробки та відтворення кольорів у цифрових системах, таких як комп’ютери, монітори, принтери тощо. 
+            Вони дозволяють стандартизувати сприйняття кольору та забезпечують узгодженість між різними пристроями та програмами.  
+            <br>
+            Давай уявимо, що кольори — це як фарби, якими ми малюємо картинки. Але комп’ютери, 
+            телевізори і принтери малюють по-різному, і для цього вони використовують спеціальні правила, 
+            які називаються колірними моделями. Це як інструкція, як змішувати фарби, щоб вийшов потрібний колір. 
+            <br>
+          
+            <img src="~/images/level4/1w200.png" class="bezier_curve_image">
+            <br>
+            </p>
+            <p>Ось 4 основні колірні моделі: </p>
+            <ul>
+                <li><p>RGB(Red, Green, Blue) - Використовується в телевізорах, комп’ютерах, смартфонах і камерах, щоб показувати кольори на екранах.</p></li>
+                <li><p>CMYK(Cyan, Magenta, Yellow, Key/Black) - Використовується в принтерах для друку картинок, журналів і листівок.</p></li>
+                <li><p>Lab(CIELAB) - Використовується в обробці зображень, дизайні та для точного порівняння кольорів на різних пристроях.</p></li>
+                <li><p>HSV(Hue, Saturation, Value) - Використовується в програмах для малювання (наприклад, Photoshop) і іграх, щоб легко обирати кольори.</p></li>
+                </ul>
+            <br><br>
+        
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5231432%2Fmod_resource%2Fcontent%2F1%2FЗавдання%20лаб3.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a href="../Views/ProgressMap/CG_Level4_tryColorSystems.cshtml">спробувати</a></p>
+
+    </div>
+
 </div>
+
+
+        <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
+            @Html.AntiForgeryToken()
+
+
+            <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+
+
+            <button type="submit">Complete Level</button>
+        </form>
+    
+
 </body>
 </html>
