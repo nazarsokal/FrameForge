@@ -1,3 +1,4 @@
+using Entities.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities;
@@ -12,6 +13,7 @@ public class FrameForgeDbContext : DbContext
     public DbSet<Student> Students { get; set; }
     public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
     public DbSet<Test> Tests { get; set; }
+    public DbSet<BattleRoom> BattleRooms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
