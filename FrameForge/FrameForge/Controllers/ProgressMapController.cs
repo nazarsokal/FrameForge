@@ -71,6 +71,17 @@ public class ProgressMapController : Controller
     public async Task<IActionResult> CompleteLevel(string levelName, MoneyStarsResult moneyResult)
     {
         var studentCompleted = GetStudentFromSession();
+        
+        // Перевіряємо, чи студент записаний на рівень
+        var enrolledLevels = _service.GetUsersEnrolledLevelsInProgress(studentCompleted);
+        var isEnrolled = enrolledLevels.Any(l => l.LevelTopicName == levelName);
+        
+        if (!isEnrolled)
+        {
+            // Якщо студент не записаний на рівень, спочатку записуємо його
+            _service.EnrolOnLevel(studentCompleted, levelName);
+        }
+        
         _service.CompleteOnLevel(studentCompleted, levelName, moneyResult.Stars, moneyResult.Money);
         
         var index = availableLevels.IndexOf(levelName);
@@ -80,12 +91,12 @@ public class ProgressMapController : Controller
             await _service.SetNextLevel(studentCompleted, availableLevels[index+1]);
         }
         
-        studentCompleted.MoneyAmount += moneyResult.Money;
-        studentCompleted.StarsAmount += moneyResult.Stars;
+        //studentCompleted.MoneyAmount += moneyResult.Money;
+        //studentCompleted.StarsAmount += moneyResult.Stars;
         
-        var studentUpdated =  await _studentService.UpdateStudent(studentCompleted);
+        //var studentUpdated = await _studentService.UpdateStudent(studentCompleted);
         
-        string userString = JsonSerializer.Serialize(studentUpdated);
+        string userString = JsonSerializer.Serialize(studentCompleted);
         HttpContext.Session.SetString("Student", userString);
         
         return RedirectToAction("Map");

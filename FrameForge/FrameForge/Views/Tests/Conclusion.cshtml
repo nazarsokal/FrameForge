@@ -44,9 +44,11 @@
 
             <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="moneyResult.Stars" value="@ViewBag.Stars">
+                <input type="hidden" name="moneyResult.Money" value="@ViewBag.Money">
                 <input type="hidden" name="levelName" value="@ViewBag.LevelName">
 
-                <button type="submit">Complete Level</button>
+                <button type="submit" class="submit-btn">Завершити рівень!</button>
             </form>
         </div>
     </div>

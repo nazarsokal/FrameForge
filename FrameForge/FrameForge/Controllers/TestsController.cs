@@ -30,6 +30,7 @@ namespace FrameForge.Controllers
             HttpContext.Session.SetInt32("Count", testModels.Count);
             HttpContext.Session.SetInt32("Stars", 0);
             HttpContext.Session.SetInt32("Money", 0);
+            HttpContext.Session.SetString("CurrentLevel", title);
             
             ViewBag.Counter = 0;
             ViewBag.Count = testModels.Count;
@@ -100,6 +101,7 @@ namespace FrameForge.Controllers
         {
             ViewBag.Stars = HttpContext.Session.GetInt32("Stars") ?? 0;
             ViewBag.Money = HttpContext.Session.GetInt32("Money") ?? 0;
+            ViewBag.LevelName = HttpContext.Session.GetString("CurrentLevel") ?? "CG_IntroductionLevel";
             string userString = HttpContext.Session.GetString("Student");
             var st = JsonSerializer.Deserialize<Student>(userString);
             st.MoneyAmount += HttpContext.Session.GetInt32("Money") ?? 0;
