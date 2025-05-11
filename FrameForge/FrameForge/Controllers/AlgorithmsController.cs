@@ -9,8 +9,8 @@ public class AlgorithmsController : Controller
         
     }
     [Route("[action]")]
-    public IActionResult Algorithms()
+    public IActionResult AlgorithmsOverview()
     {
-        return View();
+        return View("Algorithms");
     }
 }
