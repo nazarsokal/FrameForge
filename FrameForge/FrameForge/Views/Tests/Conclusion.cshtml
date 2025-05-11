@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="conclusion-content">
-            <h1>Вітаємо! Тест завершено</h1>
+            <h1>Вітаємо!Рівень завершено</h1>
             
             <div class="results">
                 <div class="result-item">
@@ -42,9 +42,12 @@
                 </div>
             </div>
 
-            <div class="button-container">
-                <a asp-controller="Home" asp-action="Index" class="button">На головну</a>
-            </div>
+            <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="levelName" value="@ViewBag.LevelName">
+
+                <button type="submit">Complete Level</button>
+            </form>
         </div>
     </div>
 </body>
