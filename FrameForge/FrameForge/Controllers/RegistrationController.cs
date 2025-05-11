@@ -30,16 +30,18 @@ public class RegistrationController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("Registration/Create")]
-    public IActionResult Create(Student student)
+    public async Task<IActionResult> Create(Student student)
     {
         if (student != null)
         {
+            var password = student.Password;
             student.GoogleId = null;
             student.MoneyAmount = 20.0;
             student.Password = PasswordHelper.HashPassword(student.Password);
-            _registrationService.RegisterStudent(student);
-            
-            string userString = JsonSerializer.Serialize(student);
+            await _registrationService.RegisterStudent(student);
+
+            Student studentFromDb = await _registrationService.GetStudent(student.Username, password);
+            string userString = JsonSerializer.Serialize(studentFromDb);
             HttpContext.Session.SetString("Student", userString);
         }
         return RedirectToAction("Index", "Home");
