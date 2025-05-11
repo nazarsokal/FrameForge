@@ -23,7 +23,17 @@ public class ProgressMapController : Controller
     [Route("[action]")]
     public async Task<IActionResult> Map()
     {
-        var student = GetStudentFromSession();
+        Student student;
+        try
+        {
+            student = GetStudentFromSession();
+
+        }
+        catch (NullReferenceException e)
+        {
+            return RedirectToAction("Registration", "Registration");
+            throw;
+        }
         userLevelsEnrolledInProgress = _service.GetUsersEnrolledLevelsInProgress(student);
         userLevelsEnrolledCompleted = _service.GetUsersEnrolledLevelsCompleted(student);
 
