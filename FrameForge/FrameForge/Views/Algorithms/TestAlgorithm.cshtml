@@ -1,4 +1,4 @@
-@model TModel
+@model Entities.Algorithm
 
 @{
     Layout = null;
@@ -9,10 +9,14 @@
 <html>
 <head>
     <title>title</title>
+    <style>
+        @Html.Raw(@Model.AlgorithmCss);
+    </style>
 </head>
 <body>
-<div>
-      
-</div>
+@Html.Raw(@Model.AlgorithmHtml);
 </body>
+<script>
+    @Html.Raw(@Model.AlgorithmJs);
+</script>
 </html>
