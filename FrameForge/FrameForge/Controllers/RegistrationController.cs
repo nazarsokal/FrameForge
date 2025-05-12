@@ -32,24 +32,38 @@ public class RegistrationController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("Registration/Create")]
-    public async Task<IActionResult> Create(Student student)
+    public async Task<IActionResult> Create(User user, bool isTeacher)
     {
-        if (student != null)
+        if (user != null)
         {
-            student.GoogleId = null;
-            student.MoneyAmount = 20.0;
-            student.Password = PasswordHelper.HashPassword(student.Password);
-            await _registrationService.RegisterStudent(student);
-
-            var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
-            var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
-            if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+            if (!isTeacher)
             {
-                await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
-            }
+                Student student = user as Student;
+                student.GoogleId = null;
+                student.MoneyAmount = 20.0;
+                student.Password = PasswordHelper.HashPassword(student.Password);
+                await _registrationService.RegisterStudent(student);
+
+                var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+                var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+                if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+                {
+                    await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+                }
             
-            string userString = JsonSerializer.Serialize(student);
-            HttpContext.Session.SetString("Student", userString);
+                string userString = JsonSerializer.Serialize(user);
+                HttpContext.Session.SetString("Student", userString);
+            }
+            else
+            {
+                Teacher teacher = user as Teacher;
+                teacher.GoogleId = null;
+                teacher.Password = PasswordHelper.HashPassword(teacher.Password);
+                await _registrationService.RegisterStudent(teacher);
+                
+                string userString = JsonSerializer.Serialize(user);
+                HttpContext.Session.SetString("Student", userString);
+            }
         }
         return RedirectToAction("Index", "Home");
     }

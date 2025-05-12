@@ -33,6 +33,11 @@
                         <br>
                         <input asp-for="Password" type="password" placeholder="Password" name="password">
                         <br>
+                        @Html.AntiForgeryToken()
+                        <label>
+                            <input name="isTeacher" value="true" type="checkbox"/>
+                            Login as Teacher
+                        </label>
                         <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
                         @* <a href="main_page.html">Sing Up</a> *@
                         <button type="submit">Sign Up</button>

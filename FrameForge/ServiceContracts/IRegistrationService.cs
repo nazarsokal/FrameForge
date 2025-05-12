@@ -4,10 +4,10 @@ namespace ServiceContracts;
 
 public interface IRegistrationService
 {
-    public Task RegisterStudent(Student student);
+    public Task RegisterStudent(User user);
     
     public Task<List<User>> GetStudents();
 
     public Task<User> GetStudent(string username, string password);
-    public Task<User> RegisterStudentWithGoogle(Student? student);
+    public Task<User> RegisterStudentWithGoogle(User? user);
 }
