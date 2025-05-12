@@ -16,7 +16,7 @@ namespace Services
         }
         public List<Student> GetAllSorted()
         {
-            List<Student> all = _dbContext.Students.ToList();
+            List<Student> all = _dbContext.Users.OfType<Student>().ToList();
             all.Sort((x, y) => y.StarsAmount.CompareTo(x.StarsAmount));
             return all;
 

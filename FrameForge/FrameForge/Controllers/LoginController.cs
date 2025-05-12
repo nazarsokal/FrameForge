@@ -26,10 +26,10 @@ namespace FrameForge.Controllers
         {
             if (ld != null) 
             {
-                Student? student = await _registrationService.GetStudent(ld.Username, ld.Password);
-                if (student != null)
+                User? user = await _registrationService.GetStudent(ld.Username, ld.Password);
+                if (user != null)
                 {
-                     string userString = JsonSerializer.Serialize(student);
+                     string userString = JsonSerializer.Serialize(user);
                      HttpContext.Session.SetString("Student", userString);
                      return RedirectToAction("Index", "Home");
                 }

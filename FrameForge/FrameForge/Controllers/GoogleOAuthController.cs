@@ -47,16 +47,19 @@ public class GoogleOAuthController : Controller
         Student? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
         if (studentInfo == null) throw new NullReferenceException();
         
-        var student = await _registrationService.RegisterStudentWithGoogle(studentInfo);
-        
-        var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
-        var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
-        if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+        User user = await _registrationService.RegisterStudentWithGoogle(studentInfo);
+
+        if (user is Student student)
         {
-            await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+            var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+            var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+            if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+            {
+                await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+            }
         }
         
-        string userString = JsonSerializer.Serialize(student);
+        string userString = JsonSerializer.Serialize(user);
         HttpContext.Session.SetString("Student", userString);
         
         return RedirectToAction("Index", "Home");

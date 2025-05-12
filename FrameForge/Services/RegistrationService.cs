@@ -20,7 +20,7 @@ public class RegistrationService : IRegistrationService
     {
         ArgumentNullException.ThrowIfNull(student);
         
-        if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
+        if (_dbContext.Users.Any(st => st.Email == student.Email && st.Username == student.Username))
             throw new InvalidOperationException("Student already exists");
         
         student.StudentId = Guid.NewGuid();
@@ -32,13 +32,13 @@ public class RegistrationService : IRegistrationService
             student.Picture = pathInSt;
         }
         
-        _dbContext.Students.Add(student);
+        _dbContext.Users.Add(student);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Student> GetStudent(string username,string password)
+    public async Task<User> GetStudent(string username,string password)
     {
-        var user = await _dbContext.Students.SingleOrDefaultAsync(s => s.Username == username);
+        var user = await _dbContext.Users.SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
             var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
@@ -50,18 +50,18 @@ public class RegistrationService : IRegistrationService
             return null;
         }
     }
-    public async Task<List<Student>> GetStudents()
+    public async Task<List<User>> GetStudents()
     {
-        return await _dbContext.Students.ToListAsync();
+        return await _dbContext.Users.ToListAsync();
     }
 
-    public async Task<Student> RegisterStudentWithGoogle(Student? student)
+    public async Task<User> RegisterStudentWithGoogle(Student? student)
     {
         if (student == null) throw new NullReferenceException();
 
         if (await CheckIfStudentExistsGoogle(student) == true)
         {
-            Student? stFromDb = await getStudentWithGoogle(student);
+            User? stFromDb = await getStudentWithGoogle(student);
             
             // await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
             var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
@@ -76,7 +76,7 @@ public class RegistrationService : IRegistrationService
         var imagePath = await SaveProfileImageAsync(student.Picture, student.StudentId);
         student.Picture = imagePath; // Записується шлях до зображення
 
-        _dbContext.Students.Add(student);
+        _dbContext.Users.Add(student);
         await _dbContext.SaveChangesAsync(); // У БД записано imagePath
 
         var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
@@ -89,16 +89,16 @@ public class RegistrationService : IRegistrationService
     public async Task<bool> CheckIfStudentExistsGoogle(Student? student)
     {
         if (student == null) throw new NullReferenceException();
-        Student? stFromDb = await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
+        User? stFromDb = await _dbContext.Users.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
         
         if(stFromDb == null) return false;
         
         else return true;
     }
 
-    private async Task<Student> getStudentWithGoogle(Student student)
+    private async Task<User> getStudentWithGoogle(Student student)
     {
-        return await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
+        return await _dbContext.Users.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
     }
     
     private async Task<string> SaveProfileImageAsync(string imageUrl, Guid userId)

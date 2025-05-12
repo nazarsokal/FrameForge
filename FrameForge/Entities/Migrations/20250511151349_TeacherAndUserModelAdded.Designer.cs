@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    partial class FrameForgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250511151349_TeacherAndUserModelAdded")]
+    partial class TeacherAndUserModelAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +93,7 @@ namespace Entities.Migrations
                     b.Property<string>("Picture")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TypeOfUser")
+                    b.Property<string>("UserType")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("varchar(8)");
@@ -104,7 +107,7 @@ namespace Entities.Migrations
 
                     b.ToTable("Users", (string)null);
 
-                    b.HasDiscriminator<string>("TypeOfUser").HasValue("User");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
                 });

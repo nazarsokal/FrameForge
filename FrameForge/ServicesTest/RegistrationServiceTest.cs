@@ -23,7 +23,7 @@ public class RegistrationServiceTest
         _registrationService.RegisterStudent(student);
 
         var studentsReceived = await _registrationService.GetStudents();
-        Student? studentMatched = studentsReceived.FirstOrDefault(s => s.StudentId == student.StudentId);
+        User? studentMatched = studentsReceived.FirstOrDefault(s => s.StudentId == student.StudentId);
         
         Assert.Equal(student, studentMatched);
     }
