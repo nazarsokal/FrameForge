@@ -32,39 +32,44 @@ public class RegistrationController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("Registration/Create")]
-    public async Task<IActionResult> Create(User user, bool isTeacher)
+    public async Task<IActionResult> Create(RegisterViewModel model)
     {
-        if (user != null)
+        if (model != null)
         {
-            if (!isTeacher)
+            if (model.IsTeacher)
             {
-                Student student = user as Student;
-                student.GoogleId = null;
-                student.MoneyAmount = 20.0;
-                student.Password = PasswordHelper.HashPassword(student.Password);
-                await _registrationService.RegisterStudent(student);
+                var teacher = new Teacher
+                {
+                    Username = model.Name,
+                    Email = model.Email,
+                    Password = PasswordHelper.HashPassword(model.Password)
+                };
 
-                var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
-                var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+                await _registrationService.RegisterStudent(teacher);
+                HttpContext.Session.SetString("Student", JsonSerializer.Serialize(teacher));
+            }
+            else
+            {
+                var student = new Student
+                {
+                    Username = model.Name,
+                    Email = model.Email,
+                    Password = PasswordHelper.HashPassword(model.Password),
+                    MoneyAmount = 20.0
+                };
+
+                await _registrationService.RegisterStudent(student);
+                HttpContext.Session.SetString("Student", JsonSerializer.Serialize(student));
+
+                var enrolledLevelsList = _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+                var enrolledLevelsListCompleted = _progressMapService.GetUsersEnrolledLevelsInProgress(student);
                 if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
                 {
                     await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
                 }
-            
-                string userString = JsonSerializer.Serialize(user);
-                HttpContext.Session.SetString("Student", userString);
-            }
-            else
-            {
-                Teacher teacher = user as Teacher;
-                teacher.GoogleId = null;
-                teacher.Password = PasswordHelper.HashPassword(teacher.Password);
-                await _registrationService.RegisterStudent(teacher);
-                
-                string userString = JsonSerializer.Serialize(user);
-                HttpContext.Session.SetString("Student", userString);
             }
         }
+
         return RedirectToAction("Index", "Home");
     }
 

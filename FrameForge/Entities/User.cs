@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Entities;
 
-public abstract class User
+public class User
 {
     [Key]
     public Guid StudentId { get; set; }
