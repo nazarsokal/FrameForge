@@ -26,22 +26,39 @@ namespace FrameForge.Controllers
         {
             if (ld != null) 
             {
-                User? user = await _registrationService.GetStudent(ld.Username, ld.Password);
-                if (user != null)
+                if (ld.IsTeacher)
                 {
-                     string userString = JsonSerializer.Serialize(user);
-                     HttpContext.Session.SetString("Student", userString);
-                     return RedirectToAction("Index", "Home");
+                    User? user = await _registrationService.GetTeacher(ld.Username, ld.Password);
+                    
+                    if (user != null)
+                    {
+                        string userString = JsonSerializer.Serialize(user);
+                        HttpContext.Session.SetString("Student", userString);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
-                    return NotFound();
+                    User? user = await _registrationService.GetStudent(ld.Username, ld.Password);
+                    
+                    if (user != null)
+                    {
+                        string userString = JsonSerializer.Serialize(user);
+                        HttpContext.Session.SetString("Student", userString);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             else
             {
                 return NotFound();
             }
+            
+            return View("login_page");
         }
     }
 }

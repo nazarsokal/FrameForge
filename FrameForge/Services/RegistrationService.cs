@@ -40,7 +40,7 @@ public class RegistrationService : IRegistrationService
 
     public async Task<User> GetStudent(string username,string password)
     {
-        var user = await _dbContext.Users.SingleOrDefaultAsync(s => s.Username == username);
+        var user = await _dbContext.Users.OfType<Student>().SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
             var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
@@ -52,6 +52,22 @@ public class RegistrationService : IRegistrationService
             return null;
         }
     }
+
+    public async Task<Teacher> GetTeacher(string username, string password)
+    {
+        var user = await _dbContext.Users.OfType<Teacher>().SingleOrDefaultAsync(s => s.Username == username);
+        if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
+        {
+            var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            user.Picture = Convert.ToBase64String(studentImage);
+            return user;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public async Task<List<User>> GetStudents()
     {
         return await _dbContext.Users.ToListAsync();

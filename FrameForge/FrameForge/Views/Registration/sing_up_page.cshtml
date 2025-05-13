@@ -16,47 +16,60 @@
             <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
            
         </head>
-        <body>
+    <body>
     
-            <div class="container">
-                <div class="box-1"></div>
-                <div class="box-2"></div>
-                <div class="box-3"></div>
-                <div class="box-login" style="height: 600px;">
-                    <br>
-                    <br>
+    <div class="container">
+        <div class="box-1"></div>
+        <div class="box-2"></div>
+        <div class="box-3"></div>
+        <div class="box-login" style="height: 600px;">
+            <br>
+            <br>
                   
-                    <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Sing Up</h1>
-                    <form method="post" asp-controller="Registration" asp-action="Create">
-                        <input asp-for="Name" type="text" placeholder="Username" name="name">
-                        <br>
-                        <input asp-for="Email" type="email" placeholder="Email" name="email">
-                        <br>
-                        <br>
-                        <input asp-for="Password" type="password" placeholder="Password" name="password">
-                        <br>
-                        @Html.AntiForgeryToken()
-                        <label>
-                            <input asp-for="IsTeacher" type="checkbox"/>
-                            Login as Teacher
-                        </label>
-                        <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
-                        @* <a href="main_page.html">Sing Up</a> *@
-                        <button type="submit">Sign Up</button>
+            <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Sing Up</h1>
+            <form method="post" asp-controller="Registration" asp-action="Create">
+                <input asp-for="Name" type="text" placeholder="Username" name="name">
+                <br>
+                <input asp-for="Email" type="email" placeholder="Email" name="email">
+                <br>
+                <br>
+                <input asp-for="Password" type="password" placeholder="Password" name="password">
+                <br>
+                @Html.AntiForgeryToken()
+                <label>
+                    <input asp-for="IsTeacher" type="checkbox" id="isTeacherCheckbox"/>
+                    Login as Teacher
+                </label>
+                <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
+                @* <a href="main_page.html">Sing Up</a> *@
+                <button type="submit">Sign Up</button>
 
-                        <div class= "login-with">
+                <div class= "login-with">
 
-                            <ul>
-                                <li><i class="fa fa-facebook"></i></li>
-                                <li><a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="text-decoration: none; color: black;"><i class="fa fa-google"></i></a></li>
-                                <li><i class="fa fa-twitter"></i></li>
-                            </ul>
+                    <ul>
+                        <li><i class="fa fa-facebook"></i></li>
+                        <li><a id="googleLoginLink"
+                               href="/GoogleOAuth/RedirectOnOAuthServer"
+                               style="text-decoration: none; color: black;">
+                            <i class="fa fa-google"></i>
+                        </a>
+                        <li><i class="fa fa-twitter"></i></li>
+                    </ul>
 
-                        </div>
-                    </form>
-                    
-                    <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Login</a></p>
                 </div>
-            </div>
-        </body>
-    </html>
+            </form>
+                    
+            <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Login</a></p>
+        </div>
+    </div>
+    </body>
+<script>
+    const checkbox = document.getElementById("isTeacherCheckbox");
+    const link = document.getElementById("googleLoginLink");
+
+    checkbox.addEventListener("change", () => {
+        const isChecked = checkbox.checked;
+        link.href = `/GoogleOAuth/RedirectOnOAuthServer?isTeacher=${isChecked}`;
+    });
+</script>
+</html>

@@ -22,12 +22,13 @@ public class GoogleOAuthController : Controller
     }
 
     [Route("[action]")]
-    public IActionResult RedirectOnOAuthServer()
+    public IActionResult RedirectOnOAuthServer(bool isTeacher)
     {
         string scope = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
         string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
         var codeVerifier = $"{Guid.NewGuid()}{Guid.NewGuid()}";
         
+        HttpContext.Session.SetString("isTeacher", isTeacher.ToString());
         HttpContext.Session.SetString("codeVerifier", codeVerifier);
         
         var codeChallenge = Sha256Helper.ComputeHash(codeVerifier);
@@ -40,27 +41,53 @@ public class GoogleOAuthController : Controller
     public async Task<IActionResult> Code(string code)
     {
         string? codeVerifier = HttpContext.Session.GetString("codeVerifier");
+        bool isTeacher = Convert.ToBoolean(HttpContext.Session.GetString("isTeacher"));
         
         string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
-        
-        Student? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
-        if (studentInfo == null) throw new NullReferenceException();
-        
-        User user = await _registrationService.RegisterStudentWithGoogle(studentInfo);
 
-        if (user is Student student)
+        if (!isTeacher)
         {
-            var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
-            var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
-            if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+            User? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
+            if (studentInfo == null) throw new NullReferenceException();
+            var studentFromGoogleInfo = new Student()
             {
-                await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+                Username = studentInfo.Username,
+                Email = studentInfo.Email,
+                GoogleId = studentInfo.GoogleId,
+                Picture = studentInfo.Picture,
+            };
+            
+            User user = await _registrationService.RegisterStudentWithGoogle(studentFromGoogleInfo);  
+            if (user is Student student)
+            {
+                var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+                var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+                if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+                {
+                    await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+                }
             }
+            
+            string userString = JsonSerializer.Serialize(user);
+            HttpContext.Session.SetString("Student", userString);
         }
-        
-        string userString = JsonSerializer.Serialize(user);
-        HttpContext.Session.SetString("Student", userString);
+        else
+        {
+            User? studentInfo = await _googleOAuthService.GetUserInfo(tokenResult.AccessToken);
+            if (studentInfo == null) throw new NullReferenceException();
+            var teacherFromGoogleInfo = new Teacher()
+            {
+                Username = studentInfo.Username,
+                Email = studentInfo.Email,
+                GoogleId = studentInfo.GoogleId,
+                Picture = studentInfo.Picture,
+            };
+            User user = await _registrationService.RegisterStudentWithGoogle(teacherFromGoogleInfo);  
+            
+            string userString = JsonSerializer.Serialize(user);
+            HttpContext.Session.SetString("Student", userString);
+        }
         
         return RedirectToAction("Index", "Home");
     }
