@@ -40,7 +40,7 @@ public class GroupController : Controller
         group.TeacherId = teacher.UserId;
         group.GroupName = groupName;
         group.Id = Guid.NewGuid();
-        group.Teacher = teacher;
+        // group.Teacher = teacher;
         
         await _groupService.AddGroup(group);
         

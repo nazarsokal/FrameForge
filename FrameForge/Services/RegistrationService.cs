@@ -16,7 +16,7 @@ public class RegistrationService : IRegistrationService
         _azureStorageService = azureStorageService;
     }
     
-    public async Task RegisterStudent(User? user)
+    public async Task RegisterUser(User? user)
     {
         ArgumentNullException.ThrowIfNull(user);
         

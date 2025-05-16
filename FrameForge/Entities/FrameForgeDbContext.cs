@@ -9,9 +9,9 @@ public class FrameForgeDbContext : DbContext
         
     }
     
-    public DbSet<User> Users { get; set; }
-    public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
-    public DbSet<Group> Groups { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
+    public virtual DbSet<Group> Groups { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

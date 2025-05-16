@@ -45,7 +45,7 @@ public class RegistrationController : Controller
                     Password = PasswordHelper.HashPassword(model.Password)
                 };
 
-                await _registrationService.RegisterStudent(teacher);
+                await _registrationService.RegisterUser(teacher);
                 HttpContext.Session.SetString("UserType", "Teacher");
                 HttpContext.Session.SetString("Student", JsonSerializer.Serialize(teacher));
             }
@@ -59,7 +59,7 @@ public class RegistrationController : Controller
                     MoneyAmount = 20.0
                 };
 
-                await _registrationService.RegisterStudent(student);
+                await _registrationService.RegisterUser(student);
                 HttpContext.Session.SetString("UserType", "Student");
                 HttpContext.Session.SetString("Student", JsonSerializer.Serialize(student));
 

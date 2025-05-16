@@ -8,5 +8,9 @@ public interface IGroupService
     
     public Task AddGroup(Group group);
     
+    public Task AssignStudent(Guid groupId, Guid studentId);
+    
     public Task UpdateGroup(Group group);
+    
+    public Task<List<Group>> GetGroups();
 }

@@ -20,7 +20,7 @@ public class RegistrationServiceTest
     public async Task RegisterUser_RegisterUser_Success()
     {
         var student = new Student() {Username = "student", Password = "password", Email = "student@email.com", UserId = Guid.NewGuid(), MoneyAmount = 10.5};
-        _registrationService.RegisterStudent(student);
+        _registrationService.RegisterUser(student);
 
         var studentsReceived = await _registrationService.GetStudents();
         User? studentMatched = studentsReceived.FirstOrDefault(s => s.UserId == student.UserId);
