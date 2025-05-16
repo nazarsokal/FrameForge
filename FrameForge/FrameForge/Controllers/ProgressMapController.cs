@@ -46,9 +46,9 @@ public class ProgressMapController : Controller
             userLevelsEnrolledCompleted = new List<EnrolledLevels>();
         
         EnrolledLevels? isLevelEnrolled =
-            userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);        
+            userLevelsEnrolledInProgress.FirstOrDefault(l => l.LevelTopicName == levelName && student.UserId == l.StudentId);        
         EnrolledLevels? isLevelCompleted =
-            userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.StudentId == l.StudentId);
+            userLevelsEnrolledCompleted.FirstOrDefault(l => l.LevelTopicName == levelName && student.UserId == l.StudentId);
         // if (isLevelEnrolled == null && isLevelCompleted == null)
         // {
         //     if (isPreviousLevelCompleted(userLevelsEnrolledCompleted, levelName))
@@ -106,7 +106,7 @@ public class ProgressMapController : Controller
         int indexAmount = 0;
         foreach (var level in availableLevels)
         {
-            bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.StudentId == l.StudentId);
+            bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.UserId == l.StudentId);
             if(isLevelContained) indexAmount++;
         }
 

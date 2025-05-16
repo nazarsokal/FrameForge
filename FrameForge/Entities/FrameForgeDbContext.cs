@@ -11,11 +11,13 @@ public class FrameForgeDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
+    public DbSet<Group> Groups { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<EnrolledLevels>().ToTable("EnrolledLevels");
+        modelBuilder.Entity<Group>().ToTable("Groups");
         
         modelBuilder.Entity<User>()
             .HasDiscriminator<string>("TypeOfUser")

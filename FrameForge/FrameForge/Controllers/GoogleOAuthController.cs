@@ -67,10 +67,11 @@ public class GoogleOAuthController : Controller
                 {
                     await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
                 }
+                string userString = JsonSerializer.Serialize(student);
+                HttpContext.Session.SetString("UserType", "Student");
+                HttpContext.Session.SetString("Student", userString);
             }
             
-            string userString = JsonSerializer.Serialize(user);
-            HttpContext.Session.SetString("Student", userString);
         }
         else
         {
@@ -83,10 +84,14 @@ public class GoogleOAuthController : Controller
                 GoogleId = studentInfo.GoogleId,
                 Picture = studentInfo.Picture,
             };
-            User user = await _registrationService.RegisterStudentWithGoogle(teacherFromGoogleInfo);  
-            
-            string userString = JsonSerializer.Serialize(user);
-            HttpContext.Session.SetString("Student", userString);
+            User user = await _registrationService.RegisterStudentWithGoogle(teacherFromGoogleInfo);
+
+            if (user is Teacher teacher)
+            {
+                string userString = JsonSerializer.Serialize(teacher);
+                HttpContext.Session.SetString("UserType", "Teacher");
+                HttpContext.Session.SetString("Teacher", userString);
+            }
         }
         
         return RedirectToAction("Index", "Home");

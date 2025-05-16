@@ -33,7 +33,8 @@ namespace FrameForge.Controllers
                     if (user != null)
                     {
                         string userString = JsonSerializer.Serialize(user);
-                        HttpContext.Session.SetString("Student", userString);
+                        HttpContext.Session.SetString("UserType", "Teacher");
+                        HttpContext.Session.SetString("Teacher", userString);
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -48,6 +49,7 @@ namespace FrameForge.Controllers
                     if (user != null)
                     {
                         string userString = JsonSerializer.Serialize(user);
+                        HttpContext.Session.SetString("UserType", "Student");
                         HttpContext.Session.SetString("Student", userString);
                         return RedirectToAction("Index", "Home");
                     }

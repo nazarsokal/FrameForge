@@ -1,0 +1,113 @@
+@using Entities
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+    <style>
+        .open-modal-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-content input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            box-sizing: border-box;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+@if ((ViewBag.Groups as List<Group>).Count == 0)
+{
+    <!-- Trigger Button -->
+    <label>У вас немає прикріплених груп</label>
+    <button onclick="document.getElementById('createGroupModal').style.display='block'" class="open-modal-btn">
+        Створити групу
+    </button>
+
+    <!-- Modal -->
+    <div id="createGroupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('createGroupModal').style.display='none'">&times;</span>
+            <h2>Створення групи</h2>
+            <form method="post" asp-action="SubmitGroup">
+                <label for="groupName">Назва групи:</label>
+                <input type="text" id="groupName" name="groupName" required />
+                <button type="submit">Створити</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    @foreach (var group in ViewBag.Groups as List<Group>)
+    {
+        <div class="group-card" style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; width: 300px; font-family: Arial, sans-serif;">
+            <h2 style="margin-top: 0;">Group Name: @group.GroupName</h2>
+            <p><strong>Teacher:</strong> @ViewBag.TeacherName</p>
+            <div>
+                <strong>Students:</strong>
+                <ul style="padding-left: 20px; margin-top: 4px;">
+                    @foreach (var students in group.Students)
+                    {
+                        <li>@students.Username; @students.StarsAmount; @students.MoneyAmount</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}
+</body>
+</html>

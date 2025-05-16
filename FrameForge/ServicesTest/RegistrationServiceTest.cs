@@ -19,11 +19,11 @@ public class RegistrationServiceTest
     [Fact]
     public async Task RegisterUser_RegisterUser_Success()
     {
-        var student = new Student() {Username = "student", Password = "password", Email = "student@email.com", StudentId = Guid.NewGuid(), MoneyAmount = 10.5};
+        var student = new Student() {Username = "student", Password = "password", Email = "student@email.com", UserId = Guid.NewGuid(), MoneyAmount = 10.5};
         _registrationService.RegisterStudent(student);
 
         var studentsReceived = await _registrationService.GetStudents();
-        User? studentMatched = studentsReceived.FirstOrDefault(s => s.StudentId == student.StudentId);
+        User? studentMatched = studentsReceived.FirstOrDefault(s => s.UserId == student.UserId);
         
         Assert.Equal(student, studentMatched);
     }

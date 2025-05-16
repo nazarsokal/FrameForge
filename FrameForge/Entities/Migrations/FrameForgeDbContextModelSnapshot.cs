@@ -68,7 +68,7 @@ namespace Entities.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Entities.User", b =>

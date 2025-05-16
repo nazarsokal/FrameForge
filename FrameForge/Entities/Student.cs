@@ -15,7 +15,7 @@ public class Student : User
     {
         if (obj is Student student)
         {
-            return StudentId == student.StudentId;
+            return UserId == student.UserId;
         }
         
         return false;

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    [Migration("20250511151349_TeacherAndUserModelAdded")]
-    partial class TeacherAndUserModelAdded
+    [Migration("20250515161410_GroupModelAdded")]
+    partial class GroupModelAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace Entities.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Entities.User", b =>
@@ -93,7 +93,7 @@ namespace Entities.Migrations
                     b.Property<string>("Picture")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserType")
+                    b.Property<string>("TypeOfUser")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("varchar(8)");
@@ -107,7 +107,7 @@ namespace Entities.Migrations
 
                     b.ToTable("Users", (string)null);
 
-                    b.HasDiscriminator<string>("UserType").HasValue("User");
+                    b.HasDiscriminator<string>("TypeOfUser").HasValue("User");
 
                     b.UseTphMappingStrategy();
                 });

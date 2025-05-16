@@ -6,7 +6,7 @@ namespace Entities;
 public class User
 {
     [Key]
-    public Guid StudentId { get; set; }
+    public Guid UserId { get; set; }
     
     [Required]
     [JsonProperty("name")]

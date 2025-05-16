@@ -23,14 +23,14 @@ public class RegistrationService : IRegistrationService
         if (_dbContext.Users.Any(st => st.Email == user.Email && st.Username == user.Username))
             throw new InvalidOperationException("User already exists");
         
-        user.StudentId = Guid.NewGuid();
+        user.UserId = Guid.NewGuid();
 
         if (user.Picture == null)
         {
             var path = @"wwwroot/images/icons_mainPage/account.png";
-            await SaveDefaultProfileImageAsync(path, user.StudentId);
+            await SaveDefaultProfileImageAsync(path, user.UserId);
             
-            var stImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            var stImage = await _azureStorageService.GetUserPhoto(user.UserId);
             user.Picture = Convert.ToBase64String(stImage);
         }
         
@@ -43,7 +43,7 @@ public class RegistrationService : IRegistrationService
         var user = await _dbContext.Users.OfType<Student>().SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
-            var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(user.UserId);
             user.Picture = Convert.ToBase64String(studentImage);
             return user;
         }
@@ -58,7 +58,7 @@ public class RegistrationService : IRegistrationService
         var user = await _dbContext.Users.OfType<Teacher>().SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
-            var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(user.UserId);
             user.Picture = Convert.ToBase64String(studentImage);
             return user;
         }
@@ -82,13 +82,13 @@ public class RegistrationService : IRegistrationService
             User? stFromDb = await getStudentWithGoogle(user);
             
             // await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
-            var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.UserId);
             stFromDb.Picture = Convert.ToBase64String(studentImage);
             
             return stFromDb;
         }
 
-        user.StudentId = Guid.NewGuid();
+        user.UserId = Guid.NewGuid();
         
         if (user is Student student)
         {
@@ -96,14 +96,14 @@ public class RegistrationService : IRegistrationService
         }
         
 
-        var imagePath = await SaveProfileImageAsync(user.Picture, user.StudentId);
+        var imagePath = await SaveProfileImageAsync(user.Picture, user.UserId);
         user.Picture = imagePath; // Записується шлях до зображення
 
 
         _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync(); // У БД записано imagePath
 
-        var stImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+        var stImage = await _azureStorageService.GetUserPhoto(user.UserId);
         user.Picture = Convert.ToBase64String(stImage); // Для повернення, не зберігається в БД
 
         return user;

@@ -16,12 +16,22 @@ public class HomeController : Controller
     [Route("/")]
     public async Task<IActionResult> Index()
     {
-        var studentJson = HttpContext.Session.GetString("Student");
-        if (studentJson != null)
+        User user = new User();
+        var userType = HttpContext.Session.GetString("UserType");
+        if (userType != null)
         {
-            var student = JsonSerializer.Deserialize<Student>(studentJson);
+            if (userType == "Student")
+            {
+                var userJson = HttpContext.Session.GetString("Student");
+                user = JsonSerializer.Deserialize<Student>(userJson);
+            }
+            else if(userType == "Teacher")
+            {
+                var userJson = HttpContext.Session.GetString("Teacher");
+                user = JsonSerializer.Deserialize<Teacher>(userJson);
+            }
             // Use your student object!
-            return View(student);
+            return View(user);
         }
         
         return View();

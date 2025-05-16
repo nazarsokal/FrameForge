@@ -15,7 +15,7 @@ public class StudentService : IStudentService
     
     public async Task<Student> GetStudentById(Guid id)
     {
-        Student? stById = await _context.Users.OfType<Student>().FirstOrDefaultAsync(s => s.StudentId == id);
+        Student? stById = await _context.Users.OfType<Student>().FirstOrDefaultAsync(s => s.UserId == id);
         if(stById == null) throw new NullReferenceException();
         
         return stById;
@@ -23,7 +23,7 @@ public class StudentService : IStudentService
 
     public async Task<Student> UpdateStudent(Student student)
     {
-        var studentFromDb = _context.Users.OfType<Student>().FirstOrDefault(st => st.StudentId == student.StudentId);
+        var studentFromDb = _context.Users.OfType<Student>().FirstOrDefault(st => st.UserId == student.UserId);
         
         if (studentFromDb == null) throw new NullReferenceException();
         

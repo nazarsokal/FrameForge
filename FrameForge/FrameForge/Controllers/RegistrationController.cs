@@ -46,6 +46,7 @@ public class RegistrationController : Controller
                 };
 
                 await _registrationService.RegisterStudent(teacher);
+                HttpContext.Session.SetString("UserType", "Teacher");
                 HttpContext.Session.SetString("Student", JsonSerializer.Serialize(teacher));
             }
             else
@@ -59,6 +60,7 @@ public class RegistrationController : Controller
                 };
 
                 await _registrationService.RegisterStudent(student);
+                HttpContext.Session.SetString("UserType", "Student");
                 HttpContext.Session.SetString("Student", JsonSerializer.Serialize(student));
 
                 var enrolledLevelsList = _progressMapService.GetUsersEnrolledLevelsCompleted(student);
