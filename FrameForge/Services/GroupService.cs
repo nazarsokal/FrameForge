@@ -17,6 +17,7 @@ public class GroupService : IGroupService
 
     public async Task AddGroup(Group group)
     {
+        _dbContext.Entry(group.Teacher).State = EntityState.Unchanged;
         _dbContext.Groups.Add(group);
         await _dbContext.SaveChangesAsync();
     }

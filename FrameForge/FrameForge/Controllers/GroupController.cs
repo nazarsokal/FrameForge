@@ -8,11 +8,13 @@ namespace FrameForge.Controllers;
 public class GroupController : Controller
 {
     private readonly IGroupService _groupService;
+    private readonly IUserService _userService;
     public Teacher? teacher;
 
-    public GroupController(IGroupService groupService)
+    public GroupController(IGroupService groupService, IUserService userService)
     {
         _groupService = groupService;
+        _userService = userService;
     }
     
     [Route("[action]")]
@@ -21,6 +23,7 @@ public class GroupController : Controller
         teacher = getTeacherFromSession();
 
         List<Group>? groups = await _groupService.GetGroupByTeacherId(teacher.UserId);
+        groups.ForEach(u => u.Teacher = teacher);
         // if (groups.Count == 0) return RedirectToAction("CreateGroup");
         ViewBag.Groups = groups;
         
@@ -37,7 +40,7 @@ public class GroupController : Controller
         group.TeacherId = teacher.UserId;
         group.GroupName = groupName;
         group.Id = Guid.NewGuid();
-        // group.Teacher = teacher;
+        group.Teacher = teacher;
         
         await _groupService.AddGroup(group);
         

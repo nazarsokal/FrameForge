@@ -69,8 +69,7 @@
 </head>
 
 <body>
-@if ((ViewBag.Groups as List<Group>).Count == 0)
-{
+
     <!-- Trigger Button -->
     <label>У вас немає прикріплених груп</label>
     <button onclick="document.getElementById('createGroupModal').style.display='block'" class="open-modal-btn">
@@ -89,14 +88,11 @@
             </form>
         </div>
     </div>
-}
-else
-{
     @foreach (var group in ViewBag.Groups as List<Group>)
     {
         <div class="group-card" style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; width: 300px; font-family: Arial, sans-serif;">
             <h2 style="margin-top: 0;">Group Name: @group.GroupName</h2>
-            <p><strong>Teacher:</strong> @ViewBag.TeacherName</p>
+            <p><strong>Teacher:</strong> @group.Teacher.Username</p>
             <div>
                 <strong>Students:</strong>
                 <ul style="padding-left: 20px; margin-top: 4px;">
@@ -108,6 +104,6 @@ else
             </div>
         </div>
     }
-}
+
 </body>
 </html>

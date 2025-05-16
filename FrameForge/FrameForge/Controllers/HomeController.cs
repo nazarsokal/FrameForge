@@ -7,11 +7,11 @@ namespace FrameForge.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly IStudentService _studentService;
+    private readonly IUserService _userService;
 
-    public HomeController(IStudentService studentService)
+    public HomeController(IUserService userService)
     {
-        _studentService = studentService;
+        _userService = userService;
     }
     [Route("/")]
     public async Task<IActionResult> Index()
