@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <Folder Include="wwwroot\css\" />
+      <Folder Include="wwwroot\images\lvl5\" />
       <Folder Include="wwwroot\images\users\" />
     </ItemGroup>
 

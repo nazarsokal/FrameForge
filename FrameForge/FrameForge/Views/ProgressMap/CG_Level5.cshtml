@@ -1,21 +1,58 @@
+
+@model Entities.Student?
+@{
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Level_3</title>
+    <link rel="stylesheet" href="~/CG_level2/bezier_curve.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div>
-    <h1>Level 5</h1>
+
+<div class="task">
+    <div class="taskCard">
+        <p id="smallTitle"><strong>Рухомі зображення</strong></p>
+        <p> Що таке рухомі зображення?
+            Рухомі зображення — це послідовність статичних зображень (кадрів), які швидко змінюють один одного,
+            створюючи ілюзію руху. Цей принцип лежить в основі кіно, анімації, відео та GIF-зображень.
+           <br>
+            Рухомі зображення — це як чарівна книжка з картинками. Уявляй, що ти швидко гортаєш сторінки,
+            і кожна картинка трохи змінюється. Якщо гортати дуже швидко, здається, що картинки оживають і рухаються!
+            Так працюють мультики чи кіно — багато картинок показують одну за одною, і ми бачимо, ніби все рухається.
+            <br>
+            Рухомі зображення програмуються за допомогою Афінних перетворень.
+            Афінне перетворення — це лінійна трансформація, яка описується матрицею 2x2 (для масштабування, 
+            обертання, нахилу) та вектором зсуву (для переміщення). У 2D-просторі афінне перетворення точки (x, y) виглядає так:
+            <img src="~/images/lvl5/equations.png" class="bezier_curve_image">
+            <br><br>
+
+        </p>
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5231432%2Fmod_resource%2Fcontent%2F1%2FЗавдання%20лаб3.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a href="../Views/ProgressMap/CG_Level2_tryBezierCurve.cshtml">спробувати</a></p>
+
+    </div>
     <div class="taskCard">
 
+
         <form method="get" asp-controller="Tests" asp-action="StartTesting">
-            <input type="hidden" name="title" value="CG_Level5">
+            <input type="hidden" name="title" value="CG_Level3">
             <button type="submit">Start Testing</button>
         </form>
 
-
     </div>
 </div>
+
+
+
+
+
+
 </body>
 </html>
