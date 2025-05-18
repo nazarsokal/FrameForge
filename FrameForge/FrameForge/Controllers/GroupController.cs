@@ -52,6 +52,15 @@ public class GroupController : Controller
     {
         return View();
     }
+
+    [Route("[action]")]
+    public async Task<IActionResult> AssignStudent(string studentName, Guid groupId)
+    {
+        Student student = (Student)await _userService.GetUserByUserName(studentName);
+        await _groupService.AssignStudent(groupId, student.UserId);
+        
+        return RedirectToAction(nameof(GroupsOverview), teacher);
+    }
     
     private Teacher getTeacherFromSession()
     {

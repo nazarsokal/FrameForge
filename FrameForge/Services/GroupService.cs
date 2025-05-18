@@ -13,7 +13,10 @@ public class GroupService : IGroupService
         _dbContext = dbContext;
     }
     
-    public async Task<List<Group>> GetGroupByTeacherId(Guid id) => await _dbContext.Groups.Where(g => g.TeacherId == id).ToListAsync();
+    public async Task<List<Group>> GetGroupByTeacherId(Guid id) => await _dbContext.Groups
+        .Where(g => g.TeacherId == id)
+        .Include(g => g.Students)
+        .ToListAsync();
 
     public async Task AddGroup(Group group)
     {

@@ -71,7 +71,6 @@
 <body>
 
     <!-- Trigger Button -->
-    <label>У вас немає прикріплених груп</label>
     <button onclick="document.getElementById('createGroupModal').style.display='block'" class="open-modal-btn">
         Створити групу
     </button>
@@ -88,6 +87,7 @@
             </form>
         </div>
     </div>
+    
     @foreach (var group in ViewBag.Groups as List<Group>)
     {
         <div class="group-card" style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; width: 300px; font-family: Arial, sans-serif;">
@@ -101,6 +101,24 @@
                         <li>@students.Username; @students.StarsAmount; @students.MoneyAmount</li>
                     }
                 </ul>
+            </div>
+            <div>
+                <button onclick="document.getElementById('AssignStudentModal').style.display='block'" class="open-modal-btn">
+                    Добавити студента
+                </button>
+            </div>
+        </div>
+        
+        <div id="AssignStudentModal" class="modal">
+            <div class="modal-content">
+                <h2>Добавити Студента</h2>
+                <form method="post" asp-action="AssignStudent">
+                    <label for="groupId" style="visibility: hidden">Group Id</label>
+                    <input type="text" id="groupId" name="groupId" value="@group.Id" style="visibility: hidden"/>
+                    <label for="studentName">Ім'я Студента:</label>
+                    <input type="text" id="studentName" name="studentName" required/>
+                    <button type="submit">Добавити</button>
+                </form>
             </div>
         </div>
     }

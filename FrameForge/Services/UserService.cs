@@ -21,6 +21,8 @@ public class UserService : IUserService
         return stById;
     }
 
+    public async Task<object> GetUserByUserName(string userName) => await _context.Users.OfType<object>().FirstOrDefaultAsync(u => ((User)u).Username == userName);
+
     public async Task<User> UpdateStudent(Student student)
     {
         var studentFromDb = _context.Users.OfType<Student>().FirstOrDefault(st => st.UserId == student.UserId);
