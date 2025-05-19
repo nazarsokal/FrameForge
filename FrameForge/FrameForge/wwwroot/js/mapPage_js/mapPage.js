@@ -82,7 +82,7 @@
                 //Зміщення островів
                 islands.forEach(island => {
                     const islandRect = island.getBoundingClientRect();
-                    if (islandRect.right > window.innerWidth - 300) {
+                    if (islandRect.right > window.innerWidth - 320) {
                         island.classList.add('shifted');
                     }
                 });
@@ -111,7 +111,7 @@
         if (
             sidebar.classList.contains('active') &&
             !sidebar.contains(e.target) &&
-            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFourthLvl')
+            !e.target.closest('.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFourthLvl, .islandFifthLvl')
         ) {
             closeSidebar();
             islands.forEach(img => {

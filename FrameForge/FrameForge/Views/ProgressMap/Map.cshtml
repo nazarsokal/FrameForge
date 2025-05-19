@@ -27,13 +27,16 @@
             <li class="navButtons" id="activeWeb1"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
             <li class="navButtons"><a href="#"> Батл </a></li>
             <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
-            <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+            <li class="navButtons"><a asp-controller="Algorithms" asp-action="AlgorithmsOverview"> Алгоритми </a></li>
             <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця
                 лідерів </a></li>
         </ul>
     </nav>
 
 
+    <div class="Islands">
+        
+    
     <!--Острови з завданнями-->
     <div class="firstLvl">
         <div class="firstIsland">
@@ -88,6 +91,7 @@
                 <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationFifth">
             </a>
         </div>
+    </div>
     </div>
 </div>
 

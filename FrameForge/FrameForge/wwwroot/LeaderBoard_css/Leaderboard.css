@@ -38,6 +38,7 @@ h2:hover {
     align-items: center; 
     justify-content: flex-start;
     padding: 20px;
+    margin-top: 89px;
 }
 
 /* Обгортка таблиці */
@@ -72,6 +73,7 @@ h2:hover {
     z-index:1;
     top: 0;
     /*Треба пофіксити білу лінію яка з'являється справа при додаванні цих двох рядків (z-index і top)*/
+    margin: 1000px;
 }
 
 .leaderBoard th {  

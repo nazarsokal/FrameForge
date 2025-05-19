@@ -37,6 +37,7 @@ body {
     /* display: flex;
     flex-direction: column; */
     transition: .5s;
+    margin-top: 89px;
 }
 #smallTitle {
 
