@@ -28,8 +28,10 @@ public class RegistrationService : IRegistrationService
         if (student.Picture == null)
         {
             var path = @"wwwroot/images/icons_mainPage/account.png";
-            var pathInSt = await SaveDefaultProfileImageAsync(path, student.StudentId);
-            student.Picture = pathInSt;
+            await SaveDefaultProfileImageAsync(path, student.StudentId);
+            
+            var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
+            student.Picture = Convert.ToBase64String(stImage);
         }
         
         _dbContext.Students.Add(student);
