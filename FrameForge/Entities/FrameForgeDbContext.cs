@@ -20,5 +20,15 @@ public class FrameForgeDbContext : DbContext
         //Seed data to Students
         modelBuilder.Entity<Student>().HasData(new Student() 
             {StudentId = Guid.NewGuid(), Username = "TestUserName", Email = "TestUser@test.com", Password = "TestPassword", MoneyAmount = 100.45});
+
+        // Fluent API
+        modelBuilder.Entity<Student>().Property(temp => temp.Email)
+            .HasColumnType("varchar(40)");
+        
+        modelBuilder.Entity<Student>().Property(temp => temp.Password)
+            .HasColumnType("nvarchar(200)");
+        
+        modelBuilder.Entity<Student>().Property(temp => temp.GoogleId)
+            .HasColumnType("varchar(40)");
     }
 }
