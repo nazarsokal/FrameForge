@@ -20,6 +20,30 @@
 
 <body>
 
+    <!--Навігаційне меню-->
+    <div class="container">
+        <nav class="leftContent">
+            <ul class="leftNavMenu">
+                <li class="navButtons" id="activebtn"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                <li class="navButtons"><a href="#"> Батл </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                <li class="navButtons"><a asp-controller="Algorithms" asp-action="AlgorithmsOverview"> Алгоритми </a></li>
+                <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця
+                        лідерів </a></li>
+            </ul>
+        </nav>
+
+        
+        <!--Острови з завданнями-->
+        <div class="firstLvl">
+            <div class="firstIsland">
+                <a asp-controller="ProgressMap" asp-action="ViewLevel" asp-route-levelName="CG_IntroductionLevel"
+                   class="@(completedLevels.Any(l => l.LevelTopicName == "CG_IntroductionLevel") ? "completed" :
+                          inProgressLevels.Any(l => l.LevelTopicName == "CG_IntroductionLevel") ? "in-progress" : "")">
+                    <img src="~/images/icons_mapPage/island_FirstLvl.png" alt="islandFirstLvl" class="islandFirstLvl">
+                    <img src="~/images/icons_mapPage/location.png" alt="location" class="islandLocationFirst">
+                </a>
+            </div>
 <!--Навігаційне меню-->
 <div class="container">
     <nav class="leftContent">
