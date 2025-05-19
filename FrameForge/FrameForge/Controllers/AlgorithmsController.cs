@@ -9,12 +9,14 @@ public class AlgorithmsController : Controller
 {
     private readonly IAzureStorageService _azureStorageService;
     private readonly IMemoryCache _memoryCache;
+    private readonly IAlgorithmsService _algorithmsService;
     private List<Algorithm>? _algorithms;
 
-    public AlgorithmsController(IAzureStorageService azureStorageService, IMemoryCache memoryCache)
+    public AlgorithmsController(IAzureStorageService azureStorageService, IMemoryCache memoryCache, IAlgorithmsService algorithmsService)
     {
         _azureStorageService = azureStorageService;
         _memoryCache = memoryCache;
+        _algorithmsService = algorithmsService;
     }
     
     [Route("[action]")]
@@ -42,7 +44,8 @@ public class AlgorithmsController : Controller
         return await _memoryCache.GetOrCreateAsync("AlgorithmsCache", async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
-            return await _azureStorageService.DownloadAllAlgorithms();
+            var algsFromAzure =  await _azureStorageService.DownloadAllAlgorithms();
+            return await _algorithmsService.GetAlgorithms(algsFromAzure);   
         });
     }
 }

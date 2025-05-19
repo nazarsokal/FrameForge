@@ -22,6 +22,36 @@ namespace Entities.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Entities.Algorithm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("AlgorithmCss")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmHtml")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmJs")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("longblob");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Algorithm", (string)null);
+                });
+
             modelBuilder.Entity("Entities.EnrolledLevels", b =>
                 {
                     b.Property<Guid>("LevelsEnrolledKey")
@@ -88,7 +118,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("afbfb446-a78a-406d-8ce1-3d2522e8bd1e"),
+                            StudentId = new Guid("974db70b-6bc8-4a5c-afeb-1682aee7bf29"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",
