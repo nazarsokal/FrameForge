@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -11,6 +12,7 @@ public class AlgorithmsController : Controller
     private readonly IMemoryCache _memoryCache;
     private readonly IAlgorithmsService _algorithmsService;
     private List<Algorithm>? _algorithms;
+    private Student student;
 
     public AlgorithmsController(IAzureStorageService azureStorageService, IMemoryCache memoryCache, IAlgorithmsService algorithmsService)
     {
@@ -23,7 +25,9 @@ public class AlgorithmsController : Controller
     public async Task<IActionResult> AlgorithmsOverview()
     {
         var algorithms = await GetAlgorithmsAsync();
-        return View("Algorithms", algorithms);
+        ViewBag.Algorithms = algorithms;
+        student = GetStudentFromSession();
+        return View("Algorithms", student);
     }
 
     [HttpGet]
@@ -47,5 +51,14 @@ public class AlgorithmsController : Controller
             var algsFromAzure =  await _azureStorageService.DownloadAllAlgorithms();
             return await _algorithmsService.GetAlgorithms(algsFromAzure);   
         });
+    }
+    
+    private Student GetStudentFromSession()
+    {
+        var studentJson = HttpContext.Session.GetString("Student");
+        if (studentJson != null) student = JsonSerializer.Deserialize<Student>(studentJson);
+        if(student == null) throw new NullReferenceException("Student is null");
+        
+        return student;
     }
 }

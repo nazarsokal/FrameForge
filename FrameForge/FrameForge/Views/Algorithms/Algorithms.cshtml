@@ -1,17 +1,62 @@
-@model List<Entities.Algorithm>
+@using Entities
+@{
+    ViewData["Title"] = "Algorithms Page";
+    Layout = "_Layout";
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <title>Algorithms Page</title>
+    <link rel="stylesheet" href="algorithmPage_css/algorithmPage.css">
+    <link rel="stylesheet" href="mapPage_css/mapPage.css">
     <title>title</title>
 </head>
 <body>
 <div>
-      @foreach (var algorithms in @Model)
-      {
-          <h1><a asp-action="TestAlgorithm" style="text-decoration: none" asp-route-algorithmName="@algorithms.AlgorithmName">@algorithms.AlgorithmName</a></h1>
-      }
+
+    <div class="container">
+        <nav class="leftContent">
+            <ul class="leftNavMenu">
+                <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                <li class="navButtons"><a href="#"> Батл </a></li>
+                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                <li class="navButtons" id="activebtnA"><a asp-controller="Algorithms" asp-action="AlgorithmsOverview"> Алгоритми </a></li>
+                <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
+            </ul>
+        </nav>
+        @* <h1>Hello Slavko</h1> *@
+
+
+        <div class="Algorithm">
+            <div class="bodyOfAlgorithm">
+                @foreach (var algorithm in @ViewBag.Algorithms as List<Algorithm>)
+                {
+                    <div class="AlgorithmCard">
+                        <div class="AlgorithmHeader">
+                            <h2>Алгоритм @algorithm.AlgorithmName</h2>
+                        </div>
+                        <div class="bezierCurveIcon">
+                            <img src="data:image/jpeg;base64,@algorithm.Image" alt="BezierCurve" style="width: 300px" class="BezierCurveIcon">
+                        </div>
+                    <div class="AlgorithmDescription">
+                        <p>
+                            @algorithm.Description
+                        </p>
+                    </div>
+                        <a asp-action="TestAlgorithm" style="text-decoration: none" asp-route-algorithmName="@algorithm.AlgorithmName">
+                            <div class="AlgorithmOpen" type="submit">
+                                <span>Спробувати Алгоритм</span>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        
+    </div>
 </div>
 </body>
 </html>
