@@ -58,149 +58,15 @@
 
 <div class="tests">
     <div class="taskCard">
-        <p id="smallTitle"><strong>Тести</strong></p>
-        <div class="question">
-            <p><strong>Запитання 1:</strong> Яким чином визначається крива Безьє для параметра \( t \in [0;1] \)?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q1a" name="q1" value="a">
-                    <label for="q1a">a) \( B(t) = \sum_{i=0}^{n} P_i \cdot t^i \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q1b" name="q1" value="b">
-                    <label for="q1b">b) \( B(t) = \sum_{i=0}^{n} P_i \cdot b_{i,n}(t) \), де \( b_{i,n}(t) = \binom{n}{i} t^i (1-t)^{n-i} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q1c" name="q1" value="c">
-                    <label for="q1c">c) \( B(t) = P_0 + t(P_1 - P_0) \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q1d" name="q1" value="d">
-                    <label for="q1d">d) \( B(t) = \frac{1}{n} \sum_{i=0}^{n} P_i \cdot t \)</label>
-                </div>
-            </form>
-        </div>
 
-        <div class="question">
-            <p><strong>Запитання 2:</strong> Який степінь має кубічна крива Безьє?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q2a" name="q2" value="a">
-                    <label for="q2a">a) 1</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q2b" name="q2" value="b">
-                    <label for="q2b">b) 2</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q2c" name="q2" value="c">
-                    <label for="q2c">c) 3</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q2d" name="q2" value="d">
-                    <label for="q2d">d) 4</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="question">
-            <p><strong>Запитання 3:</strong> Яка матриця коефіцієнтів \( \mathbf{M}_B \) використовується в матричній формі кубічної кривої Безьє?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q3a" name="q3" value="a">
-                    <label for="q3a">a) \( \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q3b" name="q3" value="b">
-                    <label for="q3b">b) \( \begin{bmatrix} -1 & 3 & -3 & 1 \\ 3 & -6 & 3 & 0 \\ -3 & 3 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q3c" name="q3" value="c">
-                    <label for="q3c">c) \( \begin{bmatrix} 1 & -1 & 1 & -1 \\ 0 & 1 & -2 & 1 \\ 0 & 0 & 1 & -1 \\ 0 & 0 & 0 & 1 \end{bmatrix} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q3d" name="q3" value="d">
-                    <label for="q3d">d) \( \begin{bmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix} \)</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="question">
-            <p><strong>Запитання 4:</strong> Яка з наведених властивостей НЕ є характеристикою кривих Безьє?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q4a" name="q4" value="a">
-                    <label for="q4a">a) Крива завжди проходить через усі контрольні точки</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q4b" name="q4" value="b">
-                    <label for="q4b">b) Крива проходить через першу та останню контрольні точки</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q4c" name="q4" value="c">
-                    <label for="q4c">c) Крива лежить у межах опуклої оболонки своїх контрольних точок</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q4d" name="q4" value="d">
-                    <label for="q4d">d) Крива є гладкою і неперервною на відрізку \( t \in [0;1] \)</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="question">
-            <p><strong>Запитання 5:</strong> Як обчислюється базисна функція Бернштейна \( b_{i,n}(t) \) для кривої Безьє?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q5a" name="q5" value="a">
-                    <label for="q5a">a) \( b_{i,n}(t) = t^i (1-t)^{n-i} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q5b" name="q5" value="b">
-                    <label for="q5b">b) \( b_{i,n}(t) = \binom{n}{i} t^i (1-t)^{n-i} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q5c" name="q5" value="c">
-                    <label for="q5c">c) \( b_{i,n}(t) = \frac{t^i}{(1-t)^{n-i}} \)</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q5d" name="q5" value="d">
-                    <label for="q5d">d) \( b_{i,n}(t) = \binom{n}{i} t^{n-i} (1-t)^i \)</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="question">
-            <p><strong>Запитання 6:</strong> Скільки контрольних точок потрібно для побудови квадратичної кривої Безьє?</p>
-            <form class="answers">
-                <div class="answer">
-                    <input type="radio" id="q6a" name="q6" value="a">
-                    <label for="q6a">a) 2</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q6b" name="q6" value="b">
-                    <label for="q6b">b) 3</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q6c" name="q6" value="c">
-                    <label for="q6c">c) 4</label>
-                </div>
-                <div class="answer">
-                    <input type="radio" id="q6d" name="q6" value="d">
-                    <label for="q6d">d) 5</label>
-                </div>
-            </form>
-        </div>
-
-        <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-            @Html.AntiForgeryToken()
-
-           
-            <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
-            
-
-            <button type="submit">Complete Level</button>
+        <form method="get" asp-controller="Tests" asp-action="StartTesting">
+            <input type="hidden" name="title" value="CG_Level2">
+            <button type="submit">Start Testing</button>
         </form>
+
+        
     </div>
 </div>
+
 </body>
 </html>

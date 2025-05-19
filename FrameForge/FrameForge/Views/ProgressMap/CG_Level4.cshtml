@@ -5,17 +5,17 @@
     <title>title</title>
 </head>
 <body>
-<div>
-    <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-        @Html.AntiForgeryToken()
+
+    @* <input type="hidden" name="LevelName" value="@ViewBag.LevelName" /> *@
+    <div class="taskCard">
+
+        <form method="get" asp-controller="Tests" asp-action="StartTesting">
+            <input type="hidden" name="title" value="CG_Level4">
+            <button type="submit">Start Testing</button>
+        </form>
 
 
-        <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
-
-
-        <button type="submit">Complete Level</button>
-    </form>
-
-</div>
+    </div>
+    
 </body>
 </html>

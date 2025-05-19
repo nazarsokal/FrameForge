@@ -129,27 +129,20 @@
     </section>
 
     <section class="card test-card">
-        <h2>Перевір свої знання</h2>
-        <p>Готовий перевірити, як добре ти засвоїв основи комп'ютерної графіки? Тести з'являться незабаром, тож слідкуй за оновленнями! Поки що ти можеш переглянути матеріали ще раз, щоб підготуватися.</p>
-        <button class="test-btn" disabled aria-disabled="true">Пройти тест (скоро буде!)</button>
+        <div class="tests">
+            <div class="taskCard">
+
+                <form method="get" asp-controller="Tests" asp-action="StartTesting">
+                    <input type="hidden" name="title" value="CG_IntroductionLevel">
+                    <button type="submit">Start Testing</button>
+                </form>
+
+
+            </div>
+        </div>
     </section>
 
-    <section class="card result-card">
-        <h2>Твій результат!</h2>
-        <p>Ти молодець! Ти пройшов цей рівень і дізнався основи комп'ютерної графіки. Ось що ти заробив:</p>
-        <div id="stars" class="stars"></div>
-        <p><strong>Зароблено монет:</strong> <span id="money">0</span> 💰</p>
-        <form id="completeLevelForm" method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-            @Html.AntiForgeryToken()
-
-            <input type="hidden" name="moneyResult.StarsAmount" id="starsInput">
-            <input type="hidden" name="moneyResult.MoneyAmount" id="moneyInput">
-            <input type="hidden" name="levelName" value="CG_IntroductionLevel">
-
-            <button type="submit" class="submit-btn">Завершити рівень!</button>
-        </form>
-
-    </section>
+    
 </main>
 
 <div id="modal" class="modal">

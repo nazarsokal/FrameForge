@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    partial class FrameForgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503144647_Tests_Migration")]
+    partial class Tests_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("a20a1008-a76a-4a19-8edc-ff7c5ba60650"),
+                            StudentId = new Guid("537c815e-d0d6-4b66-bfd1-bfcc735dd31f"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",
@@ -103,11 +106,12 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Answer")
+                    b.PrimitiveCollection<string>("Answer")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("AnswerVariants")
+                    b.PrimitiveCollection<string>("AnswerVariants")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Question")
