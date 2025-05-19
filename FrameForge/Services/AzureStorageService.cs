@@ -2,8 +2,6 @@ using Azure.Storage.Files.Shares;
 using ServiceContracts;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares.Models;
-using Entities;
 using ServiceContracts.Enums;
 
 namespace Services;
@@ -77,43 +75,28 @@ public class AzureStorageService : IAzureStorageService
             throw;
         }
     }
-    public async Task<List<Algorithm>?> DownloadAllAlgorithms()
+
+    public async Task<Dictionary<FileExtensions, string>> DownloadAlgorithm(string algorithmName)
     {
-        List<Algorithm>? allAlgorithms = new();
+        Dictionary<FileExtensions, string> algorithmFiles = new Dictionary<FileExtensions, string>();
         ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
-        ShareDirectoryClient algorithmsDir = rootDir.GetSubdirectoryClient("Algorithms");
-
-        await foreach (ShareFileItem item in algorithmsDir.GetFilesAndDirectoriesAsync())
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient($"Algorithms/{algorithmName}");
+        var list = new List<string>() {"index.html", "style.css", "script.js"};
+        foreach (var file in list)
         {
-            if (!item.IsDirectory) continue;
+            ShareFileClient fileClient = folder.GetFileClient(file);
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content);
+            string content = await reader.ReadToEndAsync();
+            string ext = Path.GetExtension(file).TrimStart('.');
 
-            string algorithmName = item.Name;
-            ShareDirectoryClient algorithmFolder = algorithmsDir.GetSubdirectoryClient(algorithmName);
-            Algorithm algorithm = new() { AlgorithmName = algorithmName };
-
-            // Define file mapping
-            var fileMapping = new Dictionary<string, Action<string>>
+            if (Enum.TryParse<FileExtensions>(ext, true, out var fileExtension))
             {
-                { "index.html", content => algorithm.AlgorithmHtml = content },
-                { "style.css",  content => algorithm.AlgorithmCss  = content },
-                { "script.js",  content => algorithm.AlgorithmJs  = content },
-            };
-
-            foreach (var file in fileMapping.Keys)
-            {
-                ShareFileClient fileClient = algorithmFolder.GetFileClient(file);
-                if (!await fileClient.ExistsAsync()) continue;
-
-                var download = await fileClient.DownloadAsync();
-                using var reader = new StreamReader(download.Value.Content);
-                string content = await reader.ReadToEndAsync();
-
-                fileMapping[file](content);
+                algorithmFiles.Add(fileExtension, content);
             }
 
-            allAlgorithms.Add(algorithm);
         }
-
-        return allAlgorithms;
+        
+        return algorithmFiles;
     }
 }

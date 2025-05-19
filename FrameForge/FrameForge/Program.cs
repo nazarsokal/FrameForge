@@ -23,7 +23,6 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
-builder.Services.AddScoped<IAlgorithmsService, AlgorithmsService>();
 
 
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
