@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    [Migration("20250408190626_SrakaMotuka")]
-    partial class SrakaMotuka
+    [Migration("20250519105749_AlgorithmModal_Added")]
+    partial class AlgorithmModal_Added
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace Entities.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("Entities.Algorithm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("AlgorithmCss")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmHtml")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmJs")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AlgorithmName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("longblob");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Algorithm", (string)null);
+                });
 
             modelBuilder.Entity("Entities.EnrolledLevels", b =>
                 {
@@ -62,16 +92,16 @@ namespace Entities.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<string>("GoogleId")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<double>("MoneyAmount")
                         .HasColumnType("double");
 
                     b.Property<string>("Password")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Picture")
                         .HasColumnType("longtext");
@@ -91,7 +121,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("67f6a25d-51aa-4dd5-97de-8b0c010507e6"),
+                            StudentId = new Guid("974db70b-6bc8-4a5c-afeb-1682aee7bf29"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",

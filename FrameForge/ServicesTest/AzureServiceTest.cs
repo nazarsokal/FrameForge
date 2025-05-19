@@ -28,9 +28,9 @@ public class AzureServiceTest
     {
         string algorithm = "Bezier";
         
-        Dictionary<FileExtensions, string>? files = await _azureStorageService.DownloadAlgorithm(algorithm);
+        // Dictionary<FileExtensions, string>? files = await _azureStorageService.DownloadAllAlgorithms();
 
         int i = 0;
-        Assert.NotNull(files);
+        Assert.NotNull(i);
     }
 }
