@@ -27,9 +27,9 @@
 /*}*/
 
 
-.leftContent{
-    z-index: 10;
-}
+/*.leftContent{*/
+/*    z-index: 10;*/
+/*}*/
 .container{
     flex-grow: 1;
     display: flex;

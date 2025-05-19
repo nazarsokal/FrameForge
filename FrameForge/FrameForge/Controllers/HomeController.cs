@@ -25,7 +25,7 @@ public class HomeController : Controller
         }
         else
         {
-            Student student = await _studentService.GetStudentById(Guid.Parse("08dd7510-39f5-4501-8dd4-9587800680c0"));
+            Student student = await _studentService.GetStudentById(Guid.Parse("259cbdc9-447a-4332-8493-8ae3341fb040"));
             string userString = JsonSerializer.Serialize(student);
             HttpContext.Session.SetString("Student", userString);
             return View(student);
