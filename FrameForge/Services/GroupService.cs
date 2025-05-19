@@ -23,7 +23,7 @@ public class GroupService : IGroupService
         // _dbContext.Entry(group.Teacher).State = EntityState.Unchanged;
         _dbContext.Groups.Add(group);
         await _dbContext.SaveChangesAsync();
-    }
+    }         
 
     public async Task AssignStudent(Guid groupId, Guid studentId)
     {
