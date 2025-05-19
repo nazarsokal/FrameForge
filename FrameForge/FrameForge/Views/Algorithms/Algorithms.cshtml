@@ -1,4 +1,4 @@
-
+@using Entities
 @{
     ViewData["Title"] = "Algorithms Page";
     Layout = "_Layout";
@@ -11,6 +11,7 @@
     <title>Algorithms Page</title>
     <link rel="stylesheet" href="algorithmPage_css/algorithmPage.css">
     <link rel="stylesheet" href="mapPage_css/mapPage.css">
+    <title>title</title>
 </head>
 <body>
 <div>
@@ -30,56 +31,27 @@
 
         <div class="Algorithm">
             <div class="bodyOfAlgorithm">
-                <div class="AlgorithmCard">
-                    <div class="AlgorithmHeader">
-                        <h2>Алгоритм Безьє</h2>
-                    </div>
-                    <div class="bezierCurveIcon">
-                        <img src="/images/icons_algorithmsPage/bezierCurve_icon.png" alt="BezierCurve" style="width: 300px" class="BezierCurveIcon">
-                    </div>
+                @foreach (var algorithm in @ViewBag.Algorithms as List<Algorithm>)
+                {
+                    <div class="AlgorithmCard">
+                        <div class="AlgorithmHeader">
+                            <h2>Алгоритм @algorithm.AlgorithmName</h2>
+                        </div>
+                        <div class="bezierCurveIcon">
+                            <img src="data:image/jpeg;base64,@algorithm.Image" alt="BezierCurve" style="width: 300px" class="BezierCurveIcon">
+                        </div>
                     <div class="AlgorithmDescription">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam aut cum earum eligendi esse est ex illo iste, iure nemo, nulla odit omnis pariatur perspiciatis quia repellat soluta vero.
+                            @algorithm.Description
                         </p>
                     </div>
-                    <div class="AlgorithmOpen">
-                        <span>Спробувати Алгоритм</span>
+                        <a asp-action="TestAlgorithm" style="text-decoration: none" asp-route-algorithmName="@algorithm.AlgorithmName">
+                            <div class="AlgorithmOpen" type="submit">
+                                <span>Спробувати Алгоритм</span>
+                            </div>
+                        </a>
                     </div>
-                </div>
-
-                <div class="AlgorithmCard">
-                    <div class="AlgorithmHeader">
-                        <h2>Алгоритм Безьє</h2>
-                    </div>
-                    <div class="bezierCurveIcon">
-                        <img src="/images/icons_algorithmsPage/bezierCurve_icon.png" alt="BezierCurve" style="width: 300px" class="BezierCurveIcon">
-                    </div>
-                    <div class="AlgorithmDescription">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam aut cum earum eligendi esse est ex illo iste, iure nemo, nulla odit omnis pariatur perspiciatis quia repellat soluta vero.
-                        </p>
-                    </div>
-                    <div class="AlgorithmOpen">
-                        <span>Спробувати Алгоритм</span>
-                    </div>
-                </div>
-
-                <div class="AlgorithmCard">
-                    <div class="AlgorithmHeader">
-                        <h2>Алгоритм Безьє</h2>
-                    </div>
-                    <div class="bezierCurveIcon">
-                        <img src="/images/icons_algorithmsPage/bezierCurve_icon.png" alt="BezierCurve" style="width: 300px" class="BezierCurveIcon">
-                    </div>
-                    <div class="AlgorithmDescription">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam aut cum earum eligendi esse est ex illo iste, iure nemo, nulla odit omnis pariatur perspiciatis quia repellat soluta vero.
-                        </p>
-                    </div>
-                    <div class="AlgorithmOpen">
-                        <span>Спробувати Алгоритм</span>
-                    </div>
-                </div>
+                }
             </div>
         </div>
 
