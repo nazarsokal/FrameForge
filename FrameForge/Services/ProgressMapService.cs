@@ -42,4 +42,12 @@ public class ProgressMapService : IProgressMapService
 
     public List<EnrolledLevels> GetUsersEnrolledLevelsInProgress(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId && x.State == States.InProgress.ToString()).ToList();
     public List<EnrolledLevels> GetUsersEnrolledLevelsCompleted(Student studentEnrolled) => _dbContext.LevelsEnrolled.Where(x => x.StudentId == studentEnrolled.StudentId && x.State == States.Completed.ToString()).ToList();
+    public async Task SetNextLevel(Student studentEnrolled, string levelTopicName)
+    {
+        EnrolledLevels levelEnrolled = new EnrolledLevels() {LevelsEnrolledKey = Guid.NewGuid(), LevelTopicName = levelTopicName, 
+            StudentId = studentEnrolled.StudentId, State = States.InProgress.ToString(), MoneyReward = 0, StarsReward = 0};
+        
+        _dbContext.LevelsEnrolled.Add(levelEnrolled);
+        await _dbContext.SaveChangesAsync();
+    }
 }

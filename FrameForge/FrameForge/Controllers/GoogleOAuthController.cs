@@ -12,11 +12,13 @@ public class GoogleOAuthController : Controller
 {
     private readonly IGoogleOAuthService _googleOAuthService;
     private readonly IRegistrationService _registrationService;
+    private readonly IProgressMapService _progressMapService;
 
-    public GoogleOAuthController(IGoogleOAuthService googleOAuthService, IRegistrationService registrationService)
+    public GoogleOAuthController(IGoogleOAuthService googleOAuthService, IRegistrationService registrationService, IProgressMapService progressMapService)
     {
         _googleOAuthService = googleOAuthService;
         _registrationService = registrationService;
+        _progressMapService = progressMapService;
     }
 
     [Route("[action]")]
@@ -46,6 +48,13 @@ public class GoogleOAuthController : Controller
         if (studentInfo == null) throw new NullReferenceException();
         
         var student = await _registrationService.RegisterStudentWithGoogle(studentInfo);
+        
+        var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
+        var enrolledLevelsListCompleted =  _progressMapService.GetUsersEnrolledLevelsInProgress(student);
+        if (enrolledLevelsList.Count == 0 && enrolledLevelsListCompleted.Count == 0)
+        {
+            await _progressMapService.SetNextLevel(student, "CG_IntroductionLevel");
+        }
         
         string userString = JsonSerializer.Serialize(student);
         HttpContext.Session.SetString("Student", userString);
