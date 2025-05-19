@@ -87,41 +87,42 @@
             </form>
         </div>
     </div>
-    
+
     @foreach (var group in ViewBag.Groups as List<Group>)
     {
+        var modalId = $"AssignStudentModal_{group.Id}";
         <div class="group-card" style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; width: 300px; font-family: Arial, sans-serif;">
             <h2 style="margin-top: 0;">Group Name: @group.GroupName</h2>
             <p><strong>Teacher:</strong> @group.Teacher.Username</p>
             <div>
                 <strong>Students:</strong>
                 <ul style="padding-left: 20px; margin-top: 4px;">
-                    @foreach (var students in group.Students)
+                    @foreach (var student in group.Students)
                     {
-                        <li>@students.Username; @students.StarsAmount; @students.MoneyAmount</li>
+                        <li>@student.Username; @student.StarsAmount; @student.MoneyAmount</li>
                     }
                 </ul>
             </div>
             <div>
-                <button onclick="document.getElementById('AssignStudentModal').style.display='block'" class="open-modal-btn">
+                <button onclick="document.getElementById('@modalId').style.display='block'" class="open-modal-btn">
                     Добавити студента
                 </button>
             </div>
         </div>
-        
-        <div id="AssignStudentModal" class="modal">
+
+        <div id="@modalId" class="modal" style="display:none;">
             <div class="modal-content">
                 <h2>Добавити Студента</h2>
                 <form method="post" asp-action="AssignStudent">
-                    <label for="groupId" style="visibility: hidden">Group Id</label>
-                    <input type="text" id="groupId" name="groupId" value="@group.Id" style="visibility: hidden"/>
+                    <input type="hidden" name="groupId" value="@group.Id" />
                     <label for="studentName">Ім'я Студента:</label>
-                    <input type="text" id="studentName" name="studentName" required/>
+                    <input type="text" id="studentName" name="studentName" required />
                     <button type="submit">Добавити</button>
                 </form>
             </div>
         </div>
     }
+
 
 </body>
 </html>
