@@ -50,7 +50,11 @@ body {
     padding: 0;
     min-height: 100vh;
     /*background: linear-gradient(180deg, #6b73ff, #000dff);*/
-    background: deepskyblue;
+    /*background: deepskyblue;*/
+}
+
+.Islands{
+    margin-top: 89px;
 }
 
 /* Стилі для островів */
