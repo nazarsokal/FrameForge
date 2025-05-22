@@ -25,9 +25,9 @@ public class HomeController : Controller
         }
         else
         {
-            // Student student = await _studentService.GetStudentById(Guid.Parse("259cbdc9-447a-4332-8493-8ae3341fb040"));
-            // string userString = JsonSerializer.Serialize(student);
-            // HttpContext.Session.SetString("Student", userString);
+            Student student = await _studentService.GetStudentById(Guid.Parse("131c8f25-d521-4c55-b4f6-c45e7cfaf164"));
+            string userString = JsonSerializer.Serialize(student);
+            HttpContext.Session.SetString("Student", userString);
             return View();
         }
         

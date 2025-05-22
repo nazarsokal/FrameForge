@@ -46,11 +46,24 @@
                         {
                             <tr>
                                 <td>
+
+                                    <!--  Відображення іконок профілю користувача  -->
+                                    @if (@student.Picture != null)
+                                    {
+                                        <img src="data:image/jpeg;base64,@student.Picture" alt="icon" class="accountIconLeaderboard">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIconLeaderboard">
+                                    }
+                                    @student.Username
+                                    
+                                    <!-- Відображення іконок з медалькою-->
                                     @if (iterator == 1)
                                     {
                                         <img src="~/images/icons_LeaderBoard/medal_FirstPlace.png" alt="medal" class="medalIcon1" id="medalIcon">
                                     }
-                                    else if(iterator == 2)
+                                    else if (iterator == 2)
                                     {
                                         <img src="~/images/icons_LeaderBoard/medal_SecondPlace.png" alt="medal" class="medalIcon1" id="medalIcon">
                                     }
@@ -58,18 +71,8 @@
                                     {
                                         <img src="~/images/icons_LeaderBoard/medal_ThirdPlace.png" alt="medal" class="medalIcon1" id="medalIcon">
                                     }
-                                    
-                                    @if (@student.Picture != null)
-                                    {
-                                        <img src="data:image/jpeg;base64,@student.Picture" alt="icon" class="accountIconLeaderboard">
-                                    }
-                                    else
-                                    {
-                                        <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIconLeaderboard">   
-                                    }
-                                    
-                                    
-                                    @student.Username
+
+
                                 </td>
                                 <td>
                                     @student.StarsAmount
