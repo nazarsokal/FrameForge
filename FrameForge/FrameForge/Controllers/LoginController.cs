@@ -28,7 +28,7 @@ namespace FrameForge.Controllers
             {
                 if (ld.IsTeacher)
                 {
-                    User? user = await _registrationService.GetTeacher(ld.Username, ld.Password);
+                    Teacher? user = await _registrationService.GetTeacher(ld.Username, ld.Password);
                     
                     if (user != null)
                     {
@@ -44,7 +44,7 @@ namespace FrameForge.Controllers
                 }
                 else
                 {
-                    User? user = await _registrationService.GetStudent(ld.Username, ld.Password);
+                    Student? user = await _registrationService.GetStudent(ld.Username, ld.Password);
                     
                     if (user != null)
                     {

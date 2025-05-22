@@ -21,14 +21,21 @@ public class ExerciseService : IExerciseService
         }
     }
 
-    public async Task<List<Exercise>?> GetExercises(Guid groupId)
+    public async Task<List<Exercise>?> GetExercises(Guid? groupId)
     {
-        return await _context.Exercises.Where(x => x.GroupId == groupId).ToListAsync();
+        var l = await _context.Exercises.Where(x => x.GroupId == groupId).ToListAsync();
+        
+        return l;
     }
 
-    public Task<Exercise> GetExercise(Guid exerciseId)
+    public async Task<Exercise> GetExercise(Guid exerciseId)
     {
-        throw new NotImplementedException();
+        return await _context.Exercises.FirstOrDefaultAsync(x => x.ExerciseId == exerciseId);
+    }
+
+    public Task<Exercise> Receive(Guid exerciseId)
+    {
+        return _context.Exercises.FirstOrDefaultAsync(x => x.ExerciseId == exerciseId);
     }
 
     public Task SubmitExercise(ExerciseSubmission exerciseSubmission)

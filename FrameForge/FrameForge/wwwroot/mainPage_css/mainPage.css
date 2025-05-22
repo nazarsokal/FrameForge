@@ -126,7 +126,7 @@ body {
 
 /* Стилі для контейнера зі завданнями */
 .container {
-    display: flex;
+    /*display: flex;*/
     position: relative;
     width: 100%;
 }

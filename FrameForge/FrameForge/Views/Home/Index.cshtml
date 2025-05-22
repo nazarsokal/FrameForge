@@ -117,6 +117,11 @@
                                         <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
                                     </div>
                                 </div>
+                                <a asp-controller="Exercise" asp-action="CompleteExercise" asp-route-exerciseId="@exercise.ExerciseId">
+                                    <div class="buttonTask">
+                                        <h3>Виконати завдання</h3>
+                                    </div>
+                                </a>
                             </li>
                         }
                     </ul>

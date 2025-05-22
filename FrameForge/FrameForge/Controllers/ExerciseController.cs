@@ -19,10 +19,17 @@ public class ExerciseController : Controller
         _groupService = groupService;
     }
     
-    public async Task<IActionResult> CompleteExercise(Guid ExerciseId)
+    [HttpGet]
+    [Route("[controller]/[action]")]
+    public async Task<IActionResult> CompleteExercise(Guid exerciseId)
     {
-        /*await _exerciseService.GetExercises(ExerciseId);*/
-        return View();
+        student = (Student)GetUserFromSession();
+        List<Exercise>? exercises = await _exerciseService.GetExercises(student.GroupId);
+        
+        var exercise = exercises.FirstOrDefault(e => e.ExerciseId == exerciseId);
+        ViewBag.Exercise = exercise;
+        
+        return View(student);
     }
 
     [HttpGet]
@@ -76,7 +83,14 @@ public class ExerciseController : Controller
         if(userType == "Teacher")
         {
             var userJson = HttpContext.Session.GetString("Teacher");
-            user = JsonSerializer.Deserialize<Teacher>(userJson);
+            Teacher teacher = JsonSerializer.Deserialize<Teacher>(userJson);
+            return teacher;
+        }
+        else
+        {
+            var userJson = HttpContext.Session.GetString("Student");
+            Student st = JsonSerializer.Deserialize<Student>(userJson);
+            return st;
         }
         return user;
     }

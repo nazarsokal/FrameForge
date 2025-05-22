@@ -38,7 +38,7 @@ public class RegistrationService : IRegistrationService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<User> GetStudent(string username,string password)
+    public async Task<Student> GetStudent(string username,string password)
     {
         var user = await _dbContext.Users.OfType<Student>().SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
