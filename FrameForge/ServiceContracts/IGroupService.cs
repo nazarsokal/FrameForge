@@ -8,7 +8,7 @@ public interface IGroupService
     
     public Task AddGroup(Group group);
     
-    public Task<Group> GetGroupByStudentId(Guid id);
+    public Task<Group?> GetGroupByStudentId(Guid id);
     
     public Task AssignStudent(Guid groupId, Guid studentId);
     

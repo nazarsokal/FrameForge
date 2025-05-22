@@ -29,11 +29,18 @@ public class HomeController : Controller
                 var userJson = HttpContext.Session.GetString("Student");
                 user = JsonSerializer.Deserialize<Student>(userJson);
  
-                var studentGroup = await _groupService.GetGroupByStudentId(user.UserId);
-                var exercisesList = await _exerciseService.GetExercises(studentGroup.Id);
+                Group? studentGroup = await _groupService.GetGroupByStudentId(user.UserId);
+                if (studentGroup != null)
+                {
+                    List<Exercise>? exercisesList = await _exerciseService.GetExercises(studentGroup.Id);
 
-                ViewBag.GroupName = studentGroup.GroupName;
-                ViewBag.Exercises = exercisesList;
+                    ViewBag.GroupName = studentGroup.GroupName;
+                    ViewBag.Exercises = exercisesList;
+                }
+                else
+                {
+                    ViewBag.GroupName = "";
+                }
             }
             else if(userType == "Teacher")
             {
@@ -41,7 +48,7 @@ public class HomeController : Controller
                 user = JsonSerializer.Deserialize<Teacher>(userJson);
                 Dictionary<string, List<Exercise>> exercisesDictionary = new Dictionary<string, List<Exercise>>();
                 
-                var groups = await _groupService.GetGroupByTeacherId(user.UserId);
+                List<Group> groups = await _groupService.GetGroupByTeacherId(user.UserId);
 
                 foreach (var group in groups)
                 {
@@ -51,7 +58,6 @@ public class HomeController : Controller
                 ViewBag.Groups = groups;
                 ViewBag.Exercises = exercisesDictionary;
             }
-            // Use your student object!
             return View(user);
         }
         

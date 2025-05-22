@@ -25,7 +25,7 @@ public class GroupService : IGroupService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Group> GetGroupByStudentId(Guid id)
+    public async Task<Group?> GetGroupByStudentId(Guid id)
     {
         var group = await _dbContext.Groups.Include(g => g.Students).FirstOrDefaultAsync(g => g.Students.Any(s => s.UserId == id));
         

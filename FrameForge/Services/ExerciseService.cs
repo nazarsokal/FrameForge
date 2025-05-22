@@ -21,7 +21,7 @@ public class ExerciseService : IExerciseService
         }
     }
 
-    public async Task<List<Exercise>> GetExercises(Guid groupId)
+    public async Task<List<Exercise>?> GetExercises(Guid groupId)
     {
         return await _context.Exercises.Where(x => x.GroupId == groupId).ToListAsync();
     }

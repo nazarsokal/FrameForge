@@ -6,7 +6,7 @@ public interface IExerciseService
 {
     public Task AddExercise(Exercise exercise);
     
-    public Task<List<Exercise>> GetExercises(Guid groupId);
+    public Task<List<Exercise>?> GetExercises(Guid groupId);
     
     public Task<Exercise> GetExercise(Guid exerciseId);
     
