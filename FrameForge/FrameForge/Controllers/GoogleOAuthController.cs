@@ -58,7 +58,7 @@ public class GoogleOAuthController : Controller
                 Picture = studentInfo.Picture,
             };
             
-            User user = await _registrationService.RegisterStudentWithGoogle(studentFromGoogleInfo);  
+            Student user = await _registrationService.RegisterStudentWithGoogle(studentFromGoogleInfo) as Student;  
             if (user is Student student)
             {
                 var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
@@ -84,7 +84,7 @@ public class GoogleOAuthController : Controller
                 GoogleId = studentInfo.GoogleId,
                 Picture = studentInfo.Picture,
             };
-            User user = await _registrationService.RegisterStudentWithGoogle(teacherFromGoogleInfo);
+            Teacher user = await _registrationService.RegisterStudentWithGoogle(teacherFromGoogleInfo) as Teacher;
 
             if (user is Teacher teacher)
             {

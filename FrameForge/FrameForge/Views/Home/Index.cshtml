@@ -1,4 +1,5 @@
 @using Entities
+@using Microsoft.IdentityModel.Tokens
 @model Entities.User?
 
 @{
@@ -9,6 +10,7 @@
     
     var exercises = ViewBag.Exercises as Dictionary<string, List<Exercise>> ?? new Dictionary<string, List<Exercise>>();
     var exercisesList = ViewBag.Exercises as List<Exercise> ?? new List<Exercise>();
+    string groupName = ViewBag.GroupName as string ?? "";
 }
 
 
@@ -80,35 +82,46 @@
         }
         else
         {
-            <div class="task">
-                <h1>@ViewBag.GroupName</h1>
-                <ul class="bodyOfTask">
-                    @foreach (var exercise in exercisesList)
-                    {
-                        <li class="taskCard">
-                            <div class="TaskHeader">
-                                <h2>@exercise.ExerciseName</h2>
-                                <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
-                                    @exercise.ExererciseDifficulty
-                                </span>
-                            </div>
-                            <div class="taskDiscription">
-                                <p>@exercise.ExerciseRequirements</p>
-                            </div>
-                            <div class="points">
-                                <div class="starPoint">
-                                    StarPoint: +@exercise.StarsReward
-                                    <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+            if (groupName.IsNullOrEmpty())
+            {
+                <h1>Вас не додано до групи</h1>
+            }
+            else if (exercisesList.Count == 0)
+            {
+                <h1>У вашій групі поки немає прикріплених вправ</h1>
+            }
+            else
+            {
+                <div class="task">
+                    <h1>@ViewBag.GroupName</h1>
+                    <ul class="bodyOfTask">
+                        @foreach (var exercise in exercisesList)
+                        {
+                            <li class="taskCard">
+                                <div class="TaskHeader">
+                                    <h2>@exercise.ExerciseName</h2>
+                                    <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
+                                        @exercise.ExererciseDifficulty
+                                    </span>
                                 </div>
-                                <div class="moneyForTask">
-                                    Money For Task: +@exercise.MoneyReward
-                                    <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                <div class="taskDiscription">
+                                    <p>@exercise.ExerciseRequirements</p>
                                 </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
-            </div>
+                                <div class="points">
+                                    <div class="starPoint">
+                                        StarPoint: +@exercise.StarsReward
+                                        <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                                    </div>
+                                    <div class="moneyForTask">
+                                        Money For Task: +@exercise.MoneyReward
+                                        <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         }
     </div>
 </body>
