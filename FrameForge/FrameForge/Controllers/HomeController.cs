@@ -28,6 +28,12 @@ public class HomeController : Controller
             {
                 var userJson = HttpContext.Session.GetString("Student");
                 user = JsonSerializer.Deserialize<Student>(userJson);
+ 
+                var studentGroup = await _groupService.GetGroupByStudentId(user.UserId);
+                var exercisesList = await _exerciseService.GetExercises(studentGroup.Id);
+
+                ViewBag.GroupName = studentGroup.GroupName;
+                ViewBag.Exercises = exercisesList;
             }
             else if(userType == "Teacher")
             {
