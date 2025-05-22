@@ -58,7 +58,7 @@ public class GoogleOAuthController : Controller
                 Picture = studentInfo.Picture,
             };
             
-            Student user = await _registrationService.RegisterStudentWithGoogle(studentFromGoogleInfo) as Student;  
+            User user = await _registrationService.RegisterStudentWithGoogle(studentFromGoogleInfo);  
             if (user is Student student)
             {
                 var enrolledLevelsList =  _progressMapService.GetUsersEnrolledLevelsCompleted(student);
@@ -70,6 +70,12 @@ public class GoogleOAuthController : Controller
                 string userString = JsonSerializer.Serialize(student);
                 HttpContext.Session.SetString("UserType", "Student");
                 HttpContext.Session.SetString("Student", userString);
+            }
+            else if(user is Teacher teacher)
+            {
+                string userString = JsonSerializer.Serialize(teacher);
+                HttpContext.Session.SetString("UserType", "Teacher");
+                HttpContext.Session.SetString("Teacher", userString);
             }
             
         }
