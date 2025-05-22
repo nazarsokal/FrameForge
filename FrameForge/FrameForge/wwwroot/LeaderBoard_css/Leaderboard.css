@@ -95,7 +95,7 @@ h2:hover {
 .leaderBoard td {
     padding: 12px;
     font-size: 14px;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .leaderBoard td:first-child {
