@@ -126,11 +126,12 @@ body {
 
 /* Стилі для контейнера зі завданнями */
 .container {
-    display: flex;
+    /*display: flex;*/
     position: relative;
     width: 100%;
 }
 
+/* Контейнер для завдань */
 .task {
     flex-grow: 1;
     padding: 20px;
@@ -149,6 +150,7 @@ body {
     gap: 20px;
     margin: 0;
     padding: 0;
+    /* Видаляємо align-items: stretch, якщо є */
 }
 
 .taskCard {
@@ -156,12 +158,18 @@ body {
     background: #eeefff;
     border: none;
     border-radius: 10px;
-    width: calc(33.33% - 13.33px);
     padding: 15px;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
+    transition: .5s;
     display: flex;
     flex-direction: column;
-    transition: .5s;
+    flex: 1 1 200px;
+    max-width: 500px;
+    min-width: 200px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    /* Не задаємо висоту, залишимо це для JS */
 }
 
 .taskCard:hover {
@@ -169,17 +177,17 @@ body {
 }
 
 .taskHeader {
-    position: relative;
     background: linear-gradient(45deg, #318ced, #ed31ab);
     padding: 10px;
     border-radius: 50px;
     color: white;
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Додаємо відступ знизу */
 }
 
-h2 {
+h2, h3 {
     background: transparent;
     padding: 10px 20px;
     border-radius: 10px;
@@ -187,21 +195,8 @@ h2 {
     color: #333;
     margin: 0;
     text-align: center;
-    display: block;
-    width: 100%;
     font-family: 'Montserrat', sans-serif;
-}
-
-h3{
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word; /* Перенос слів у заголовках */
 }
 
 .buttonTask{
@@ -227,6 +222,8 @@ p {
     font-size: 14px;
     color: #333;
     font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word; /* Перенос слів */
+    hyphens: auto; /* Автоматичний перенос слів */
 }
 
 /* Стилі для іконок профілю */
