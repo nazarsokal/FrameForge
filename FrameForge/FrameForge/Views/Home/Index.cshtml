@@ -4,7 +4,10 @@
 @{
     ViewData["Title"] = "Frame Forge";
     Layout = "_Layout";
+
     var isTeacher = Model?.GetType() == typeof(Teacher);
+    
+    var exercises = ViewBag.Exercises as Dictionary<string, List<Exercise>>;
 }
 
 
@@ -26,7 +29,7 @@
                 @if (isTeacher)
                 {
                     <li class="navButtons"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
-                    <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Створити Завдання </a></li>
+                    <li class="navButtons"><a asp-controller="Exercise" asp-action="CreateExercise"> Створити Завдання </a></li>
                 }
                 else
                 {
@@ -39,122 +42,41 @@
             </ul>
         </nav>
 
-        <!--Тестові завданя-->
-        <div class="task">
-            <ul class="bodyOfTask">
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <span class="lvlMode easy">Easy</span>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <span class="lvlMode easy">Easy</span>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode medium">Medium</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode medium">Medium</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode hard">Hard</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +50 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +1000 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        @if (isTeacher)
+        {
+            @foreach (var group in exercises)
+            {
+                <div class="task">
+                    <p>@group.Key</p>
+                    <ul class="bodyOfTask">
+                        @foreach (var exercise in group.Value)
+                        {
+                            <li class="taskCard">
+                                <div class="TaskHeader">
+                                    <h2>@exercise.ExerciseName</h2>
+                                    <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
+                                        @exercise.ExererciseDifficulty
+                                    </span>
+                                </div>
+                                <div class="taskDiscription">
+                                    <p>@exercise.ExerciseRequirements</p>
+                                </div>
+                                <div class="points">
+                                    <div class="starPoint">
+                                        StarPoint: +@exercise.StarsReward
+                                        <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                                    </div>
+                                    <div class="moneyForTask">
+                                        Money For Task: +@exercise.MoneyReward
+                                        <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
     </div>
 </body>
 

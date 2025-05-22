@@ -12,12 +12,16 @@ public class FrameForgeDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
     public virtual DbSet<Group> Groups { get; set; }
+    public virtual DbSet<Exercise> Exercises { get; set; }
+    public virtual DbSet<ExerciseSubmission> ExerciseSubmissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<EnrolledLevels>().ToTable("EnrolledLevels");
         modelBuilder.Entity<Group>().ToTable("Groups");
+        modelBuilder.Entity<Exercise>().ToTable("Exercises");
+        modelBuilder.Entity<ExerciseSubmission>().ToTable("ExerciseSubmissions");
         
         modelBuilder.Entity<User>()
             .HasDiscriminator<string>("TypeOfUser")
@@ -33,6 +37,9 @@ public class FrameForgeDbContext : DbContext
             .HasOne(s => s.Group)
             .WithMany(g => g.Students)
             .HasForeignKey(s => s.GroupId);
+
+        modelBuilder.Entity<ExerciseSubmission>()
+            .HasOne(s => s.StudentSubmitted);
 
     }
 }

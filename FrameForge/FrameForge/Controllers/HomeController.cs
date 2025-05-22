@@ -8,10 +8,14 @@ namespace FrameForge.Controllers;
 public class HomeController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IGroupService _groupService;
+    private readonly IExerciseService _exerciseService;
 
-    public HomeController(IUserService userService)
+    public HomeController(IUserService userService, IGroupService groupService, IExerciseService exerciseService)
     {
         _userService = userService;
+        _groupService = groupService;
+        _exerciseService = exerciseService;
     }
     [Route("/")]
     public async Task<IActionResult> Index()
@@ -29,6 +33,17 @@ public class HomeController : Controller
             {
                 var userJson = HttpContext.Session.GetString("Teacher");
                 user = JsonSerializer.Deserialize<Teacher>(userJson);
+                Dictionary<string, List<Exercise>> exercisesDictionary = new Dictionary<string, List<Exercise>>();
+                
+                var groups = await _groupService.GetGroupByTeacherId(user.UserId);
+
+                foreach (var group in groups)
+                {
+                    exercisesDictionary[group.GroupName] = await _exerciseService.GetExercises(group.Id); 
+                }
+                
+                ViewBag.Groups = groups;
+                ViewBag.Exercises = exercisesDictionary;
             }
             // Use your student object!
             return View(user);
