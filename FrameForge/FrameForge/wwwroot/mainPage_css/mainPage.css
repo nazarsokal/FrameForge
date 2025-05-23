@@ -150,7 +150,7 @@ body {
     gap: 20px;
     margin: 0;
     padding: 0;
-    /* Видаляємо align-items: stretch, якщо є */
+    align-items: flex-start; 
 }
 
 .taskCard {
@@ -163,13 +163,15 @@ body {
     transition: .5s;
     display: flex;
     flex-direction: column;
-    flex: 1 1 200px;
+    flex: 0 1 auto;
     max-width: 500px;
     min-width: 200px;
     box-sizing: border-box;
     overflow-wrap: break-word;
     hyphens: auto;
-    /* Не задаємо висоту, залишимо це для JS */
+    /*Тут можна добавити скрол для дуже великого тексту*/
+    /*max-height: 300px;*/
+    /*overflow-y: auto;*/
 }
 
 .taskCard:hover {
@@ -184,7 +186,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px; /* Додаємо відступ знизу */
+    margin-bottom: 10px;
 }
 
 h2, h3 {
@@ -196,7 +198,7 @@ h2, h3 {
     margin: 0;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    overflow-wrap: break-word; /* Перенос слів у заголовках */
+    overflow-wrap: break-word;
 }
 
 .buttonTask{
@@ -217,15 +219,18 @@ h2, h3 {
     */ background: #f7e018;
 }
 
-p {
-    margin: 2px 0;
+.taskDiscription {
+    margin-bottom: 10px;
+}
+
+.taskDiscription p {
+    margin: 0; 
     font-size: 14px;
     color: #333;
     font-family: 'Montserrat', sans-serif;
-    overflow-wrap: break-word; /* Перенос слів */
-    hyphens: auto; /* Автоматичний перенос слів */
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
-
 /* Стилі для іконок профілю */
 .accountIcon {
     width: 40px;
