@@ -102,14 +102,44 @@
     </div>
 
     <label class="label">Your Code:</label>
+    
     <iframe
         frameBorder="0"
         height="450px"
-        src="https://onecompiler.com/embed/html"
+        src="https://onecompiler.com/embed/html?codeChangeEvent=true"
         width="100%"
     ></iframe>
 
-    <button type="submit">Submit</button>
+    <button type="submit" onclick="submitForm()">Submit</button>
 </div>
 </body>
+<script>
+    var code = "";
+    
+    window.onmessage = function (e) {
+        if (e.data && e.data.language) {
+            console.log(e.data)
+            code = e.data;
+        }
+    };
+
+    function submitForm() {
+        var ex = @Html.Raw(Json.Serialize(exercise));
+        console.log(code);
+        fetch("/Exercise/CompleteExercise", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                exercise: ex,
+                action: code.action,
+                files: code.files,
+                language: code.language,
+                result: code.result,
+                stdin: code.stdin,
+                _id: code._id
+            })
+        });
+    }
+
+</script>
 </html>

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
@@ -30,6 +31,19 @@ public class ExerciseController : Controller
         ViewBag.Exercise = exercise;
         
         return View(student);
+    }
+
+    [HttpPost]
+    [Route("[controller]/[action]")]
+    public async Task<IActionResult> CompleteExercise([FromBody] ExerciseRequest request)
+    {
+        // Example usage
+        var language = request.Language;
+        var fileCount = request.Files?.Count ?? 0;
+        var output = request.Result?.Output;
+
+
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
@@ -94,4 +108,41 @@ public class ExerciseController : Controller
         }
         return user;
     }
+}
+
+public class ExerciseRequest
+{
+    [JsonPropertyName("exercise")]
+    public Exercise Exercise { get; set; }
+    
+    [JsonPropertyName("action")]
+    public string Action { get; set; }
+
+    [JsonPropertyName("files")]
+    public List<ExerciseFile> Files { get; set; }
+
+    [JsonPropertyName("language")]
+    public string Language { get; set; }
+
+    [JsonPropertyName("result")]
+    public ExerciseResult Result { get; set; }
+
+    [JsonPropertyName("stdin")]
+    public string Stdin { get; set; }
+
+    [JsonPropertyName("_id")]
+    public string Id { get; set; }
+}
+
+
+public class ExerciseFile
+{
+    public string Name { get; set; }
+    public string Content { get; set; }
+}
+
+public class ExerciseResult
+{
+    public bool Success { get; set; }
+    public string Output { get; set; }
 }
