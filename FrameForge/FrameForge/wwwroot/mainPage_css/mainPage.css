@@ -124,6 +124,22 @@ body {
    background: linear-gradient(135deg, #318ced, #ed31ab);
 }
 
+/*Стилі для назви групи*/
+h2{
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 50px;
+    transition: background 0.5s;
+    margin-top: auto;
+    text-align: center;
+}
+
+
 /* Стилі для контейнера зі завданнями */
 .container {
     /*display: flex;*/
@@ -193,7 +209,7 @@ body {
     margin-bottom: 10px;
 }
 
-h2, h3 {
+h3 {
     background: transparent;
     padding: 10px 20px;
     border-radius: 10px;
