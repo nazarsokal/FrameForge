@@ -15,6 +15,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddSingleton<BattleSingleton>();
 
 builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
 
