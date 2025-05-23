@@ -2,19 +2,19 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using Services;
+using Services.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<LeaderboardService>();
 builder.Services.AddScoped<TestsServise>();
-
+builder.Services.AddSignalR();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
 
 builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
 
@@ -23,8 +23,7 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
-builder.Services.AddScoped<IBattleService, BattleService > ();
-
+builder.Services.AddScoped<IBattleService, BattleService>();
 
 builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 {
@@ -37,7 +36,11 @@ builder.Services.AddDbContext<FrameForgeDbContext>(options =>
 
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+    logging.SetMinimumLevel(LogLevel.Debug);
+});
 var app = builder.Build();
 
 if(builder.Environment.IsDevelopment())
@@ -46,6 +49,7 @@ if(builder.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllers();
+app.MapHub<BattleHub>("/battleHub");
 app.UseSession();
 
 app.Run();

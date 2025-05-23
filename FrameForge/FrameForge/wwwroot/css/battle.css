@@ -1,0 +1,120 @@
+.battle-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.battle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.players-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.player {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.player.status {
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.question-container {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.answers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.answers-container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.answers-container button:hover {
+    background: #0056b3;
+}
+
+.timer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.battle-result {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.battle-result button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.battle-result button:hover {
+    background: #218838;
+}
+
+.available-rooms {
+    margin-top: 20px;
+}
+
+.available-rooms ul {
+    list-style: none;
+    padding: 0;
+}
+
+.available-rooms li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.available-rooms button {
+    padding: 5px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.available-rooms button:hover {
+    background: #0056b3;
+} 

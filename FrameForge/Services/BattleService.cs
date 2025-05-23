@@ -2,20 +2,26 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
+using Microsoft.AspNetCore.SignalR;
+using Services.Hubs;
 
 namespace Services;
 
 public class BattleService : IBattleService
 {
-    FrameForgeDbContext _context;
-    private Random _random;
+    private readonly FrameForgeDbContext _context;
+    private readonly IHubContext<BattleHub> _hubContext;
+    private readonly Random _random;
 
-    public BattleService(FrameForgeDbContext context)
+    public BattleService(
+        FrameForgeDbContext context,
+        IHubContext<BattleHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
         _random = new Random();
     }
-    
+
     public string GetRandom20Tests()
     {
         var tests = _context.Tests.ToList();
@@ -25,25 +31,99 @@ public class BattleService : IBattleService
         if (20 > tests.Count)
             throw new ArgumentException("Count cannot be greater than the number of available units.");
 
-        var RandTests =  tests
+        var RandTests = tests
             .OrderBy(x => _random.Next())
             .Take(20)
             .ToList();
         return JsonSerializer.Serialize(RandTests);
     }
-    public async Task<BattleRoom> CreateRoom(Student curStudent)
+
+    public async Task<BattleRoom> CreateRoom(Student player)
     {
-        var room = new BattleRoom()
+        var room = new BattleRoom
         {
-            Player1Id = curStudent.StudentId,
-            Questions = GetRandom20Tests()
+            roomId = Guid.NewGuid(),
+            Player1Id = player.StudentId,
+            Questions = GetRandom20Tests(),
+            StartTime = DateTime.UtcNow,
+            Status = BattleStatus.WaitingForPlayer,
+            Player1Score = 0,
+            Player2Score = 0
         };
+
         _context.BattleRooms.Add(room);
         await _context.SaveChangesAsync();
+
+        await _hubContext.Clients.All.SendAsync("NewRoomAvailable", room);
         return room;
     }
 
-    public async Task<bool> IsRoomsToEnterExsist()
+    public async Task<BattleRoom> JoinRoom(Guid roomId, Student player)
+    {
+        var room = await _context.BattleRooms.FindAsync(roomId);
+        if (room == null || room.Status != BattleStatus.WaitingForPlayer)
+            throw new InvalidOperationException("Room is not available");
+
+        room.Player2Id = player.StudentId;
+        room.Status = BattleStatus.InProgress;
+        await _context.SaveChangesAsync();
+
+        return room;
+    }
+
+    public async Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer)
+    {
+        var room = await _context.BattleRooms.FindAsync(roomId);
+        if (room == null || room.Status != BattleStatus.InProgress)
+            throw new InvalidOperationException("Invalid battle room");
+
+        var questions = JsonSerializer.Deserialize<List<Test>>(room.Questions);
+        var currentQuestion = questions[room.Player1Score + room.Player2Score];
+
+        bool isCorrect = answer == currentQuestion.Answer;
+        if (isCorrect)
+        {
+            if (playerId == room.Player1Id)
+                room.Player1Score++;
+            else
+                room.Player2Score++;
+        }
+
+        bool isBattleComplete = (room.Player1Score + room.Player2Score) >= questions.Count;
+        if (isBattleComplete)
+        {
+            room.Status = BattleStatus.Completed;
+            room.EndTime = DateTime.UtcNow;
+            room.WinnerId = room.Player1Score > room.Player2Score ? room.Player1Id : room.Player2Id;
+        }
+
+        await _context.SaveChangesAsync();
+
+        var result = new BattleResult
+        {
+            IsCorrect = isCorrect,
+            CurrentScore = playerId == room.Player1Id ? room.Player1Score : room.Player2Score,
+            IsBattleComplete = isBattleComplete,
+            WinnerId = room.WinnerId
+        };
+
+        await _hubContext.Clients.Group(roomId.ToString()).SendAsync("AnswerProcessed", result);
+        return result;
+    }
+
+    public async Task<BattleRoom> GetRoomStatus(Guid roomId)
+    {
+        return await _context.BattleRooms.FindAsync(roomId);
+    }
+
+    public async Task<List<BattleRoom>> GetAvailableRooms()
+    {
+        return await _context.BattleRooms
+            .Where(r => r.Status == BattleStatus.WaitingForPlayer)
+            .ToListAsync();
+    }
+
+    public async Task<bool> AreRoomsToEnterExsist()
     {
         List<BattleRoom> rooms = await _context.BattleRooms.ToListAsync();
         foreach (BattleRoom room in rooms)

@@ -67,24 +67,24 @@ public class BattleHub : Hub
         }
     }
 
-    // public async Task SubmitAnswer(string roomId, string answer)
-    // {
-    //     var studentString = Context.GetHttpContext().Session.GetString("Student");
-    //     if (string.IsNullOrEmpty(studentString))
-    //         return;
-    //
-    //     var student = JsonSerializer.Deserialize<Student>(studentString);
-    //     var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.StudentId, answer);
-    //     
-    //     await Clients.Group(roomId).SendAsync("AnswerSubmitted", new
-    //     {
-    //         PlayerId = student.StudentId,
-    //         IsCorrect = result.IsCorrect,
-    //         CurrentScore = result.CurrentScore,
-    //         IsBattleComplete = result.IsBattleComplete,
-    //         WinnerId = result.WinnerId
-    //     });
-    // }
+    public async Task SubmitAnswer(string roomId, string answer)
+    {
+        var studentString = Context.GetHttpContext().Session.GetString("Student");
+        if (string.IsNullOrEmpty(studentString))
+            return;
+    
+        var student = JsonSerializer.Deserialize<Student>(studentString);
+        var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.StudentId, answer);
+        
+        await Clients.Group(roomId).SendAsync("AnswerSubmitted", new
+        {
+            PlayerId = student.StudentId,
+            IsCorrect = result.IsCorrect,
+            CurrentScore = result.CurrentScore,
+            IsBattleComplete = result.IsBattleComplete,
+            WinnerId = result.WinnerId
+        });
+    }
     public async Task StartBattle(string roomId)
     {
         
