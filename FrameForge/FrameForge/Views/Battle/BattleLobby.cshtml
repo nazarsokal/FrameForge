@@ -1,0 +1,35 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Lobby</title>
+    <link rel="stylesheet" href="~/css/battle.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="/js/battleLobby.js"></script>
+</head>
+<body>
+    <div class="battle-container">
+        <div class="battle-header">
+            <h1>Battle Lobby</h1>
+        </div>
+
+        <div class="available-rooms">
+            <h2>Available Rooms</h2>
+            <ul id="availableRooms">
+                <!-- Список кімнат буде додано динамічно -->
+            </ul>
+        </div>
+
+        <div class="create-room" id="createRoomContainer">
+       
+            <button id="createRoom"> Create New Room</button>
+         
+        </div>
+    </div>
+</body>
+</html> 

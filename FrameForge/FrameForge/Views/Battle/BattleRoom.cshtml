@@ -1,0 +1,186 @@
+@model Entities.BattleRoom
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Room</title>
+    <link rel="stylesheet" href="~/css/battle.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    @* <script src="~/js/battle.js"></script> *@
+</head>
+<body>
+    <div class="battle-container">
+        <div class="battle-header">
+            <h1>Battle Room</h1>
+            <div class="timer" id="battleTimer">00:00</div>
+        </div>
+
+        <div class="players-container">
+            <div class="player player1">
+                <h3 id="player1Name">Waiting...</h3>
+                <div class="score">Score: <span id="player1Score">@Model.Player1Score</span></div>
+            </div>
+            <div class="player player2">
+                <h3 id="player2Name">Waiting...</h3>
+                <div class="score">Score: <span id="player2Score">@Model.Player2Score</span></div>
+            </div>
+        </div>
+        <div class="ready">
+            <button id="readyButton">
+                Ready
+            </button>
+        </div>
+        
+
+        <div class="question-container">
+            <div id="currentQuestion"></div>
+            <div class="answers-container" id="answersContainer">
+                <!-- Варіанти відповідей будуть додані динамічно -->
+            </div>
+        </div>
+
+        <div id="battleResult" class="battle-result" style="display: none;">
+            <h2>Battle Result</h2>
+            <div id="winnerAnnouncement"></div>
+            <button onclick="location.href='/Battle/BattleLobby'">Back to Lobby</button>
+        </div>
+
+        <input type="hidden" id="currentPlayerId" value="@ViewBag.CurrentPlayerId" />
+        <input type="hidden" id="roomId" value="@Model.roomId" />
+    </div>
+
+<script>
+    
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/battleHub")
+        .withAutomaticReconnect()
+        .build();
+        const player1Id = "@ViewBag.Room.Player1Id.ToString()";
+        const player2Id = "@ViewBag.Room.Player2Id.ToString()";
+        
+        let battleTimer;
+        let currentQuestionIndex = 0;
+        const questionsJson = @Html.Raw(Json.Serialize(ViewBag.Room.Questions));
+        const questions = JSON.parse(questionsJson);
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await connection.start();
+                console.log("Connected to hub");
+
+                
+
+                console.log("Player1Id: " + player1Id);
+                console.log("Player2Id: " + player2Id);
+
+                await connection.invoke("GetStudent", player1Id);
+                await connection.invoke("GetStudent", player2Id);
+
+            } catch (err) {
+                console.error("Connection failed:", err);
+            }
+        });
+
+
+        connection.on("Student", (student) => {
+            console.log("📩 Received Student object from SignalR:", student);
+            console.log("🔍 Checking student.id =", student.studentId.toString());
+            console.log("player1Id =", player1Id, " | player2Id =", player2Id);
+
+            if (student.studentId.toString() === player1Id) {
+                document.getElementById("player1Name").innerHTML = student.username;
+                console.log("✅ Updated name for Player 1:", student.username);
+            }
+            else if (student.studentId.toString() === player2Id) {
+                document.getElementById("player2Name").innerHTML = student.username;
+                console.log("✅ Updated name for Player 2:", student.username);
+            }
+            else {
+                console.warn("⚠️ Received a student that does not match any player");
+            }
+            
+        });
+        connection.on("AnswerSubmitted", (result) => {
+            console.log("Answer submitted:", result);
+            if (result.isCorrect) {
+                document.getElementById("player1Score").innerHTML = result.player1Score;
+                document.getElementById("player2Score").innerHTML = result.player2Score;
+                document.getElementById("winnerAnnouncement").innerHTML = "Player " + result.winner + " won!";
+                document.getElementById("battleResult").style.display = "block";
+            }
+            else {
+                document.getElementById("player1Score").innerHTML = result.player1Score;
+            }
+            showQuestion();
+            
+        });
+
+
+        connection.on("StudentError", (message) => {
+            console.error("Помилка:", message);
+        });
+
+
+
+
+
+        function startBattle() {
+            //battleTimer = setInterval(updateTimer, 1000);
+            showQuestion();
+        }
+
+        function updateTimer() {
+            const timerElement = document.getElementById('battleTimer');
+            // Оновлення таймера
+        }
+        async function submitAnswer(roomId, variant) {
+            console.log("Room ID:", roomId);
+            console.log("Selected answer:", variant);
+            try {
+                await connection.invoke("SubmitAnswer", roomId, variant);
+                console.log("Answer submitted successfully.");
+            } catch (err) {
+                console.error("Failed to submit answer:", err);
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endBattle();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            const questionElement = document.getElementById('currentQuestion');
+            const answersContainer = document.getElementById('answersContainer');
+            console.log("Answer varians:",question.AnswerVariants);
+            const answerVariants = JSON.parse(question.AnswerVariants);
+            questionElement.innerHTML = question.Question;
+            answersContainer.innerHTML = '';
+
+            answerVariants.forEach(variant => {
+                const button = document.createElement('button');
+                button.textContent = variant;
+                button.onclick = () => submitAnswer(document.getElementById('roomId').value, variant);
+                answersContainer.appendChild(button);
+            });
+            currentQuestionIndex++;
+        }
+
+        function endBattle() {
+            clearInterval(battleTimer);
+            // Логіка завершення батлу
+        }
+    
+
+</script>
+</body>
+</html> 
