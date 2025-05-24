@@ -10,11 +10,13 @@ public class BattleHub : Hub
 {
     private readonly IBattleService _battleService;
     private readonly IStudentService _studentService;
+    private readonly BattleSingleton _battleSingleton;
 
-    public BattleHub(IBattleService battleService, IStudentService studentService)
+    public BattleHub(IBattleService battleService, IStudentService studentService, BattleSingleton battleSingleton)
     {
         _battleService = battleService;
         _studentService = studentService;
+        _battleSingleton = battleSingleton;
     }
 
     public async Task CreateBattleRoom()
@@ -24,6 +26,7 @@ public class BattleHub : Hub
             return;
         var student = JsonSerializer.Deserialize<Student>(studentString);
         var room = await _battleService.CreateRoom(student);
+        _battleSingleton.Add(student.StudentId);
         await Groups.AddToGroupAsync(Context.ConnectionId, room.roomId.ToString());
         await Clients.Caller.SendAsync("BattleRoomCreated", room);
     }
@@ -36,9 +39,14 @@ public class BattleHub : Hub
 
         var student = JsonSerializer.Deserialize<Student>(studentString);
         var room = await _battleService.JoinRoom(Guid.Parse(roomId), student);
-        
+        _battleSingleton.Add(student.StudentId);
+
         await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
         await Clients.Group(roomId).SendAsync("PlayerJoined", room);
+    }
+    public async Task JoinGroup(string roomId)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
     }
 
     public async Task GetStudent(string id)
@@ -79,15 +87,37 @@ public class BattleHub : Hub
         await Clients.Group(roomId).SendAsync("AnswerSubmitted", new
         {
             PlayerId = student.StudentId,
+            PlayerName = student.Username,
             IsCorrect = result.IsCorrect,
-            CurrentScore = result.CurrentScore,
+            Player1score = result.CurrentPlayer1Score,
+            player2Score = result.CurrentPlayer2Score,
             IsBattleComplete = result.IsBattleComplete,
             WinnerId = result.WinnerId
         });
     }
-    public async Task StartBattle(string roomId)
+    
+    public async Task SetReady(string roomId)
     {
-        
+        var studentString = Context.GetHttpContext().Session.GetString("Student");
+        if (string.IsNullOrEmpty(studentString))
+            return;
+
+        var student = JsonSerializer.Deserialize<Student>(studentString);
+        _battleSingleton.SetReady(student.StudentId);
+        var curRoom = await _battleService.GetRoomStatus(Guid.Parse(roomId));
+        if (_battleSingleton.IsReady(curRoom.Player1Id) && _battleSingleton.IsReady(curRoom.Player2Id))
+        {
+            await Clients.Group(roomId).SendAsync("AllAreReady");
+        }
+        else if (_battleSingleton.IsReady(curRoom.Player1Id) || _battleSingleton.IsReady(curRoom.Player2Id))
+        {
+            await Clients.OthersInGroup(roomId).SendAsync("OpponentIsReady",
+                (_battleSingleton.IsReady(curRoom.Player1Id) == true) ? curRoom.Player1Id : curRoom.Player2Id);
+        }
+        else
+        {
+            await Clients.Group(roomId).SendAsync("ErrorNoOneReady");
+        }
     }
 
     public async Task GetAvailableRooms()
