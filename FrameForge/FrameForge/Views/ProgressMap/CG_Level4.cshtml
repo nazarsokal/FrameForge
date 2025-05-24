@@ -2,20 +2,59 @@
 
 <html>
 <head>
-    <title>title</title>
+    
+        <title>Level_4</title>
+        <link rel="stylesheet" href="~/CG_level4/images.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+
 </head>
 <body>
 
-    @* <input type="hidden" name="LevelName" value="@ViewBag.LevelName" /> *@
+<div class="task">
     <div class="taskCard">
+        <p id="smallTitle"><strong>Колірні моделі</strong></p>
+        <p> Що таке колірна модель?
+            Колірні моделі — це системи або стандарти, які використовуються для представлення кольорів у цифровому або фізичному вигляді. 
+            Вони визначають, як кольори створюються, комбінуються та відображаються за допомогою набору базових компонентів. 
+            <br>
+            Уяви, що кольори — це як фарби, які ти використовуєш, щоб малювати! Але щоб комп’ютер або принтер знав, які фарби змішати, 
+            люди придумали спеціальні правила — вони називаються колірними моделями. Це як рецепти для створення всіх кольорів, які ти бачиш!
+            <br>
+            <img src="~/images/level4/images.png" class="bezier_curve_image">
+            <br>
+            Рис.1. Колірна модель RGB
+            <br><br>
+            Основні колірні моделі включають:
+            <br>
+            1.  RGB (Red, Green, Blue): Використовується в електронних дисплеях (комп’ютери, телевізори). Кольори створюються змішуванням червоних, зелених і синіх компонентів у різних інтенсивностях.
+            <br>
+            2.  CMYK (Cyan, Magenta, Yellow, Key/Black): Використовується в друку. Кольори утворюються шляхом субтрактивного змішування ціан, магенти, жовтого та чорного.
+            <br>
+            3.  HSV/HSB (Hue, Saturation, Value/Brightness): Модель, орієнтована на сприйняття людиною, де колір визначається відтінком, насиченістю та яскравістю.
+            <br>
+            4.  LAB (Lab): Модель, що базується на сприйнятті людиною кольору, де L — світлість, а a та b — колірні компоненти (зелений-червоний і синій-жовтий).
+            <br><br>
+        
 
-        <form method="get" asp-controller="Tests" asp-action="StartTesting">
-            <input type="hidden" name="title" value="CG_Level4">
-            <button type="submit">Start Testing</button>
-        </form>
-
+        </p>
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5231432%2Fmod_resource%2Fcontent%2F1%2FЗавдання%20лаб3.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a asp-controller="Algorithms" asp-action="AlgorithmsOverview">спробувати</a></p>
 
     </div>
     
+@* <input type="hidden" name="LevelName" value="@ViewBag.LevelName" /> *@
+    <div class="taskCard">
+
+    <form method="get" asp-controller="Tests" asp-action="StartTesting">
+        <input type="hidden" name="title" value="CG_Level4">
+        <button type="submit">Start Testing</button>
+    </form>
+
+
+    </div>
+</div>
+
 </body>
 </html>
