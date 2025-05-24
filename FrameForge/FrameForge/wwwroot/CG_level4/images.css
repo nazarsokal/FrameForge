@@ -67,10 +67,143 @@ label {
     cursor: pointer;
 }
 
-.bezier_curve_image {
+.fractal_image {
     max-width: 100%;
     height: auto;
 }
 
 /* Responsive Design */
 
+/* 1024px - Tablets (landscape) */
+@media (max-width: 1024px) {
+    .task, .tests {
+        padding: 15px;
+        margin-left: 4vw;
+        margin-right: 4vw;
+    }
+
+    .taskCard {
+        padding: 12px;
+        box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    #smallTitle {
+        font-size: 22px;
+    }
+
+    .taskCard p {
+        font-size: 16px;
+    }
+
+    .mini-title {
+        font-size: 18px;
+    }
+
+    .fractal_image {
+        max-width: 90%;
+    }
+}
+
+/* 768px - Tablets (portrait) */
+@media (max-width: 768px) {
+    .task, .tests {
+        padding: 10px;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    }
+
+    .taskCard {
+        padding: 10px;
+        box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    #smallTitle {
+        font-size: 20px;
+    }
+
+    .taskCard p {
+        font-size: 14px;
+    }
+
+    .mini-title {
+        font-size: 16px;
+    }
+
+    .fractal_image {
+        max-width: 80%;
+    }
+
+    .answers {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+
+/* 480px - Larger phones */
+@media (max-width: 480px) {
+    .task, .tests {
+        padding: 8px;
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+
+    .taskCard {
+        padding: 8px;
+        box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    #smallTitle {
+        font-size: 18px;
+    }
+
+    .taskCard p {
+        font-size: 12px;
+    }
+
+    .mini-title {
+        font-size: 14px;
+    }
+
+    .fractal_image {
+        max-width: 70%;
+    }
+
+    .answers {
+        gap: 8px;
+    }
+}
+
+/* 320px - Smaller phones */
+@media (max-width: 320px) {
+    .task, .tests {
+        padding: 5px;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    .taskCard {
+        padding: 5px;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #smallTitle {
+        font-size: 16px;
+    }
+
+    .taskCard p {
+        font-size: 10px;
+    }
+
+    .mini-title {
+        font-size: 12px;
+    }
+
+    .fractal_image {
+        max-width: 60%;
+    }
+
+    .answers {
+        gap: 5px;
+    }
+}
