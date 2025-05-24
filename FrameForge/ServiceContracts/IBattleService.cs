@@ -14,7 +14,10 @@ public interface IBattleService
 public class BattleResult
 {
     public bool IsCorrect { get; set; }
-    public int CurrentScore { get; set; }
+    public int CurrentPlayer1Score { get; set; }
+    
+    public int CurrentPlayer2Score { get; set; }
+
     public bool IsBattleComplete { get; set; }
     public Guid? WinnerId { get; set; }
 }
