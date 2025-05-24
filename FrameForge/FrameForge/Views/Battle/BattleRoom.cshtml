@@ -21,20 +21,21 @@
     <div class="battle-container">
         <div class="battle-header">
             <h1>Battle Room</h1>
-            <div class="timer" id="battleTimer">00:00</div>
         </div>
 
         <div class="players-container">
             <div class="player player1">
                 <h3 id="player1Name">Waiting...</h3>
                 <div class="score">Score: <span id="player1Score">@Model.Player1Score</span></div>
+                <div class="status"> <span id="player1Status"></span></div>
             </div>
             <div class="player player2">
                 <h3 id="player2Name">Waiting...</h3>
                 <div class="score">Score: <span id="player2Score">@Model.Player2Score</span></div>
+                <div class="status"> <span id="player2Status"></span></div>
             </div>
         </div>
-        <div class="ready">
+        <div class="ready" id="ready">
             <button id="readyButton">
                 Ready
             </button>
@@ -49,8 +50,8 @@
         </div>
 
         <div id="battleResult" class="battle-result" style="display: none;">
-            <h2>Battle Result</h2>
-            <div id="winnerAnnouncement"></div>
+            <div id="player1result"></div>
+            <div id="player2result"></div>
             <button onclick="location.href='/Battle/BattleLobby'">Back to Lobby</button>
         </div>
 
@@ -66,15 +67,23 @@
         .build();
         const player1Id = "@ViewBag.Room.Player1Id.ToString()";
         const player2Id = "@ViewBag.Room.Player2Id.ToString()";
+        const roomId = "@ViewBag.Room.roomId.ToString()";
         
         let battleTimer;
         let currentQuestionIndex = 0;
         const questionsJson = @Html.Raw(Json.Serialize(ViewBag.Room.Questions));
         const questions = JSON.parse(questionsJson);
+        
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await connection.start();
-                console.log("Connected to hub");
+                await connection.start().then(()=>
+                {
+                    console.log("Connected to hub");
+                    connection.invoke("JoinGroup", roomId).catch(err => console.error(err));
+                    console.log("Reconnected to room:", roomId);
+
+
+                });
 
                 
 
@@ -88,13 +97,51 @@
                 console.error("Connection failed:", err);
             }
         });
+        connection.onreconnected(() => {
+            if (groupName) {
+                connection.invoke("JoinGroup", roomId).catch(err => console.error(err));
+                console.log("Reconnected to room:", roomId);
+            }
+        });
+
+        document.getElementById("readyButton").addEventListener("click", async () => {
+            console.log("Ready button clicked");
+            await connection.invoke("SetReady", roomId).catch(err => console.error(err));
+            document.getElementById("ready").innerHTML = "Waiting for the opponent...";
+            
+        });
 
 
+
+        connection.on("OpponentIsReady", (Id) => {
+            console.log("Player is ready:", Id);
+            if(Id === player1Id) {
+                document.getElementById("player1Status").innerHTML = "Ready";
+                console.log("Player 1 is ready");
+            }
+            else if(Id === player2Id) {
+                document.getElementById("player2Status").innerHTML = "Ready";
+                console.log("Player 2 is ready");
+            }
+            else {
+                console.log("Incorrect Id: ", Id, " | Player1Id: ", player1Id, " | Player2Id: ", player2Id, " |");
+            }
+        });
+        connection.on("AllAreReady",()=>
+        {
+            console.log("All players are ready");
+            document.getElementById("player1Status").innerHTML = "";
+            document.getElementById("player2Status").innerHTML = "";
+            document.getElementById("ready").innerHTML = "";
+
+
+            startBattle();
+        });
+            
         connection.on("Student", (student) => {
             console.log("📩 Received Student object from SignalR:", student);
             console.log("🔍 Checking student.id =", student.studentId.toString());
             console.log("player1Id =", player1Id, " | player2Id =", player2Id);
-
             if (student.studentId.toString() === player1Id) {
                 document.getElementById("player1Name").innerHTML = student.username;
                 console.log("✅ Updated name for Player 1:", student.username);
@@ -106,24 +153,31 @@
             else {
                 console.warn("⚠️ Received a student that does not match any player");
             }
-            
         });
+        
         connection.on("AnswerSubmitted", (result) => {
             console.log("Answer submitted:", result);
-            if (result.isCorrect) {
-                document.getElementById("player1Score").innerHTML = result.player1Score;
-                document.getElementById("player2Score").innerHTML = result.player2Score;
-                document.getElementById("winnerAnnouncement").innerHTML = "Player " + result.winner + " won!";
-                document.getElementById("battleResult").style.display = "block";
+            document.getElementById("player1Score").innerHTML = result.player1score.toString();
+            document.getElementById("player2Score").innerHTML = result.player2score.toString();
+            ;
+            if(result.playerId.toString() === player1Id) {
+                if (result.isCorrect) {
+                    document.getElementById("player2result").innerHTML = `${result.playerName}'s answer is correct!`;
+                } else {
+                    document.getElementById("player2result").innerHTML = `${result.playerName}'s answer is incorrect!`;
+                }
             }
-            else {
-                document.getElementById("player1Score").innerHTML = result.player1Score;
+            else if(result.playerId.toString() === player2Id) {
+                    if (result.isCorrect) {
+                        document.getElementById("player2result").innerHTML = `${result.playerName}'s answer is correct!`;
+                    } else {
+                        document.getElementById("player2result").innerHTML = `${result.playerName}'s answer is incorrect!`;
+                    }
             }
-            showQuestion();
+            
+            //showQuestion();
             
         });
-
-
         connection.on("StudentError", (message) => {
             console.error("Помилка:", message);
         });
@@ -136,11 +190,7 @@
             //battleTimer = setInterval(updateTimer, 1000);
             showQuestion();
         }
-
-        function updateTimer() {
-            const timerElement = document.getElementById('battleTimer');
-            // Оновлення таймера
-        }
+        
         async function submitAnswer(roomId, variant) {
             console.log("Room ID:", roomId);
             console.log("Selected answer:", variant);
@@ -152,35 +202,59 @@
             }
         }
 
+        let answerTimeoutId = null;
+
         function showQuestion() {
+            document.getElementById("player1result").innerHTML = "";
+            document.getElementById("player2result").innerHTML = "";
             if (currentQuestionIndex >= questions.length) {
                 endBattle();
                 return;
             }
+            
 
             const question = questions[currentQuestionIndex];
             const questionElement = document.getElementById('currentQuestion');
             const answersContainer = document.getElementById('answersContainer');
-            console.log("Answer varians:",question.AnswerVariants);
             const answerVariants = JSON.parse(question.AnswerVariants);
+
             questionElement.innerHTML = question.Question;
             answersContainer.innerHTML = '';
+
+            // очистка попереднього таймера (якщо такий був)
+            if (answerTimeoutId !== null) {
+                clearTimeout(answerTimeoutId);
+            }
+
+            // таймер: 10 секунд на відповідь
+            answerTimeoutId = setTimeout(() => {
+                console.log("Користувач не відповів вчасно");
+                submitAnswer(document.getElementById('roomId').value, '');
+            }, 10000); // 10000 мс = 10 секунд
 
             answerVariants.forEach(variant => {
                 const button = document.createElement('button');
                 button.textContent = variant;
-                button.onclick = () => submitAnswer(document.getElementById('roomId').value, variant);
+
+                button.onclick = () => {
+                    clearTimeout(answerTimeoutId); // ❗ Зупинити таймер, бо користувач відповів
+                    submitAnswer(document.getElementById('roomId').value, variant);
+                    button.style.backgroundColor = 'yellow';
+                };
+
                 answersContainer.appendChild(button);
             });
+
             currentQuestionIndex++;
         }
+
+        
+
 
         function endBattle() {
             clearInterval(battleTimer);
             // Логіка завершення батлу
         }
-    
-
 </script>
 </body>
 </html> 
