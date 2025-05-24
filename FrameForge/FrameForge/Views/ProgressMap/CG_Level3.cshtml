@@ -62,16 +62,19 @@
         <p>Випробуй себе сам - <a asp-controller="Algorithms" asp-action="AlgorithmsOverview">спробувати</a></p>
 
     </div>
-    <div class="taskCard">
-            
-
-        <form method="get" asp-controller="Tests" asp-action="StartTesting">
-            <input type="hidden" name="title" value="CG_Level3">
-            <button type="submit">Start Testing</button>
-        </form>
-            
     </div>
-</div>
+    <div class="tests">
+        <div class="taskCard">
+
+            <form method="get" asp-controller="Tests" asp-action="StartTesting">
+                <input type="hidden" name="title" value="CG_Level2">
+                <button type="submit">Start Testing</button>
+            </form>
+
+
+        </div>
+    </div>
+
 
 
 
