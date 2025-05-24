@@ -14,6 +14,7 @@ body {
 
 .task, .tests {
     flex-grow: 1;
+
     padding: 20px;
     margin-left: 5vw;
     margin-right: 5vw;
@@ -28,6 +29,7 @@ body {
     padding: 15px;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
     transition: .5s;
+    margin-top: 89px;
 }
 
 #smallTitle {
@@ -67,7 +69,7 @@ label {
     cursor: pointer;
 }
 
-.fractal_image {
+.bezier_curve_image {
     max-width: 100%;
     height: auto;
 }
@@ -84,6 +86,7 @@ label {
 
     .taskCard {
         padding: 12px;
+        margin-top: 70px;
         box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.6);
     }
 
@@ -99,7 +102,7 @@ label {
         font-size: 18px;
     }
 
-    .fractal_image {
+    .bezier_curve_image {
         max-width: 90%;
     }
 }
@@ -114,6 +117,7 @@ label {
 
     .taskCard {
         padding: 10px;
+        margin-top: 60px;
         box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
     }
 
@@ -129,7 +133,7 @@ label {
         font-size: 16px;
     }
 
-    .fractal_image {
+    .bezier_curve_image {
         max-width: 80%;
     }
 
@@ -150,6 +154,7 @@ label {
 
     .taskCard {
         padding: 8px;
+        margin-top: 50px;
         box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.4);
     }
 
@@ -165,7 +170,7 @@ label {
         font-size: 14px;
     }
 
-    .fractal_image {
+    .bezier_curve_image {
         max-width: 70%;
     }
 
@@ -184,6 +189,7 @@ label {
 
     .taskCard {
         padding: 5px;
+        margin-top: 40px;
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     }
 
@@ -199,7 +205,7 @@ label {
         font-size: 12px;
     }
 
-    .fractal_image {
+    .bezier_curve_image {
         max-width: 60%;
     }
 
