@@ -28,9 +28,6 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<Guid>("Player1Id")
                         .HasColumnType("char(36)");
 
@@ -46,9 +43,6 @@ namespace Entities.Migrations
                     b.Property<string>("Questions")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -127,7 +121,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("a4277fd7-66aa-47a6-8e91-468dfaf64a80"),
+                            StudentId = new Guid("c4889752-3472-4be1-987a-e08f446c5da5"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",
