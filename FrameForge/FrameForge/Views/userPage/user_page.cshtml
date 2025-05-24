@@ -1,12 +1,8 @@
-﻿
-@model Entities.Student?
+﻿@model Entities.Student?
 @{
     ViewData["Title"] = "Frame Forge";
     Layout = "_Layout";
 }
-
-<!DOCTYPE html>
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -15,79 +11,76 @@
     <title>Профіль користувача</title>
     <link rel="stylesheet" href="~/user_page/user_page.css">
 </head>
-<body>
-    <!-- Header (unchanged from your provided code) -->
-    @* <div class="header"> *@
-    @*     <div class="leftText"> *@
-    @*         <h1><a asp-controller="Home" asp-action="Index">Frame Forge <img src="~/images/icons_mainPage/FrameForge.png" width="30px" alt="FrameForge Logo"></a></h1> *@
-    @*     </div> *@
-    @*     <div class="dropbutton"></div> *@
-    @*     <div class="user-profile"> *@
-    @*         <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon"> *@
-    @*         <span class="rightText">Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span> *@
-    @*     </div> *@
-    @* </div> *@
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="profile-content">
-            <!-- Total Balance -->
-            <div class="profile-section">
-                <h2>Загальний баланс</h2>
-                <div class="stats">
+<div class="container">
+    <div class="profile-content">
+        <!-- Total Balance with User Info -->
+        <div class="profile-section">
+            <h2>Інформація про користувача</h2>
+            <div class="user-balance">
+                <div class="user-photo">
+                    <img src="" alt="User Photo" class="profile-image">
+                </div>
+                <div class="user-info">
                     <div class="stat-card">
-                        <span>Монети: <span id="total-coins">0</span></span>
-                        <img src="~/images/icons_mainPage/coin.png" alt="coin">
+                        <span>Монети: <span id="total-coins">0</span> <img src="~/images/icons_mainPage/coin.png" alt="coin"></span>
                     </div>
                     <div class="stat-card">
-                        <span>Зірочки: <span id="total-stars">0</span></span>
-                        <img src="~/images/icons_mainPage/star.png" alt="star">
+                        <span>Зірочки: <span id="total-stars">0</span> <img src="~/images/icons_mainPage/star.png" alt="star"></span>
+                    </div>
+                    <div class="stat-card">
+                        <span>Username:</span>
+                    </div>
+                    <div class="stat-card">
+                        <span>Email:</span>
                     </div>
                     <div class="stat-card">
                         <span>Місце в таблиці лідерів: <span id="leaderboard-position">0</span></span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Completed Tasks -->
-            <div class="profile-section">
-                <h2>Виконані завдання</h2>
-                <div class="stats" id="completed-tasks">
-                    <!-- Populated by JavaScript -->
+        <!-- Completed Tasks -->
+        <div class="profile-section">
+            <h2>Виконані завдання</h2>
+            <div class="stats" id="completed-tasks">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Levels -->
+        <div class="profile-section">
+            <h2>Рівні</h2>
+            <h3>Завершені рівні</h3>
+            <div class="stats" id="completed-levels">
+                <!-- Populated by JavaScript -->
+            </div>
+            <h3>Рівні в процесі</h3>
+            <div class="stats" id="in-progress-levels">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Match History -->
+        <div class="profile-section">
+            <h2>Історія матчів</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <span>Відсоток перемог: <span id="win-percentage">0%</span></span>
+                </div>
+                <div class="stat-card">
+                    <span>Відсоток програшів: <span id="loss-percentage">0%</span></span>
                 </div>
             </div>
-
-            <!-- Levels -->
-            <div class="profile-section">
-                <h2>Рівні</h2>
-                <h3>Завершені рівні</h3>
-                <div class="stats" id="completed-levels">
-                    <!-- Populated by JavaScript -->
-                </div>
-                <h3>Рівні в процесі</h3>
-                <div class="stats" id="in-progress-levels">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Match History -->
-            <div class="profile-section">
-                <h2>Історія матчів</h2>
-                <div class="stats">
-                    <div class="stat-card">
-                        <span>Відсоток перемог: <span id="win-percentage">0%</span></span>
-                    </div>
-                    <div class="stat-card">
-                        <span>Відсоток програшів: <span id="loss-percentage">0%</span></span>
-                    </div>
-                </div>
-                <div class="match-history" id="match-history">
-                    <!-- Populated by JavaScript -->
-                </div>
+            <div class="match-history" id="match-history">
+                <!-- Populated by JavaScript -->
             </div>
         </div>
     </div>
+</div>
 
-    <script src="~/js/user_page/user_page.js"></script>
-</body>
+
+
+<script src="~/js/user_page/user_page.js"></script>
 </html>

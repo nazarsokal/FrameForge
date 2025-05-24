@@ -1,21 +1,19 @@
-﻿// Placeholder data (replace with backend data)
+﻿// Placeholder data for tasks, levels, and match history (replace with backend data)
 const userData = {
-    totalCoins: 1250,
-    totalStars: 75,
-    leaderboardPosition: 5,
     completedTasks: [
-        { name: "Відредагуйте код (Easy)", points: 10, coins: 250 },
-        { name: "Відредагуйте код (Medium)", points: 25, coins: 500 },
-        { name: "Відредагуйте код (Hard)", points: 50, coins: 1000 }
+        { name: "Відредагуйте код", points: 10, coins: 250 },
+        { name: "Відредагуйте код", points: 25, coins: 500 },
+        { name: "Відредагуйте код", points: 50, coins: 1000 }
     ],
     completedLevels: [
         { name: "CG_IntroductionLevel", points: 20, coins: 300 },
         { name: "CG_Level2", points: 30, coins: 450 }
     ],
     inProgressLevels: [
-        { name: "CG_Level3", progress: "50%" },
-        { name: "CG_Level4", progress: "20%" }
+        { name: "CG_Level3", points: 20, coins: 300 },
+        { name: "CG_Level4", points: 20, coins: 300 }
     ],
+
     matchHistory: [
         { opponent: "User1", result: "won", date: "2025-05-20" },
         { opponent: "User2", result: "lost", date: "2025-05-19" },
@@ -23,20 +21,21 @@ const userData = {
     ]
 };
 
-// Populate Total Coins and Leaderboard Position
-document.getElementById("total-coins").textContent = userData.totalCoins;
-document.getElementById("total-stars").textContent = userData.totalStars;
-document.getElementById("leaderboard-position").textContent = userData.leaderboardPosition;
-
 // Populate Completed Tasks
 const completedTasksList = document.getElementById("completed-tasks");
 userData.completedTasks.forEach(task => {
     const div = document.createElement("div");
     div.className = "stat-card";
     div.innerHTML = `
-        <a asp-controller="Placeholder" asp-action="Placeholder">
-            <span>${task.name}: ${task.points} зірочок, ${task.coins} монет</span>
-            <img src="~/images/icons_mainPage/task.png" alt="task">
+       <a asp-controller="Placeholder" asp-action="Placeholder">
+        <span class="lvlMode easy">Easy</span>
+            <span class="level-name">${task.name}</span>
+            <div class="level-rewards">
+            <span class="lvlMode easy">Easy</span>
+            <p>dadasdadasjlkasfdlkjasfjlafjl</p>
+          <span>${task.points} зірочок <img src="images/icons_mainPage/star.png" alt="star"></span>
+                <span>${task.coins} монет <img src="images/icons_mainPage/coin.png" alt="coin"></span>
+               </div>
         </a>
     `;
     completedTasksList.appendChild(div);
@@ -49,8 +48,11 @@ userData.completedLevels.forEach(level => {
     div.className = "stat-card";
     div.innerHTML = `
         <a asp-controller="Placeholder" asp-action="Placeholder">
-            <span>${level.name}: ${level.points} зірочок, ${level.coins} монет</span>
-            <img src="~/images/icons_mainPage/level.png" alt="level">
+            <span class="level-name">${level.name}</span>
+            <div class="level-rewards">
+                <span>${level.points} зірочок <img src="images/icons_mainPage/star.png" alt="star"></span>
+                <span>${level.coins} монет <img src="images/icons_mainPage/coin.png" alt="coin"></span>
+            </div>
         </a>
     `;
     completedLevelsList.appendChild(div);
@@ -63,8 +65,11 @@ userData.inProgressLevels.forEach(level => {
     div.className = "stat-card";
     div.innerHTML = `
         <a asp-controller="Placeholder" asp-action="Placeholder">
-            <span>${level.name}: Прогрес ${level.progress}</span>
-            <img src="~/images/icons_mainPage/level.png" alt="level">
+            <span class="level-name">${level.name}</span>
+            <div class="level-rewards">
+                <span>${level.points} зірочок <img src="images/icons_mainPage/star.png" alt="star"></span>
+                <span>${level.coins} монет <img src="images/icons_mainPage/coin.png" alt="coin"></span>
+            </div>
         </a>
     `;
     inProgressLevelsList.appendChild(div);
