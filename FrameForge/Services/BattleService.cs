@@ -45,7 +45,6 @@ public class BattleService : IBattleService
             roomId = Guid.NewGuid(),
             Player1Id = player.StudentId,
             Questions = GetRandom20Tests(),
-            StartTime = DateTime.UtcNow,
             Status = BattleStatus.WaitingForPlayer,
             Player1Score = 0,
             Player2Score = 0
@@ -79,7 +78,6 @@ public class BattleService : IBattleService
 
         var questions = JsonSerializer.Deserialize<List<Test>>(room.Questions);
         var currentQuestion = questions[room.Player1Score + room.Player2Score];
-
         bool isCorrect = answer == currentQuestion.Answer;
         if (isCorrect)
         {
@@ -93,7 +91,6 @@ public class BattleService : IBattleService
         if (isBattleComplete)
         {
             room.Status = BattleStatus.Completed;
-            room.EndTime = DateTime.UtcNow;
             room.WinnerId = room.Player1Score > room.Player2Score ? room.Player1Id : room.Player2Id;
         }
 
@@ -102,7 +99,8 @@ public class BattleService : IBattleService
         var result = new BattleResult
         {
             IsCorrect = isCorrect,
-            CurrentScore = playerId == room.Player1Id ? room.Player1Score : room.Player2Score,
+            CurrentPlayer1Score =  room.Player1Score,
+            CurrentPlayer2Score =  room.Player2Score,
             IsBattleComplete = isBattleComplete,
             WinnerId = room.WinnerId
         };
