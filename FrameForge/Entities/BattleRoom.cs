@@ -13,8 +13,7 @@ public class BattleRoom
     
     public int Player1Score { get; set; }
     public int Player2Score { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime? EndTime { get; set; }
+
     public BattleStatus Status { get; set; }
     public Guid? WinnerId { get; set; }
 }
