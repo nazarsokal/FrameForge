@@ -1,0 +1,110 @@
+@using Entities
+@model Entities.Student?
+@{
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
+    var enrolledLevels = ViewBag.EnrolledLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
+    var completedLevels = ViewBag.CompletedLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
+}
+ 
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профіль користувача</title>
+    <link rel="stylesheet" href="~/user_page/user_page.css">
+</head>
+<div class="container">
+    <div class="profile-content">
+        <!-- Total Balance with User Info -->
+        <div class="profile-section">
+            <h2>Інформація про користувача</h2>
+            <div class="user-balance">
+                <div class="user-photo">
+                    <img src="data:image/jpeg;base64,@Model.Picture" alt="User Photo" class="profile-image">
+                </div>
+                <div class="user-info">
+                    <div class="stat-card">
+                        <span>Монети: <span id="total-coins">@Model.MoneyAmount</span></span>
+                        <img src="~/images/icons_mainPage/coin.png" alt="coin">
+                        <span>Username: @Model.Username</span>
+                    </div>
+                    <div class="stat-card">
+                        <span>Зірочки: <span id="total-stars">@Model.StarsAmount</span></span>
+                        <img src="~/images/icons_mainPage/star.png" alt="star">
+                        <span>Email: @Model.Email</span>
+                    </div>
+                    <a asp-controller="Leaderboard" asp-action="LeaderBoard" style="text-decoration: none;">
+                        <div class="stat-card">
+                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@ViewBag.StudentsPlace</span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+            <div class="profile-section">
+                <h2>Виконані завдання</h2>
+                <div class="stats" id="completed-tasks">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Levels -->
+            <div class="profile-section">
+                <h2>Рівні</h2>
+                <!-- Completed Tasks -->
+                <h3>Пройдені рівні</h3>
+                <div class="stats" id="completed-tasks">
+                    @foreach (var task in completedLevels)
+                    {
+                        <a asp-controller="ProgressMap" asp-action="Map" style="text-decoration: none">
+                            <div class="stat-card">
+                                <span>
+                                    @task.Name: @task.StarsRewarded зірочок, @task.MoneyRewarded монет
+                                </span>
+                            </div>
+                        </a>
+                    }
+                </div>
+                <h3>Рівні в процесі</h3>
+                <div class="stats" id="enrolled-tasks">
+                    @foreach (var task in enrolledLevels)
+                    {
+                        <a asp-controller="ProgressMap" asp-action="Map" style="text-decoration: none">
+                            <div class="stat-card" >
+                                <span>
+                                    @task.Name
+                                </span>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        <!-- Match History -->
+        <div class="profile-section">
+            <h2>Історія матчів</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <span>Відсоток перемог: <span id="win-percentage">0%</span></span>
+                </div>
+                <div class="stat-card">
+                    <span>Відсоток програшів: <span id="loss-percentage">0%</span></span>
+                </div>
+            </div>
+            <div class="match-history" id="match-history">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <script src="~/js/user_page/user_page.js"></script>
+    </html>

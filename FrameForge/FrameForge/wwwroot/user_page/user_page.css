@@ -1,0 +1,512 @@
+﻿*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+}
+
+.profile-content {
+    padding: 20px;
+    margin-top: 80px;
+    color: #333;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-section {
+    background: #f0f2f5;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: .3s;
+}
+
+.profile-section:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-section h2 {
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    color: white;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.profile-section h3 {
+    font-size: 16px;
+    color: #555;
+    margin: 15px 0 10px 0;
+    text-align: left;
+}
+
+.stats {
+    display: flex;
+    justify-content: center; /* Center the cards horizontally */
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: .3s;
+}
+
+.stat-card:hover {
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    color: white;
+}
+
+.stat-card img {
+    width: 20px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.stat-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.match-history {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.match {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.match.won {
+    background: rgba(0, 128, 0, 0.1);
+}
+
+.match.lost {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* Styles for user balance section */
+.user-balance {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-photo {
+    flex: 0 0 auto;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.user-info .stat-card {
+    min-width: 0;
+    padding: 10px;
+}
+
+/* Styles for level name and rewards */
+.level-name {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.level-rewards {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.level-rewards span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Styles for task cards */
+.task-card-wrapper {
+    width: calc(33.33% - 20px); /* Adjusted width to account for gap */
+    margin-bottom: 20px;
+    flex-grow: 0;
+}
+
+.taskCard {
+    position: relative;
+    background: linear-gradient(to bottom, #e6e6fa, #d8bfd8);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    position: relative; /* Ensure proper positioning context */
+    overflow: hidden; /* Prevent badge overflow */
+}
+
+.taskContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 25px; /* Add space to avoid overlap with badge */
+}
+
+.taskDescription {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.points {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.starPoint, .moneyForTask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.imgStar, .imgCoin {
+    width: 16px;
+    height: 16px;
+}
+
+.lvlMode {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    padding: 5px 10px;
+    font-size: 8px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transform: rotate(15deg);
+    transform-origin: top left;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 40px; /* Limit badge width to prevent excessive overlap */
+    text-align: center;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.lvlMode.easy {
+    background-color: green;
+}
+
+.lvlMode.medium {
+    background-color: orange;
+}
+
+.lvlMode.hard {
+    background-color: red;
+}
+
+/* Responsive Design */
+
+/* 1024px - Tablets (landscape) */
+@media (max-width: 1024px) {
+    .profile-content {
+        max-width: 900px;
+        padding: 15px;
+    }
+
+    .profile-section {
+        padding: 15px;
+    }
+
+    .task-card-wrapper {
+        width: calc(33.33% - 20px);
+    }
+
+    .stat-card {
+        min-width: 180px;
+        padding: 12px;
+    }
+
+    .profile-section h2 {
+        font-size: 16px;
+    }
+
+    .profile-section h3 {
+        font-size: 14px;
+    }
+
+    .taskDescription, .points {
+        font-size: 13px;
+    }
+
+    .user-balance {
+        gap: 15px;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .lvlMode {
+        font-size: 11px;
+        padding: 4px 8px;
+        top: 8px;
+        right: 8px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* 768px - Tablets (portrait) */
+@media (max-width: 768px) {
+    .profile-content {
+        margin-top: 60px;
+        padding: 10px;
+    }
+
+    .profile-section {
+        padding: 10px;
+    }
+
+    .stats {
+        justify-content: center; /* Ensure centering even in column layout */
+    }
+
+    .task-card-wrapper {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .stat-card {
+        min-width: 100%;
+        max-width: 400px;
+        padding: 10px;
+    }
+
+    .profile-section h2 {
+        font-size: 15px;
+    }
+
+    .profile-section h3 {
+        font-size: 13px;
+    }
+
+    .taskDescription, .points {
+        font-size: 12px;
+    }
+
+    .user-balance {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .user-info {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .user-info .stat-card {
+        padding: 8px;
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .lvlMode {
+        font-size: 10px;
+        padding: 3px 6px;
+        top: 6px;
+        right: 6px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 13px;
+        height: 13px;
+    }
+}
+
+/* 480px - Larger phones */
+@media (max-width: 480px) {
+    .profile-content {
+        margin-top: 40px;
+        padding: 5px;
+    }
+
+    .profile-section {
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .task-card-wrapper {
+        width: 100%;
+        max-width: 300px; /* Slightly narrower for smaller screens */
+    }
+
+    .stat-card {
+        padding: 8px;
+        max-width: 100%;
+    }
+
+    .profile-section h2 {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .profile-section h3 {
+        font-size: 12px;
+        margin: 10px 0 5px 0;
+    }
+
+    .taskDescription, .points {
+        font-size: 11px;
+    }
+
+    .stat-card img {
+        width: 18px;
+    }
+
+    .match-history {
+        gap: 5px;
+        margin-top: 15px;
+    }
+
+    .match {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .lvlMode {
+        top: 6px;
+        right: 6px;
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+/* 320px - Smaller phones */
+@media (max-width: 320px) {
+    .profile-content {
+        margin-top: 30px;
+        padding: 3px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .profile-section {
+        padding: 5px;
+        border-radius: 8px;
+    }
+
+    .stat-card {
+        padding: 5px;
+    }
+
+    .profile-section h2 {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    .profile-section h3 {
+        font-size: 11px;
+        margin: 8px 0 4px 0;
+    }
+
+    .taskDescription, .points {
+        font-size: 10px;
+    }
+
+    .stat-card img {
+        width: 16px;
+    }
+
+    .match {
+        padding: 6px;
+        font-size: 11px;
+    }
+
+    .profile-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .lvlMode {
+        top: 5px;
+        right: 5px;
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 10px;
+        height: 10px;
+    }
+}
