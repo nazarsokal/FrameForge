@@ -135,3 +135,17 @@
     margin-top: 18px;
     margin-left:87%;
 }
+
+#buttonAddStudent{
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 50px;
+    transition: .5s;
+    margin-left: 12%;
+    margin-top: 18px;
+}
