@@ -1,4 +1,7 @@
-﻿using Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Entities;
 
 namespace ServiceContracts;
 
@@ -9,6 +12,8 @@ public interface IBattleService
     Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer, int questionIndex);
     Task<BattleRoom> GetRoomStatus(Guid roomId);
     Task<List<BattleRoom>> GetAvailableRooms();
+    Task EndBattle(Guid roomId);
+    Task<BattleRoom> LeaveRoom(Guid roomId);
 }
 
 public class BattleResult

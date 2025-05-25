@@ -22,6 +22,29 @@ namespace Entities.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Entities.BattleHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("Player1Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Player2Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("WinnerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BattleHistory");
+                });
+
             modelBuilder.Entity("Entities.BattleRoom", b =>
                 {
                     b.Property<Guid>("roomId")
@@ -121,7 +144,7 @@ namespace Entities.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("c4889752-3472-4be1-987a-e08f446c5da5"),
+                            StudentId = new Guid("866e1126-0c39-41b9-9c04-9309b532ce1b"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",

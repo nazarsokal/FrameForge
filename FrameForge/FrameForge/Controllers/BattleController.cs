@@ -2,6 +2,7 @@
 using ServiceContracts;
 using System.Text.Json;
 using Entities;
+using Services.Hubs;
 
 
 namespace FrameForge.Controllers;
@@ -10,12 +11,14 @@ namespace FrameForge.Controllers;
 public class BattleController : Controller
 {
     private readonly IBattleService _battleService;
-    private readonly IStudentService _studentService;
+    private BattleSingleton _battlesingleton;
 
-    public BattleController(IBattleService battleService, IStudentService studentService)
+    public BattleController(IBattleService battleService, BattleSingleton battlesingleton)
     {
         _battleService = battleService;
-        _studentService = studentService;
+        _battlesingleton = battlesingleton;
+        
+        
     }
 
     [HttpGet]
@@ -38,70 +41,18 @@ public class BattleController : Controller
         ViewBag.Room = room;
         return View("BattleRoom", room);
     }
-
-    // [HttpPost]
-    // [Route("[action]")]
-    // public async Task<IActionResult> CreateBattle()
-    // {
-    //     var studentString = HttpContext.Session.GetString("Student");
-    //     if (string.IsNullOrEmpty(studentString))
-    //         return RedirectToAction("Login", "Account");
-    //
-    //     var student = JsonConvert.DeserializeObject<Student>(studentString);
-    //     var room = await _battleService.CreateRoom(student);
-    //     
-    //     HttpContext.Session.SetString("BattleRoom", JsonConvert.SerializeObject(room));
-    //     return RedirectToAction("BattleRoom");
-    // }
-
-//     [HttpPost]
-//     [Route("[action]")]
-//     public async Task<IActionResult> JoinBattle(Guid roomId)
-//     {
-//         var studentString = HttpContext.Session.GetString("Student");
-//         if (string.IsNullOrEmpty(studentString))
-//             return RedirectToAction("Login", "Account");
-//
-//         var student = JsonConvert.DeserializeObject<Student>(studentString);
-//         var room = await _battleService.JoinRoom(roomId, student);
-//         
-//         HttpContext.Session.SetString("BattleRoom", JsonConvert.SerializeObject(room));
-//         return RedirectToAction("BattleRoom");
-//     }
-//
-//     [HttpGet]
-//     [Route("[action]")]
-//     public async Task<IActionResult> BattleRoom()
-//     {
-//         var roomString = HttpContext.Session.GetString("BattleRoom");
-//         var studentString = HttpContext.Session.GetString("Student");
-//         
-//         if (string.IsNullOrEmpty(roomString) || string.IsNullOrEmpty(studentString))
-//             return RedirectToAction("BattleLobby");
-//
-//         var room = JsonConvert.DeserializeObject<BattleRoom>(roomString);
-//         var student = JsonConvert.DeserializeObject<Student>(studentString);
-//         
-//         ViewBag.CurrentPlayerId = student.StudentId;
-//         return View(room);
-//     }
-//
-//     [HttpPost]
-//     [Route("[action]")]
-//     public async Task<IActionResult> SubmitAnswer(string answer)
-//     {
-//         var roomString = HttpContext.Session.GetString("BattleRoom");
-//         var studentString = HttpContext.Session.GetString("Student");
-//         
-//         if (string.IsNullOrEmpty(roomString) || string.IsNullOrEmpty(studentString))
-//             return Json(new { success = false });
-//
-//         var room = JsonConvert.DeserializeObject<BattleRoom>(roomString);
-//         var student = JsonConvert.DeserializeObject<Student>(studentString);
-//
-//         var result = await _battleService.SubmitAnswer(room.roomId, student.StudentId, answer);
-//         return Json(result);
-//     }
-//
-//   
+    
+    
+    
+    [HttpPost]
+    [Route("[action]")]
+    public async Task<IActionResult> EndBattle(Guid roomId)
+    {
+        if (!_battlesingleton.CheckRoom(roomId))
+        {
+            await _battleService.EndBattle(roomId);
+            _battlesingleton.AddRoomToHistory(roomId);
+        }
+        return Ok();
+    }
 }

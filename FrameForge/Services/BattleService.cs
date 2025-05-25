@@ -158,6 +158,40 @@ public class BattleService : IBattleService
         return null;
     }
 
+    public async Task EndBattle(Guid roomId)
+    {
+        var room = await _context.BattleRooms.FirstOrDefaultAsync(r => r.roomId == roomId);
+
+        if (room == null)
+            throw new Exception("Room not found");
+        room.Status = BattleStatus.Completed;
+
+        // Створюємо запис в історії
+        var battleHistory = new BattleHistory
+        {
+            Player1Id = (Guid)room.Player1Id,
+            Player2Id = (Guid)room.Player2Id,
+            EndTime = DateTime.UtcNow,
+            WinnerId = (Guid)(room.Player1Score > room.Player2Score ? room.Player1Id :
+                room.Player2Score > room.Player1Score ? room.Player2Id : null)
+        };
+        
+
+        await _context.BattleHistory.AddAsync(battleHistory);
+        await _context.SaveChangesAsync();
+    }
+    public async Task<BattleRoom> LeaveRoom(Guid roomId)
+    {
+        var room = await _context.BattleRooms.FirstOrDefaultAsync(r => r.roomId == roomId);
+        if (room != null)
+        {
+            _context.BattleRooms.Remove(room);
+            await _context.SaveChangesAsync();
+        }
+        return room;
+    }
+
+
     public async Task<BattleRoom> DeleteRoom(BattleRoom room)
     {
         if (room == null)

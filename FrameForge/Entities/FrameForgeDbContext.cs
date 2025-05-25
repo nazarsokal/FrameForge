@@ -14,6 +14,7 @@ public class FrameForgeDbContext : DbContext
     public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
     public DbSet<Test> Tests { get; set; }
     public DbSet<BattleRoom> BattleRooms { get; set; }
+    public DbSet<Ba>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
