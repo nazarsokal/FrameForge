@@ -9,7 +9,7 @@
 <head>
     <title>title</title>
     <link rel="stylesheet" href="~/GroupsOverview_css/GroupsOverview.css">
-    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
+    @* <link rel="stylesheet" href="~/mainPage_css/mainPage.css"> *@
 </head>
 
 <body>
@@ -34,12 +34,15 @@
     <!-- Modal -->
     <div id="createGroupModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="document.getElementById('createGroupModal').style.display='none'">&times;</span>
+            @* <span class="close" onclick="document.getElementById('createGroupModal').style.display='none'">&times;</span> *@
             <h2>Створення групи</h2>
             <form method="post" asp-action="SubmitGroup">
                 <label for="groupName">Назва групи:</label>
                 <input type="text" id="groupName" name="groupName" required />
-                <button type="submit">Створити</button>
+                <div class="buttonsModal">
+                    <button class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                    <button class="sumbit" type="submit">Створити</button>
+                </div>
             </form>
         </div>
     </div>
@@ -69,12 +72,15 @@
 
         <div id="@modalId" class="modal" style="display:none;">
             <div class="modal-content">
-                <h2>Добавити Студента</h2>
+                <h2 class="addStudentModal">Добавити Студента</h2>
                 <form method="post" asp-action="AssignStudent">
                     <input type="hidden" name="groupId" value="@group.Id" />
                     <label for="studentName">Ім'я Студента:</label>
                     <input type="text" id="studentName" name="studentName" required />
-                    <button type="submit">Добавити</button>
+                    <div class="buttonsModal">
+                        <button class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                        <button type="submit">Добавити</button>
+                    </div>
                 </form>
             </div>
         </div>
