@@ -6,7 +6,7 @@ public interface IBattleService
 {
     Task<BattleRoom> CreateRoom(Student player);
     Task<BattleRoom> JoinRoom(Guid roomId, Student player);
-    Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer);
+    Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer, int questionIndex);
     Task<BattleRoom> GetRoomStatus(Guid roomId);
     Task<List<BattleRoom>> GetAvailableRooms();
 }

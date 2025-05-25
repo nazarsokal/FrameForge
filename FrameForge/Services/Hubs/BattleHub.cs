@@ -75,14 +75,14 @@ public class BattleHub : Hub
         }
     }
 
-    public async Task SubmitAnswer(string roomId, string answer)
+    public async Task SubmitAnswer(string roomId, string answer, int questionIndex)
     {
         var studentString = Context.GetHttpContext().Session.GetString("Student");
         if (string.IsNullOrEmpty(studentString))
             return;
     
         var student = JsonSerializer.Deserialize<Student>(studentString);
-        var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.StudentId, answer);
+        var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.StudentId, answer, questionIndex - 1);
         
         await Clients.Group(roomId).SendAsync("AnswerSubmitted", new
         {
@@ -90,7 +90,7 @@ public class BattleHub : Hub
             PlayerName = student.Username,
             IsCorrect = result.IsCorrect,
             Player1score = result.CurrentPlayer1Score,
-            player2Score = result.CurrentPlayer2Score,
+            player2score = result.CurrentPlayer2Score,
             IsBattleComplete = result.IsBattleComplete,
             WinnerId = result.WinnerId
         });

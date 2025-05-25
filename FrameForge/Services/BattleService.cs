@@ -70,14 +70,14 @@ public class BattleService : IBattleService
         return room;
     }
 
-    public async Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer)
+    public async Task<BattleResult> SubmitAnswer(Guid roomId, Guid playerId, string answer, int questionIndex)
     {
         var room = await _context.BattleRooms.FindAsync(roomId);
         if (room == null || room.Status != BattleStatus.InProgress)
             throw new InvalidOperationException("Invalid battle room");
 
         var questions = JsonSerializer.Deserialize<List<Test>>(room.Questions);
-        var currentQuestion = questions[room.Player1Score + room.Player2Score];
+        var currentQuestion = questions[questionIndex];
         bool isCorrect = answer == currentQuestion.Answer;
         if (isCorrect)
         {
