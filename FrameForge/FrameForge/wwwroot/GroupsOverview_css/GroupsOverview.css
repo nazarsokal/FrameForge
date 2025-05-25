@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+#activePage{
+    background-color: #f7e018;
+}
+
 .open-modal-btn {
     margin: 10px;
     padding: 10px 20px;
@@ -150,6 +154,6 @@ h2{
     margin-top: 20px;
 }
 
-/*.sumbit{*/
+/*.submit{*/
 /*    margin-left: 4px;*/
 /*}*/

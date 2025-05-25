@@ -18,7 +18,7 @@
 
     <nav class="leftContent">
         <ul class="leftNavMenu">
-            <li class="navButtons"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
+            <li class="navButtons" id="activePage"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
             <li class="navButtons"><a asp-controller="Exercise" asp-action="CreateExercise"> Створити Завдання </a></li>
             <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
             <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
@@ -40,8 +40,8 @@
                 <label for="groupName">Назва групи:</label>
                 <input type="text" id="groupName" name="groupName" required />
                 <div class="buttonsModal">
-                    <button class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
-                    <button class="sumbit" type="submit">Створити</button>
+                    <button type="button" class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                    <button class="submit" type="submit">Створити</button>
                 </div>
             </form>
         </div>
@@ -78,7 +78,7 @@
                     <label for="studentName">Ім'я Студента:</label>
                     <input type="text" id="studentName" name="studentName" required />
                     <div class="buttonsModal">
-                        <button class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                        <button type="button" class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
                         <button type="submit">Добавити</button>
                     </div>
                 </form>
