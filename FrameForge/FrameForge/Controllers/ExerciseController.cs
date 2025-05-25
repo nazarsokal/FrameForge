@@ -37,13 +37,27 @@ public class ExerciseController : Controller
     [Route("[controller]/[action]")]
     public async Task<IActionResult> CompleteExercise([FromBody] ExerciseRequest request)
     {
-        // Example usage
-        var language = request.Language;
-        var fileCount = request.Files?.Count ?? 0;
-        var output = request.Result?.Output;
+        student = (Student)GetUserFromSession();
+        var codes = new List<string>();
+        ExerciseSubmission submission = new ExerciseSubmission()
+        {
+            ExerciseId = request.Exercise.ExerciseId,
+            ExerciseName = request.Exercise.ExerciseName,
+            Status = "Completed",
+            StudentSubmittedId = student.UserId,
+            SubmissionDate = DateTime.Now,
+            SubmittedExerciseId = Guid.NewGuid()
+        };
+        
+        foreach (var file in request.Files)
+        {
+            codes.Add(file.Content); 
+        }
+        
+        await _azureStorageService.UploadCode(codes, request.Exercise.ExerciseId, student.UserId);
+        await _exerciseService.SubmitExercise(submission);
 
-
-        return RedirectToAction("Index", "Home");
+        return Ok(new { redirectUrl = Url.Action("Index", "Home") });
     }
 
     [HttpGet]

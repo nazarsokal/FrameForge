@@ -38,9 +38,10 @@ public class ExerciseService : IExerciseService
         return _context.Exercises.FirstOrDefaultAsync(x => x.ExerciseId == exerciseId);
     }
 
-    public Task SubmitExercise(ExerciseSubmission exerciseSubmission)
+    public async Task SubmitExercise(ExerciseSubmission exerciseSubmission)
     {
-        throw new NotImplementedException();
+        _context.ExerciseSubmissions.Add(exerciseSubmission);
+        await _context.SaveChangesAsync();
     }
 
     private async Task<bool> CheckIfExerciseExists(Guid groupId, string exerciseName)

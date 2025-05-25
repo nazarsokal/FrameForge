@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(FrameForgeDbContext))]
-    partial class FrameForgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250523193910_ExerciseSubmissionModelChanged")]
+    partial class ExerciseSubmissionModelChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,13 +119,15 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("StudentSubmittedId")
+                    b.Property<Guid>("StudentSubmittedUserId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("SubmittedExerciseId");
+
+                    b.HasIndex("StudentSubmittedUserId");
 
                     b.ToTable("ExerciseSubmissions", (string)null);
                 });
@@ -208,6 +213,17 @@ namespace Entities.Migrations
                     b.HasBaseType("Entities.User");
 
                     b.HasDiscriminator().HasValue("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.ExerciseSubmission", b =>
+                {
+                    b.HasOne("Entities.Student", "StudentSubmitted")
+                        .WithMany()
+                        .HasForeignKey("StudentSubmittedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudentSubmitted");
                 });
 
             modelBuilder.Entity("Entities.Group", b =>

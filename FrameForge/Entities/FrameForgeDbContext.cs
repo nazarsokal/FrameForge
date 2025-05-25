@@ -37,9 +37,7 @@ public class FrameForgeDbContext : DbContext
             .HasOne(s => s.Group)
             .WithMany(g => g.Students)
             .HasForeignKey(s => s.GroupId);
-
-        modelBuilder.Entity<ExerciseSubmission>()
-            .HasOne(s => s.StudentSubmitted);
+        
 
     }
 }

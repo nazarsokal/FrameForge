@@ -1,7 +1,9 @@
 using Azure.Storage.Files.Shares;
 using ServiceContracts;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using ServiceContracts.Enums;
 
 namespace Services;
@@ -98,5 +100,33 @@ public class AzureStorageService : IAzureStorageService
         }
         
         return algorithmFiles;
+    }
+
+    public async Task UploadCode(List<string> code, Guid taskId, Guid userId)
+    {
+        string fileName = "";
+        ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient("UserTasks");
+        
+        ShareDirectoryClient userDir = folder.GetSubdirectoryClient($"{taskId.ToString()}_{userId.ToString()}");
+        await userDir.CreateIfNotExistsAsync();
+
+        for (int i = 0; i < code.Count; i++)
+        {
+            byte[] fileBytes = Encoding.UTF8.GetBytes(code[0]);
+            
+            if(i == 0) fileName = "index.html";
+            else if (i == 1) fileName = "style.css";
+            else if (i == 2) fileName = "script.js";
+            
+            ShareFileClient fileClient = userDir.GetFileClient(fileName);
+            await fileClient.CreateAsync(fileBytes.Length);
+
+            using MemoryStream stream = new MemoryStream(fileBytes);
+            await fileClient.UploadRangeAsync(
+                new HttpRange(0, fileBytes.Length),
+                stream
+            );
+        }
     }
 }

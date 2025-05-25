@@ -10,9 +10,13 @@ public class ExerciseSubmission
     public Guid ExerciseId { get; set; }
 
     public string ExerciseName { get; set; }
-    public Student StudentSubmitted { get; set; }
+    public Guid StudentSubmittedId { get; set; }
     
     public DateTime SubmissionDate { get; set; }
     
     public string Status { get; set; }
+
+    public double StarsReward { get; set; }
+    public double MoneyReward { get; set; }
+    public string? Feedback { get; set; }
 }
