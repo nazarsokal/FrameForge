@@ -60,7 +60,7 @@
         <button id="readyButton">Ready</button>
     </div>
 
-    <div class="question-container">
+    <div class="question-container" id="question-container">
         <div id="currentQuestion"></div>
         <div id="timerBar"><div id="timerProgress"></div></div>
         <div class="answers-container" id="answersContainer"></div>
@@ -145,7 +145,7 @@
         answersSubmittedCount++;
         if (answersSubmittedCount === 2) {
             clearTimeout(answerTimeoutId);
-            document.getElementById("correctAnswer").innerHTML = `Correct answer: ${questions[currentQuestionIndex - 1].CorrectAnswer}`;
+            document.getElementById("correctAnswer").innerHTML = `Correct answer: ${questions[currentQuestionIndex - 1].Answer}`;
             setTimeout(() => {
                 answersSubmittedCount = 0;
                 showQuestion();
@@ -235,6 +235,32 @@
 
     function endBattle() {
         clearInterval(battleTimer);
+        const player1Score = parseInt(document.getElementById("player1Score").innerHTML);
+        const player2Score = parseInt(document.getElementById("player2Score").innerHTML);
+        const player1Name = document.getElementById("player1Name").innerHTML;
+        const player2Name = document.getElementById("player2Name").innerHTML;
+
+        document.getElementById("question-container").style.display = "none";
+        const battleResult = document.getElementById("battleResult");
+        battleResult.classList.add("show");
+
+        let resultMessage = "";
+        if (player1Score > player2Score) {
+            resultMessage = `<div class="winner">${player1Name} переміг!</div>`;
+        } else if (player2Score > player1Score) {
+            resultMessage = `<div class="winner">${player2Name} переміг!</div>`;
+        } else {
+            resultMessage = `<div class="winner draw">Нічия!</div>`;
+        }
+
+        resultMessage += `
+            <div class="final-scores">
+                <div>${player1Name}: ${player1Score} очків</div>
+                <div>${player2Name}: ${player2Score} очків</div>
+            </div>
+        `;
+
+        battleResult.innerHTML = resultMessage + battleResult.innerHTML;
     }
 </script>
 </body>
