@@ -94,6 +94,11 @@ public class BattleHub : Hub
             IsBattleComplete = result.IsBattleComplete,
             WinnerId = result.WinnerId
         });
+
+        if (result.IsBattleComplete)
+        {
+            await _battleService.EndBattle(Guid.Parse(roomId));
+        }
     }
     
     public async Task SetReady(string roomId)
@@ -119,7 +124,31 @@ public class BattleHub : Hub
             await Clients.Group(roomId).SendAsync("ErrorNoOneReady");
         }
     }
+    public async Task LeaveRoom(string roomId)
+    {
+        var studentString = Context.GetHttpContext().Session.GetString("Student");
+        if (string.IsNullOrEmpty(studentString))
+            return;
 
+        var student = JsonSerializer.Deserialize<Student>(studentString);
+    
+    
+        // Видалення кімнати
+        var room =  await _battleService.LeaveRoom(Guid.Parse(roomId));
+        
+
+        // Повідомлення іншим клієнтам у групі
+        if (room != null)
+        {
+            await Clients.OthersInGroup(roomId).SendAsync("OpponentLeft", room);
+        }
+        // Видалення користувача з групи
+        //await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
+
+        // Видалення зі сінглтона, якщо використовується
+        _battleSingleton.Remove(room.Player1Id);
+        _battleSingleton.Remove((Guid)room.Player2Id);
+    }
     public async Task GetAvailableRooms()
     {
         var rooms = await _battleService.GetAvailableRooms();
