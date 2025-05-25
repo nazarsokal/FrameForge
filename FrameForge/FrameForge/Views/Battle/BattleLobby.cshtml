@@ -1,3 +1,5 @@
+@model List<Entities.BattleRoom>
+
 @{
     Layout = null;
 }
@@ -13,23 +15,37 @@
     <script src="/js/battleLobby.js"></script>
 </head>
 <body>
-    <div class="battle-container">
-        <div class="battle-header">
-            <h1>Battle Lobby</h1>
-        </div>
-
-        <div class="available-rooms">
-            <h2>Available Rooms</h2>
-            <ul id="availableRooms">
-                <!-- Список кімнат буде додано динамічно -->
-            </ul>
-        </div>
-
-        <div class="create-room" id="createRoomContainer">
-       
-            <button id="createRoom"> Create New Room</button>
-         
-        </div>
+<div class="battle-container">
+    <div class="battle-header">
+        <h1>Battle Lobby</h1>
     </div>
+
+    <div class="available-rooms">
+        <h2>Available Rooms</h2>
+        @if (Model != null && Model.Any())
+        {
+            <ul>
+                @foreach (var room in Model)
+                {
+                    <li>
+                        <div class="room-info">
+                            <h3>Room #@room.roomId</h3>
+                            <p>Players: @room.Player1Id - @room.Player2Id</p>
+                        </div>
+                        <button class="join-button" onclick="location.href='/Battle/JoinRoom/@room.roomId'">Join</button>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p style="text-align: center; color: #666;">No available rooms at the moment.</p>
+        }
+    </div>
+
+    <div class="create-room" id="createRoomContainer">
+        <button id="createRoom">Create New Room</button>
+    </div>
+</div>
 </body>
 </html> 

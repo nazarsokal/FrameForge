@@ -1,3 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: #333;
+}
+
 .battle-container {
     max-width: 800px;
     margin: 0 auto;
@@ -9,6 +23,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.battle-header h1 {
+    font-size: 32px;
+    color: #333;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .players-container {
@@ -31,11 +52,56 @@
     font-style: italic;
 }
 
+.player h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #318ced;
+    margin: 10px 0;
+}
+
+.status {
+    font-style: italic;
+    color: #666;
+}
+
+.ready {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#readyButton {
+    padding: 12px 30px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#readyButton:hover {
+    background: #f7e018;
+    transform: scale(1.05);
+}
+
 .question-container {
     background: #f5f5f5;
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+#currentQuestion {
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
 
 .answers-container {
@@ -59,6 +125,22 @@
     background: #0056b3;
 }
 
+.answers-container button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#correctAnswer {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #28a745;
+}
+
 .timer {
     font-size: 24px;
     font-weight: bold;
@@ -71,6 +153,24 @@
     background: #f8f9fa;
     border-radius: 5px;
     margin-top: 20px;
+}
+
+.winner {
+    font-size: 32px;
+    font-weight: bold;
+    color: #28a745;
+    margin: 20px 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.draw {
+    color: #f7e018;
+}
+
+.final-scores {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
 }
 
 .battle-result button {
@@ -87,8 +187,16 @@
     background: #218838;
 }
 
+/* Стилі для Battle Lobby */
 .available-rooms {
     margin-top: 20px;
+}
+
+.available-rooms h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .available-rooms ul {
@@ -117,4 +225,247 @@
 
 .available-rooms button:hover {
     background: #0056b3;
+}
+
+.room-info {
+    flex: 1;
+}
+
+.room-info h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.room-info p {
+    color: #666;
+    font-size: 14px;
+}
+
+.join-button {
+    padding: 8px 20px;
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.join-button:hover {
+    background: #f7e018;
+    transform: scale(1.05);
+}
+
+/* Адаптивність */
+@media (max-width: 1024px) {
+    .battle-container {
+        max-width: 90%;
+        margin: 15px auto;
+    }
+
+    .player h3 {
+        font-size: 22px;
+    }
+
+    .score {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .battle-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .players-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .answers-container {
+        grid-template-columns: 1fr;
+    }
+
+    .battle-header h1 {
+        font-size: 24px;
+    }
+
+    .player h3 {
+        font-size: 20px;
+    }
+
+    .winner {
+        font-size: 24px;
+    }
+
+    .final-scores {
+        font-size: 18px;
+    }
+
+    .available-rooms li {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .join-button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    #readyButton {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .battle-container {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .battle-header h1 {
+        font-size: 20px;
+    }
+
+    .player {
+        padding: 15px;
+    }
+
+    .player h3 {
+        font-size: 18px;
+    }
+
+    .score {
+        font-size: 16px;
+    }
+
+    .question-container {
+        padding: 15px;
+    }
+
+    #currentQuestion {
+        font-size: 16px;
+    }
+
+    .answers-container button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .battle-result {
+        padding: 20px;
+    }
+
+    .winner {
+        font-size: 20px;
+    }
+
+    .final-scores {
+        font-size: 16px;
+    }
+
+    .battle-result button {
+        width: 100%;
+        max-width: 250px;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .available-rooms h2 {
+        font-size: 20px;
+    }
+
+    .room-info h3 {
+        font-size: 16px;
+    }
+
+    .room-info p {
+        font-size: 12px;
+    }
+}
+
+/* Підтримка високих екранів */
+@media (min-height: 1000px) {
+    .battle-container {
+        margin: 50px auto;
+    }
+
+    .players-container {
+        margin-bottom: 50px;
+    }
+
+    .question-container {
+        padding: 40px;
+    }
+
+    #currentQuestion {
+        font-size: 24px;
+    }
+
+    .answers-container {
+        gap: 20px;
+    }
+
+    .answers-container button {
+        padding: 20px;
+        font-size: 18px;
+    }
+}
+
+/* Підтримка темної теми */
+@media (prefers-color-scheme: dark) {
+    .battle-container {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+    }
+
+    .player {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .player h3 {
+        color: #fff;
+    }
+
+    .score {
+        color: #318ced;
+    }
+
+    .status {
+        color: #ccc;
+    }
+
+    .question-container {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .answers-container button {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .answers-container button:hover {
+        background: #f7e018;
+        color: #000;
+    }
+
+    .battle-result {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .available-rooms li {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .room-info h3 {
+        color: #fff;
+    }
+
+    .room-info p {
+        color: #ccc;
+    }
 } 
