@@ -23,7 +23,7 @@ body{
     max-width: 350px;
     min-height: 600px;
     max-height: 90vh; /* Ensure it doesn't exceed viewport height */
-    margin: 5% auto;
+    margin: 2% auto;
     background: #eeefff;
     box-shadow: 2px 2px 40px rgba(0,0,0,.7);
     border-radius: 10px;
@@ -189,7 +189,7 @@ input[type="checkbox"]:checked::after {
     .box-login {
         min-height: 550px;
         max-height: 85vh; /* Adjust for smaller screens */
-        margin-top: 4%;
+        margin-top: 3%;
     }
 
     input[type="text"],
@@ -267,7 +267,7 @@ input[type="checkbox"]:checked::after {
     .box-login {
         min-height: 500px;
         max-height: 80vh; /* Adjust for smaller screens */
-        margin-top: 3%;
+        margin-top: 2%;
     }
 
     input[type="text"],
@@ -344,8 +344,8 @@ input[type="checkbox"]:checked::after {
 @media (max-width: 480px) {
     .box-login {
         min-height: 450px;
-        max-height: 75vh; /* Adjust for smaller screens */
-        margin-top: 2%;
+        max-height: 65vh; /* Adjust for smaller screens */
+        margin-top: 1%;
     }
 
     input[type="text"],
@@ -422,7 +422,7 @@ input[type="checkbox"]:checked::after {
 @media (max-width: 320px) {
     .box-login {
         min-height: 400px;
-        max-height: 70vh; /* Adjust for smaller screens */
+        max-height: 75vh; /* Adjust for smaller screens */
         margin-top: 1%;
     }
 
