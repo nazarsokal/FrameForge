@@ -9,9 +9,9 @@ namespace FrameForge.Controllers
     public class TestsController : Controller
     {
         private readonly TestsServise _testsServise;
-        private readonly IStudentService _studentService;
+        private readonly IUserService _studentService;
 
-        public TestsController(TestsServise testsServise, IStudentService studentService)
+        public TestsController(TestsServise testsServise, IUserService studentService)
         {
             _testsServise = testsServise;
             _studentService = studentService;
@@ -112,7 +112,7 @@ namespace FrameForge.Controllers
             string updatedUserString = JsonSerializer.Serialize(updatedStudent);
             HttpContext.Session.SetString("Student", updatedUserString);
             
-            return View("Conclusion", updatedStudent);
+            return View("Conclusion", (Student)updatedStudent);
         }
     }
 }

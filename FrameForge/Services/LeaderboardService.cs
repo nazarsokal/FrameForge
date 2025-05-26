@@ -24,7 +24,7 @@ namespace Services
 
         public int GetStudentsPlace(Student student)
         {
-            var allStudents = _dbContext.Students.ToList();
+            var allStudents = _dbContext.Users.OfType<Student>().ToList();
             allStudents.Sort((x, y) => y.StarsAmount.CompareTo(x.StarsAmount));
             
             var indexOfStudent = allStudents.IndexOf(student);

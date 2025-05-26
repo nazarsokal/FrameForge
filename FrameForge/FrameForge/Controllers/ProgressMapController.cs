@@ -106,7 +106,7 @@ public class ProgressMapController : Controller
         int indexAmount = 0;
         foreach (var level in availableLevels)
         {
-            bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.StudentId == l.StudentId);
+            bool isLevelContained = userLevelsEnrolledCompleted.Any(l => l.LevelTopicName == level && student.UserId == l.StudentId);
             if(isLevelContained) indexAmount++;
         }
 

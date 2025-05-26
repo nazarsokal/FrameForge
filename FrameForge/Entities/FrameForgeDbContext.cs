@@ -14,6 +14,8 @@ public class FrameForgeDbContext : DbContext
     public virtual DbSet<Group> Groups { get; set; }
     public virtual DbSet<Exercise> Exercises { get; set; }
     public virtual DbSet<ExerciseSubmission> ExerciseSubmissions { get; set; }
+    public virtual DbSet<Algorithm> Algorithms { get; set; }
+    public virtual DbSet<Test> Tests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,6 +23,8 @@ public class FrameForgeDbContext : DbContext
         modelBuilder.Entity<EnrolledLevels>().ToTable("EnrolledLevels");
         modelBuilder.Entity<Group>().ToTable("Groups");
         modelBuilder.Entity<Exercise>().ToTable("Exercises");
+        modelBuilder.Entity<Test>().ToTable("Tests");
+        modelBuilder.Entity<Algorithm>().ToTable("Algorithms");
         modelBuilder.Entity<ExerciseSubmission>().ToTable("ExerciseSubmissions");
         
         modelBuilder.Entity<User>()
