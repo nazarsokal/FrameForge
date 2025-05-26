@@ -44,9 +44,9 @@ public class ExerciseService : IExerciseService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<ExerciseSubmission>> GetSubmissions(Guid exerciseId)
+    public async Task<List<ExerciseSubmission>> GetSubmissions(Guid studentId)
     {
-        var submissions = _context.ExerciseSubmissions.Where(x => x.ExerciseId == exerciseId);
+        var submissions = _context.ExerciseSubmissions.Where(x => x.StudentSubmittedId == studentId);
         
         return await submissions.ToListAsync();
     }

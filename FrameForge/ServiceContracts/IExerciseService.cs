@@ -14,7 +14,7 @@ public interface IExerciseService
     
     public Task SubmitExercise(ExerciseSubmission exerciseSubmission);
     
-    public Task<List<ExerciseSubmission>> GetSubmissions(Guid exerciseId);
+    public Task<List<ExerciseSubmission>> GetSubmissions(Guid studentId);
     
     public Task<ExerciseSubmission> GetSubmission(Guid exerciseSubmissionId);
 }

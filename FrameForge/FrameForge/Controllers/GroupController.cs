@@ -64,12 +64,22 @@ public class GroupController : Controller
         return RedirectToAction(nameof(GroupsOverview), teacher);
     }
 
+    [Route("[action]")]
     public async Task<IActionResult> CompletedTasksOverview(Guid groupId)
     {
-        var students = _userService.GetStudentsFromGroup(groupId);
+        teacher = getTeacherFromSession();
+        Dictionary<Student, List<ExerciseSubmission>> usersExercises = new Dictionary<Student, List<ExerciseSubmission>>();
+        var students = await _userService.GetStudentsFromGroup(groupId);
+        
+        foreach (var student in students)
+        {
+            var submittedExercises = await _exerciseService.GetSubmissions(student.UserId);
+            usersExercises.Add(student, submittedExercises);
+        }
+        
+        ViewBag.UsersExercises = usersExercises;
 
-        var submittedExercises = await _exerciseService.GetSubmissions(Guid.Empty);
-        return await CompletedTasksOverview(groupId);
+        return View(teacher);
     }
     
     private Teacher getTeacherFromSession()
