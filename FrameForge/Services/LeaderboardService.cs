@@ -22,5 +22,15 @@ namespace Services
 
         }
 
+        public int GetStudentsPlace(Student student)
+        {
+            var allStudents = _dbContext.Students.ToList();
+            allStudents.Sort((x, y) => y.StarsAmount.CompareTo(x.StarsAmount));
+            
+            var indexOfStudent = allStudents.IndexOf(student);
+            
+            return indexOfStudent;
+        }
+
     }
 }

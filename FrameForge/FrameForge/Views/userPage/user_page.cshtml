@@ -1,10 +1,14 @@
 ﻿
+
+@using Entities
 @model Entities.Student?
 @{
     ViewData["Title"] = "Frame Forge";
     Layout = "_Layout";
+    var enrolledLevels = ViewBag.EnrolledLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
+    var completedLevels = ViewBag.CompletedLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
 }
-
+ 
 <!DOCTYPE html>
 
 <!DOCTYPE html>
@@ -36,37 +40,58 @@
                 <h2>Загальний баланс</h2>
                 <div class="stats">
                     <div class="stat-card">
-                        <span>Монети: <span id="total-coins">0</span></span>
+                        <span>Монети: <span id="total-coins">@Model.MoneyAmount</span></span>
                         <img src="~/images/icons_mainPage/coin.png" alt="coin">
                     </div>
                     <div class="stat-card">
-                        <span>Зірочки: <span id="total-stars">0</span></span>
+                        <span>Зірочки: <span id="total-stars">@Model.StarsAmount</span></span>
                         <img src="~/images/icons_mainPage/star.png" alt="star">
                     </div>
-                    <div class="stat-card">
-                        <span>Місце в таблиці лідерів: <span id="leaderboard-position">0</span></span>
-                    </div>
+                    <a asp-controller="Leaderboard" asp-action="LeaderBoard" style="text-decoration: none;">
+                        <div class="stat-card">
+                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@ViewBag.StudentsPlace</span></span>
+                        </div>
+                    </a>
                 </div>
             </div>
 
-            <!-- Completed Tasks -->
+
             <div class="profile-section">
                 <h2>Виконані завдання</h2>
                 <div class="stats" id="completed-tasks">
                     <!-- Populated by JavaScript -->
                 </div>
             </div>
-
+            
             <!-- Levels -->
             <div class="profile-section">
                 <h2>Рівні</h2>
-                <h3>Завершені рівні</h3>
-                <div class="stats" id="completed-levels">
-                    <!-- Populated by JavaScript -->
+                <!-- Completed Tasks -->
+                <h3>Пройдені рівні</h3>
+                <div class="stats" id="completed-tasks">
+                    @foreach (var task in completedLevels)
+                    {
+                        <a asp-controller="ProgressMap" asp-action="Map" style="text-decoration: none">
+                            <div class="stat-card">
+                                <span>
+                                    @task.Name: @task.StarsRewarded зірочок, @task.MoneyRewarded монет
+                                </span>
+                            </div>
+                        </a>
+                    }
                 </div>
                 <h3>Рівні в процесі</h3>
-                <div class="stats" id="in-progress-levels">
-                    <!-- Populated by JavaScript -->
+                <div class="stats" id="enrolled-tasks">
+                    @foreach (var task in enrolledLevels)
+                    {
+                        <a asp-controller="ProgressMap" asp-action="Map" style="text-decoration: none">
+                            <div class="stat-card" >
+                                <span>
+                                    @task.Name
+                                </span>
+                            </div>
+                        </a>
+                    }
                 </div>
             </div>
 
@@ -88,6 +113,6 @@
         </div>
     </div>
 
-    <script src="~/js/user_page/user_page.js"></script>
+    @* <script src="~/js/user_page/user_page.js"></script> *@
 </body>
 </html>
