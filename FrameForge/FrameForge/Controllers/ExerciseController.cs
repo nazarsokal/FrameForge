@@ -135,10 +135,11 @@ public class ExerciseController : Controller
         await _exerciseService.RateExercise(exercise.ExerciseId, feedback, Convert.ToDouble(moneyReward), int.Parse(starsReward));
         
         var submittedUserId = Guid.Parse(HttpContext.Session.GetString("submittedUserId"));
-        Student student = (Student) await _userService.GetUserById(submittedUserId);
+        Student student = (Student)await _userService.GetUserById(submittedUserId);
+        
         await _userService.UpdateStudent(student);
         
-        return RedirectToAction("ExercisesOverview", teacher);
+        return RedirectToAction("Index", "Home");
     }
     
     private User GetUserFromSession()
