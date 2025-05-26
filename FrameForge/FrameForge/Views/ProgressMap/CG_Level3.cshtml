@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Level_3</title>
-    <link rel="stylesheet" href="~/CG_level2/bezier_curve.css">
+    <link rel="stylesheet" href="~/CG_level3/fractal.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -19,34 +19,62 @@
 <div class="task">
     <div class="taskCard">
         <p id="smallTitle"><strong>Фрактали</strong></p>
-        
-        <p> Що таке фрактал?
+        <br>
+        <p> <span class="mini-title">Що таке фрактал?</span>
+            <br><br>
             Фрактали — це геометричні об'єкти, які мають самоподібність, тобто їхня структура повторюється на різних рівнях масштабування. 
             Вони часто характеризуються дробовою розмірністю (нецілочисельною) і можуть бути згенеровані ітераційними процесами, такими як множина Мандельброта чи крива Коха. 
             Фрактали широко застосовуються в математиці, комп'ютерній графіці та моделюванні природних явищ (наприклад, узбережжя, хмари, рослини).
-            <br>
+            <br><br>
             Фрактали — це як магічні малюнки, які виглядають однаково, якщо їх розглядати дуже близько чи здалеку!
             Уяви, що ти малюєш сніжинку: якщо подивитися на її маленьку частину, вона схожа на всю сніжинку.
-            <br>
-              
-            <img src="~/images/level3/fractal.jpg" class="bezier_curve_image">
             <br><br>
+            <img src="~/images/level3/fractal.jpg" class="fractal_image">
+            <br>
+            Рис.1. Фрактал
+            <br><br>
+            <span class="mini-title">Основні властивості фракталів:</span>
+            <br><br>
+            1.	Самоподібність — частини об’єкта подібні до його цілого вигляду. 
+            <br><br>
+            2.	Дробова (фрактальна) розмірність — розмірність фрактала не є цілим числом. Наприклад, сніжинка Коха має розмірність приблизно 1.26.
+            <br><br>
+            3.	Рекурсивність побудови — фрактали створюються шляхом багаторазового застосування одного й того ж правила або функції.
+            <br><br>
+            4.	Нескінченна деталізація — при збільшенні масштабу видно нові деталі.
+            <br><br>
+            5.	Невласна гладкість — більшість фракталів мають ламану або нерівну структуру, навіть якщо описуються простими формулами.
+            <br><br>
+
+            <span class="mini-title">Фрактали поділяються на декілька основних типів:</span>
+            <br><br>
+            1.  Геометричні фрактали — побудовані шляхом повторення певної геометричної операції (наприклад, трикутник Серпінського, сніжинка Коха).
+            <br><br>
+            2.  Алгебраїчні (математичні) фрактали — створюються за допомогою ітерацій формул на комплексній площині (наприклад, множина Мандельброта, множина Жюля).
+            <br><br>
+            3.  Стохастичні (випадкові) фрактали — моделюють природні об’єкти з елементами випадковості (наприклад, фрактальні гори, хмари).
+            <br><br>
+            4.  IFS-фрактали (Iterated Function System) — створюються за допомогою системи афінних перетворень (наприклад, папороть Барнслі).
+            <br><br><br>
                
         </p>
         <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5231432%2Fmod_resource%2Fcontent%2F1%2FЗавдання%20лаб3.pdf">сюди</a></p>
-        <p>Випробуй себе сам - <a href="../Views/ProgressMap/CG_Level2_tryBezierCurve.cshtml">спробувати</a></p>
+        <p>Випробуй себе сам - <a asp-controller="Algorithms" asp-action="AlgorithmsOverview">спробувати</a></p>
 
     </div>
-    <div class="taskCard">
-            
-
-        <form method="get" asp-controller="Tests" asp-action="StartTesting">
-            <input type="hidden" name="title" value="CG_Level3">
-            <button type="submit">Start Testing</button>
-        </form>
-            
     </div>
-</div>
+    <div class="tests">
+        <div class="taskCard">
+
+            <form method="get" asp-controller="Tests" asp-action="StartTesting">
+                <input type="hidden" name="title" value="CG_Level2">
+                <button type="submit">Start Testing</button>
+            </form>
+
+
+        </div>
+    </div>
+
 
 
 
