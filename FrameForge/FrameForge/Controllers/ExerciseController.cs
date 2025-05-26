@@ -32,6 +32,22 @@ public class ExerciseController : Controller
         return View(student);
     }
 
+    [HttpGet]
+    [Route("[controller]/[action]")]
+    public async Task<IActionResult> ReviewRatedTask(Guid exerciseId)
+    {
+        student = (Student)GetUserFromSession();
+        var ratedExercise = await _exerciseService.GetSubmission(exerciseId);
+        var exercise = await _exerciseService.GetExercise(ratedExercise.ExerciseId);
+        var code = await _azureStorageService.GetSubmittedTasks(exercise.ExerciseId, student.UserId);
+        
+        ViewBag.Exercise = exercise;
+        ViewBag.RatedExercise = ratedExercise;
+        ViewBag.ExerciseCode = code;
+        
+        return View("ReviewRatedTask", student);
+    }
+
     [HttpPost]
     [Route("[controller]/[action]")]
     public async Task<IActionResult> CompleteExercise([FromBody] ExerciseRequest request)
@@ -88,22 +104,7 @@ public class ExerciseController : Controller
         await _exerciseService.AddExercise(exercise);
         return RedirectToAction("Index", "Home");
     }
-
-    [HttpGet]
-    [Route("[action]")]
-    public async Task<IActionResult> ExercisesOverview(Guid groupId)
-    {
-        var user = GetUserFromSession();
-        
-        var groups = await _groupService.GetGroupByTeacherId(user.UserId);
-        var exercises = await _exerciseService.GetSubmissions(groupId);
-        
-        ViewBag.GroupName = groups.Where(g => g.Id == groupId).Select(n => n.GroupName);
-        ViewBag.Exercises = exercises;
-        
-        return View(user);
-    }
-
+    
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> RateExercise(Guid submittedExerciseId, Guid userId)
