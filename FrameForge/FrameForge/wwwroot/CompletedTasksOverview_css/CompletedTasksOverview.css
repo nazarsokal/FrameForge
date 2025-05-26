@@ -1,0 +1,223 @@
+﻿*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Container for all the cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 100px; /* Space for a potential fixed header */
+    align-items: flex-start;
+}
+
+/* Individual card style */
+.card {
+    position: relative;
+    background: #eeefff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    max-width: 500px;
+    min-width: 200px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    margin: 20px;
+}
+
+.card:hover {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    transform: translateY(-5px);
+}
+
+/* Card title */
+.card h3 {
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    padding: 10px;
+    border-radius: 50px;
+    color: white;
+    font-size: 16px;
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word;
+}
+
+/* Info text */
+.card p {
+    color: #333;
+    margin: 10px 0;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Button style */
+.card a.button {
+    display: inline-block;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.card a.button:hover {
+    background: #f7e018;
+    transform: scale(1.05);
+}
+
+/* Username header */
+.card-container h1 {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 50px;
+    text-align: center;
+    width: 100%;
+    margin: 20px 0 10px 0;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.5s;
+}
+
+.back-button {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Responsive design for tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    .card-container {
+        margin-left: 25vw;
+        padding: 15px;
+    }
+
+    .card {
+        min-width: 180px;
+        max-width: 400px;
+        padding: 10px;
+        margin: 15px;
+    }
+
+    .card h3 {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .card p {
+        font-size: 13px;
+    }
+
+    .card a.button {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .card-container h1 {
+        font-size: 20px;
+        padding: 8px;
+    }
+}
+
+/* Responsive design for mobile devices (less than 768px) */
+@media (max-width: 768px) {
+    .card-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .card {
+        min-width: 90%;
+        max-width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+    }
+
+    .card h3 {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
+
+    .card a.button {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+
+    .card-container h1 {
+        font-size: 18px;
+        padding: 6px;
+    }
+}
+
+/* Very small screens (less than 480px) */
+@media (max-width: 480px) {
+    .card {
+        min-width: 95%;
+        padding: 8px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+    }
+
+    .card p {
+        font-size: 11px;
+    }
+
+    .card a.button {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+    .card-container h1 {
+        font-size: 16px;
+        padding: 5px;
+    }
+}

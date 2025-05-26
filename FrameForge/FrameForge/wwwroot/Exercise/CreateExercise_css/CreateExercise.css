@@ -41,6 +41,7 @@ h2 {
     border-radius: 50px;
     transition: background 0.5s;
     font-family: 'Montserrat', sans-serif;
+    margin-top: -10px;
 }
 
 /*h2:hover {*/

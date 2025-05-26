@@ -10,67 +10,20 @@
 
 <html>
 <head>
-    <title>title</title>
-    <style>
-        /* Container for all the cards */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        /* Individual card style */
-        .card {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            width: 300px;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        /* Hover effect */
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Card title */
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        /* Info text */
-        .card p {
-            color: #555;
-            margin: 10px 0;
-            font-size: 0.95rem;
-        }
-
-        /* Button style */
-        .card a.button {
-            display: inline-block;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 14px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .card a.button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Completed Exerceses</title>
+    <link rel="stylesheet" href="~/CompletedTasksOverview_css/CompletedTasksOverview.css">
 </head>
 <body>
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+
 <div class="card-container">
     @foreach (var submission in submittedTasks)
     {
-        <p><h1>@submission.Key.Username</h1></p>
-        @foreach(var exercise in submission.Value)
+        <p>
+            <h1>@submission.Key.Username</h1></p>
+        @foreach (var exercise in submission.Value)
         {
             <div class="card">
                 <h3>@exercise.ExerciseName</h3>
@@ -81,4 +34,9 @@
     }
 </div>
 </body>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </html>

@@ -12,79 +12,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Exercise Submission</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f9fc;
-            margin: 0;
-            padding: 40px;
-        }
-
-        .containerTS {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .label {
-            font-weight: bold;
-            margin-top: 20px;
-            display: block;
-            font-size: 16px;
-            color: #444;
-        }
-
-        .description {
-            margin-bottom: 15px;
-            color: #555;
-        }
-
-        .requirements {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 20px 0 10px;
-            color: #222;
-        }
-
-        textarea {
-            width: 100%;
-            height: 300px;
-            font-family: monospace;
-            font-size: 14px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            resize: vertical;
-            background-color: #fefefe;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 12px 24px;
-            font-size: 16px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #004d99;
-        }
-    </style>
+    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
+    <link rel="stylesheet" href="~/Exercise/CompleteExercise_css/CompleteExercise.css">
 </head>
 <body>
+
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+
 <div class="containerTS">
     <h1>Exercise Submission</h1>
 
@@ -102,13 +38,16 @@
     </div>
 
     <label class="label">Your Code:</label>
-    
+
     <iframe
-        frameBorder="0"
-        height="450px"
-        src="https://onecompiler.com/embed/html?codeChangeEvent=true"
+        id="oc-editor"
+        src="https://onecompiler.com/embed/html?listenToEvents=true"
+        sandbox="allow-scripts allow-same-origin"
+        frameborder="0"
         width="100%"
-    ></iframe>
+        height="450px"
+        >
+    </iframe>
 
     <button type="submit" onclick="submitForm()">Submit</button>
 </div>
@@ -147,5 +86,9 @@
             });
     }
 
+    function goBack() {
+        window.history.back();
+    }
+    
 </script>
 </html>
