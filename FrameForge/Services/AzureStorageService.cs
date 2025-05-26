@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
+using Entities;
 using ServiceContracts.Enums;
 
 namespace Services;
@@ -128,5 +129,44 @@ public class AzureStorageService : IAzureStorageService
                 stream
             );
         }
+    }
+
+    public async Task<ExerciseRequest> GetSubmittedTasks(Guid exerciseSubmissionId, Guid userId)
+    {
+        string fileName = "";
+        ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient("UserTasks");
+        ExerciseRequest exerciseRequest = new ExerciseRequest();
+        
+        ShareDirectoryClient userDir = folder.GetSubdirectoryClient($"{exerciseSubmissionId.ToString()}_{userId.ToString()}");
+        var list = new List<string>() {"index.html", "style.css", "script.js"};
+        int i = 0;
+        foreach (var file in list)
+        {
+            ShareFileClient fileClient = userDir.GetFileClient(file);
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content);
+            string content = await reader.ReadToEndAsync();
+            
+            if(i == 0)
+            {
+                exerciseRequest.Files[i].Name = "index.html";
+                exerciseRequest.Files[i].Content = content;
+            }
+            else if (i == 1)
+            {
+                exerciseRequest.Files[i].Name = "style.css";
+                exerciseRequest.Files[i].Content = content;
+            }
+            else if (i == 2)
+            {
+                exerciseRequest.Files[i].Name = "script.js";
+                exerciseRequest.Files[i].Content = content;
+            }
+
+            i++;
+        }
+        
+        return exerciseRequest;
     }
 }

@@ -69,7 +69,7 @@
 <div class="card-container">
     @foreach (var submission in submittedTasks)
     {
-        <h1>@submission.Key.Username</h1>
+        <p><h1>@submission.Key.Username</h1></p>
         @foreach(var exercise in submission.Value)
         {
             <div class="card">

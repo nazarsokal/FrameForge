@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
@@ -105,10 +104,14 @@ public class ExerciseController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> CheckExercise(Guid exerciseId)
+    [Route("[action]")]
+    public async Task<IActionResult> RateExercise(Guid submittedExerciseId, Guid userId)
     {
+        Teacher teacher = (Teacher)GetUserFromSession();
+        var submittedExercises = await _exerciseService.GetSubmission(submittedExerciseId);
+        var exerciseRequestFromAzure = await _azureStorageService.GetSubmittedTasks(submittedExerciseId, userId);
         
-        return await CheckExercise(exerciseId);
+        return View(teacher);
     }
     
     private User GetUserFromSession()
@@ -131,39 +134,3 @@ public class ExerciseController : Controller
     }
 }
 
-public class ExerciseRequest
-{
-    [JsonPropertyName("exercise")]
-    public Exercise Exercise { get; set; }
-    
-    [JsonPropertyName("action")]
-    public string Action { get; set; }
-
-    [JsonPropertyName("files")]
-    public List<ExerciseFile> Files { get; set; }
-
-    [JsonPropertyName("language")]
-    public string Language { get; set; }
-
-    [JsonPropertyName("result")]
-    public ExerciseResult Result { get; set; }
-
-    [JsonPropertyName("stdin")]
-    public string Stdin { get; set; }
-
-    [JsonPropertyName("_id")]
-    public string Id { get; set; }
-}
-
-
-public class ExerciseFile
-{
-    public string Name { get; set; }
-    public string Content { get; set; }
-}
-
-public class ExerciseResult
-{
-    public bool Success { get; set; }
-    public string Output { get; set; }
-}
