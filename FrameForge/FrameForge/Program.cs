@@ -21,8 +21,10 @@ builder.WebHost.UseUrls("http://*:5118", "https://*:7287");
 builder.Services.AddScoped<IProgressMapService, ProgressMapService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<IAlgorithmsService, AlgorithmsService>();
 
 

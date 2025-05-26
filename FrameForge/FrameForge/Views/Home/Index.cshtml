@@ -1,8 +1,16 @@
-@model Entities.Student?
+@using Entities
+@using Microsoft.IdentityModel.Tokens
+@model Entities.User?
 
 @{
     ViewData["Title"] = "Frame Forge";
     Layout = "_Layout";
+
+    var isTeacher = Model?.GetType() == typeof(Teacher);
+    
+    var exercises = ViewBag.Exercises as Dictionary<string, List<Exercise>> ?? new Dictionary<string, List<Exercise>>();
+    var exercisesList = ViewBag.Exercises as List<Exercise> ?? new List<Exercise>();
+    string groupName = ViewBag.GroupName as string ?? "";
 }
 
 
@@ -21,131 +29,105 @@
     <div class="container">
         <nav class="leftContent">
             <ul class="leftNavMenu">
-                <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
-                <li class="navButtons"><a href="#"> Батл </a></li>
-                <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
-                <li class="navButtons"><a asp-controller="Algorithms" asp-action="AlgorithmsOverview"> Алгоритми </a></li>
+                @if (isTeacher)
+                {
+                    <li class="navButtons"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
+                    <li class="navButtons"><a asp-controller="Exercise" asp-action="CreateExercise"> Створити Завдання </a></li>
+                }
+                else
+                {
+                    <li class="navButtons"><a asp-controller="ProgressMap" asp-action="Map"> Карта </a></li>
+                    <li class="navButtons"><a href="#"> Батл </a></li>
+                    <li class="navButtons"><a href="#" target="_blank"> Магазин </a></li>
+                }
+                <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
                 <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
             </ul>
         </nav>
 
-        <!--Тестові завданя-->
-        <div class="task">
-            <ul class="bodyOfTask">
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <span class="lvlMode easy">Easy</span>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <span class="lvlMode easy">Easy</span>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +10 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +250 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode medium">Medium</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode medium">Medium</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +25 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +500 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-                <li class="taskCard">
-                    <div class="TaskHeader">
-                        <h2>Відредагуйте код</h2>
-                        <div class="lvlMode hard">Hard</div>
-                    </div>
-                    <div class="taskDiscription">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic vel quam voluptates, nam
-                            possimus eaque a ipsam eveniet, unde minima quos deserunt est, ut velit magni culpa quae
-                            voluptatibus sunt.</p>
-                    </div>
-                    <div class="points">
-                        <div class="starPoint">
-                            <div>StarPoint: +50 <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"></div>
-                        </div>
-                        <div class="moneyForTask">
-                            <div>Money For Task: +1000 <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"></div>
-                        </div>
-                    </div>
-                    <div class="buttonTask">
-                        <h3>Виконати завдання</h3>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        @if (isTeacher)
+        {
+            @foreach (var group in exercises)
+            {
+                <div class="task">
+                    <h2>@group.Key</h2>
+                    <ul class="bodyOfTask">
+                        @foreach (var exercise in group.Value)
+                        {
+                            <li class="taskCard">
+                                <div class="TaskHeader">
+                                    <h3>@exercise.ExerciseName</h3>
+                                    <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
+                                        @exercise.ExererciseDifficulty
+                                    </span>
+                                </div>
+                                <div class="taskDiscription">
+                                    <p>@exercise.ExerciseRequirements</p>
+                                </div>
+                                <div class="points">
+                                    <div class="starPoint">
+                                        StarPoint: +@exercise.StarsReward
+                                        <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                                    </div>
+                                    <div class="moneyForTask">
+                                        Money For Task: +@exercise.MoneyReward
+                                        <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
+        else
+        {
+            if (groupName.IsNullOrEmpty())
+            {
+                <h1>Вас не додано до групи</h1>
+            }
+            else if (exercisesList.Count == 0)
+            {
+                <h1>У вашій групі поки немає прикріплених вправ</h1>
+            }
+            else
+            {
+                <div class="task">
+                    <h2>@ViewBag.GroupName</h2>
+                    <ul class="bodyOfTask">
+                        @foreach (var exercise in exercisesList)
+                        {
+                            <li class="taskCard">
+                                <div class="TaskHeader">
+                                    <h3>@exercise.ExerciseName</h3>
+                                    <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
+                                        @exercise.ExererciseDifficulty
+                                    </span>
+                                </div>
+                                <div class="taskDiscription">
+                                    <p>@exercise.ExerciseRequirements</p>
+                                </div>
+                                <div class="points">
+                                    <div class="starPoint">
+                                        StarPoint: +@exercise.StarsReward
+                                        <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                                    </div>
+                                    <div class="moneyForTask">
+                                        Money For Task: +@exercise.MoneyReward
+                                        <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                    </div>
+                                </div>
+                                <a asp-controller="Exercise" asp-action="CompleteExercise" asp-route-exerciseId="@exercise.ExerciseId">
+                                    <div class="buttonTask">
+                                        <h3>Виконати завдання</h3>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
     </div>
 </body>
-
 </html>

@@ -16,34 +16,34 @@ public class RegistrationService : IRegistrationService
         _azureStorageService = azureStorageService;
     }
     
-    public async Task RegisterStudent(Student? student)
+    public async Task RegisterUser(User? user)
     {
-        ArgumentNullException.ThrowIfNull(student);
+        ArgumentNullException.ThrowIfNull(user);
         
-        if (_dbContext.Students.Any(st => st.Email == student.Email && st.Username == student.Username))
-            throw new InvalidOperationException("Student already exists");
+        if (_dbContext.Users.Any(st => st.Email == user.Email && st.Username == user.Username))
+            throw new InvalidOperationException("User already exists");
         
-        student.StudentId = Guid.NewGuid();
+        user.UserId = Guid.NewGuid();
 
-        if (student.Picture == null)
+        if (user.Picture == null)
         {
             var path = @"wwwroot/images/icons_mainPage/account.png";
-            await SaveDefaultProfileImageAsync(path, student.StudentId);
+            await SaveDefaultProfileImageAsync(path, user.UserId);
             
-            var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
-            student.Picture = Convert.ToBase64String(stImage);
+            var stImage = await _azureStorageService.GetUserPhoto(user.UserId);
+            user.Picture = Convert.ToBase64String(stImage);
         }
         
-        _dbContext.Students.Add(student);
+        _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task<Student> GetStudent(string username,string password)
     {
-        var user = await _dbContext.Students.SingleOrDefaultAsync(s => s.Username == username);
+        var user = await _dbContext.Users.OfType<Student>().SingleOrDefaultAsync(s => s.Username == username);
         if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
-            var studentImage = await _azureStorageService.GetUserPhoto(user.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(user.UserId);
             user.Picture = Convert.ToBase64String(studentImage);
             return user;
         }
@@ -52,55 +52,77 @@ public class RegistrationService : IRegistrationService
             return null;
         }
     }
-    public async Task<List<Student>> GetStudents()
+
+    public async Task<Teacher> GetTeacher(string username, string password)
     {
-        return await _dbContext.Students.ToListAsync();
+        var user = await _dbContext.Users.OfType<Teacher>().SingleOrDefaultAsync(s => s.Username == username);
+        if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
+        {
+            var studentImage = await _azureStorageService.GetUserPhoto(user.UserId);
+            user.Picture = Convert.ToBase64String(studentImage);
+            return user;
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    public async Task<Student> RegisterStudentWithGoogle(Student? student)
+    public async Task<List<User>> GetStudents()
     {
-        if (student == null) throw new NullReferenceException();
+        return await _dbContext.Users.ToListAsync();
+    }
 
-        if (await CheckIfStudentExistsGoogle(student) == true)
+    public async Task<User> RegisterStudentWithGoogle(User? user)
+    {
+        if (user == null) throw new NullReferenceException();
+
+        if (await CheckIfStudentExistsGoogle(user) == true)
         {
-            Student? stFromDb = await getStudentWithGoogle(student);
+            User? stFromDb = await getStudentWithGoogle(user);
             
             // await SaveProfileImageAsync(stFromDb.Picture, stFromDb.StudentId);
-            var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.StudentId);
+            var studentImage = await _azureStorageService.GetUserPhoto(stFromDb.UserId);
             stFromDb.Picture = Convert.ToBase64String(studentImage);
             
             return stFromDb;
         }
+
+        user.UserId = Guid.NewGuid();
         
-        student.StudentId = Guid.NewGuid();
-        student.MoneyAmount = 10.0;
+        if (user is Student student)
+        {
+            student.MoneyAmount = 10.0;
+        }
+        
 
-        var imagePath = await SaveProfileImageAsync(student.Picture, student.StudentId);
-        student.Picture = imagePath; // Записується шлях до зображення
+        var imagePath = await SaveProfileImageAsync(user.Picture, user.UserId);
+        user.Picture = imagePath; // Записується шлях до зображення
 
-        _dbContext.Students.Add(student);
+
+        _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync(); // У БД записано imagePath
 
-        var stImage = await _azureStorageService.GetUserPhoto(student.StudentId);
-        student.Picture = Convert.ToBase64String(stImage); // Для повернення, не зберігається в БД
+        var stImage = await _azureStorageService.GetUserPhoto(user.UserId);
+        user.Picture = Convert.ToBase64String(stImage); // Для повернення, не зберігається в БД
 
-        return student;
+        return user;
 
     }
 
-    public async Task<bool> CheckIfStudentExistsGoogle(Student? student)
+    public async Task<bool> CheckIfStudentExistsGoogle(User? user)
     {
-        if (student == null) throw new NullReferenceException();
-        Student? stFromDb = await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
+        if (user == null) throw new NullReferenceException();
+        User? stFromDb = await _dbContext.Users.FirstOrDefaultAsync(st => st.GoogleId == user.GoogleId);
         
         if(stFromDb == null) return false;
         
         else return true;
     }
 
-    private async Task<Student> getStudentWithGoogle(Student student)
+    private async Task<User> getStudentWithGoogle(User User)
     {
-        return await _dbContext.Students.FirstOrDefaultAsync(st => st.GoogleId == student.GoogleId);
+        return await _dbContext.Users.FirstOrDefaultAsync(st => st.GoogleId == User.GoogleId);
     }
     
     private async Task<string> SaveProfileImageAsync(string imageUrl, Guid userId)

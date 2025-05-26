@@ -1,0 +1,151 @@
+@using Entities
+@model Entities.Student
+
+@{
+    Layout = "_Layout";
+    
+    Exercise exercise = ViewBag.Exercise as Exercise ?? new Exercise(); 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .containerTS {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .description {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .requirements {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            color: #222;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+            background-color: #fefefe;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #004d99;
+        }
+    </style>
+</head>
+<body>
+<div class="containerTS">
+    <h1>Exercise Submission</h1>
+
+    <label class="label">Task Name:</label>
+    <div class="description">@exercise.ExerciseName</div>
+
+    <label class="label">Task Description:</label>
+    <div class="description">
+        @exercise.ExerciseDescription
+    </div>
+
+    <div class="requirements">Task Requirements</div>
+    <div class="description">
+        @exercise.ExerciseRequirements
+    </div>
+
+    <label class="label">Your Code:</label>
+    
+    <iframe
+        frameBorder="0"
+        height="450px"
+        src="https://onecompiler.com/embed/html?codeChangeEvent=true"
+        width="100%"
+    ></iframe>
+
+    <button type="submit" onclick="submitForm()">Submit</button>
+</div>
+</body>
+<script>
+    var code = "";
+    
+    window.onmessage = function (e) {
+        if (e.data && e.data.language) {
+            console.log(e.data)
+            code = e.data;
+        }
+    };
+
+    function submitForm() {
+        var ex = @Html.Raw(Json.Serialize(exercise));
+        console.log(code);
+        fetch("/Exercise/CompleteExercise", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                exercise: ex,
+                action: code.action,
+                files: code.files,
+                language: code.language,
+                result: code.result,
+                stdin: code.stdin,
+                _id: code._id
+            })
+        })
+        .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                }
+            });
+    }
+
+</script>
+</html>

@@ -1,8 +1,9 @@
 using Azure.Storage.Files.Shares;
 using ServiceContracts;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares.Models;
+using Azure;
 using Entities;
 using ServiceContracts.Enums;
 
@@ -77,43 +78,97 @@ public class AzureStorageService : IAzureStorageService
             throw;
         }
     }
-    public async Task<List<Algorithm>?> DownloadAllAlgorithms()
+
+    public async Task<Dictionary<FileExtensions, string>> DownloadAlgorithm(string algorithmName)
     {
-        List<Algorithm>? allAlgorithms = new();
+        Dictionary<FileExtensions, string> algorithmFiles = new Dictionary<FileExtensions, string>();
         ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
-        ShareDirectoryClient algorithmsDir = rootDir.GetSubdirectoryClient("Algorithms");
-
-        await foreach (ShareFileItem item in algorithmsDir.GetFilesAndDirectoriesAsync())
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient($"Algorithms/{algorithmName}");
+        var list = new List<string>() {"index.html", "style.css", "script.js"};
+        foreach (var file in list)
         {
-            if (!item.IsDirectory) continue;
+            ShareFileClient fileClient = folder.GetFileClient(file);
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content);
+            string content = await reader.ReadToEndAsync();
+            string ext = Path.GetExtension(file).TrimStart('.');
 
-            string algorithmName = item.Name;
-            ShareDirectoryClient algorithmFolder = algorithmsDir.GetSubdirectoryClient(algorithmName);
-            Algorithm algorithm = new() { AlgorithmName = algorithmName };
-
-            // Define file mapping
-            var fileMapping = new Dictionary<string, Action<string>>
+            if (Enum.TryParse<FileExtensions>(ext, true, out var fileExtension))
             {
-                { "index.html", content => algorithm.AlgorithmHtml = content },
-                { "style.css",  content => algorithm.AlgorithmCss  = content },
-                { "script.js",  content => algorithm.AlgorithmJs  = content },
-            };
-
-            foreach (var file in fileMapping.Keys)
-            {
-                ShareFileClient fileClient = algorithmFolder.GetFileClient(file);
-                if (!await fileClient.ExistsAsync()) continue;
-
-                var download = await fileClient.DownloadAsync();
-                using var reader = new StreamReader(download.Value.Content);
-                string content = await reader.ReadToEndAsync();
-
-                fileMapping[file](content);
+                algorithmFiles.Add(fileExtension, content);
             }
 
-            allAlgorithms.Add(algorithm);
+        }
+        
+        return algorithmFiles;
+    }
+
+    public async Task UploadCode(List<string> code, Guid taskId, Guid userId)
+    {
+        string fileName = "";
+        ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient("UserTasks");
+        
+        ShareDirectoryClient userDir = folder.GetSubdirectoryClient($"{taskId.ToString()}_{userId.ToString()}");
+        await userDir.CreateIfNotExistsAsync();
+
+        for (int i = 0; i < code.Count; i++)
+        {
+            byte[] fileBytes = Encoding.UTF8.GetBytes(code[i]);
+            
+            if(i == 0) fileName = "index.html";
+            else if (i == 1) fileName = "style.css";
+            else if (i == 2) fileName = "script.js";
+            
+            ShareFileClient fileClient = userDir.GetFileClient(fileName);
+            await fileClient.CreateAsync(fileBytes.Length);
+
+            using MemoryStream stream = new MemoryStream(fileBytes);
+            await fileClient.UploadRangeAsync(
+                new HttpRange(0, fileBytes.Length),
+                stream
+            );
+        }
+    }
+
+    public async Task<ExerciseRequest> GetSubmittedTasks(Guid taskId, Guid userId)
+    {
+        // Prepare the directory client for UserTasks/{taskId}_{userId}
+        ShareDirectoryClient rootDir   = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder    = rootDir.GetSubdirectoryClient("UserTasks");
+        string                   dirName = $"{taskId}_{userId}";
+        ShareDirectoryClient userDir   = folder.GetSubdirectoryClient(dirName);
+
+        // DTO to return
+        var exerciseRequest = new ExerciseRequest
+        {
+            Files = new List<ExerciseFile>()  // make sure this property is a List<ExerciseFile>
+        };
+
+        // The exact same file names you used when uploading
+        var fileNames = new[] { "index.html", "style.css", "script.js" };
+
+        foreach (var name in fileNames)
+        {
+            ShareFileClient fileClient = userDir.GetFileClient(name);
+
+            // If the file doesn't exist, skip it (optional)
+            if (!await fileClient.ExistsAsync())
+                continue;
+
+            // Download and read the entire file
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content, Encoding.UTF8);
+            string content = await reader.ReadToEndAsync();
+
+            // Add to your DTO
+            exerciseRequest.Files.Add(new ExerciseFile
+            {
+                Name    = name,
+                Content = content
+            });
         }
 
-        return allAlgorithms;
+        return exerciseRequest;
     }
 }

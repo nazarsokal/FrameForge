@@ -7,7 +7,9 @@ namespace FrameForge.Controllers
         [Route("[action]")]
         public IActionResult logOut()
         {
-            HttpContext.Session.Remove("Student");
+            var userType = HttpContext.Session.GetString("UserType");
+            HttpContext.Session.Remove(userType);
+            HttpContext.Session.Remove("UserType");
             return RedirectToAction("Index","Home");
         }
     }

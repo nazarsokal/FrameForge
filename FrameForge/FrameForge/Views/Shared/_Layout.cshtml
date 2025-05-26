@@ -1,5 +1,5 @@
 @using Entities
-@model Entities.Student?
+@model Entities.User?
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +17,20 @@
         <div class="user-profile">
             @if (string.IsNullOrEmpty(@Model.Picture))
             {
-                <a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none"><img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon"></a>
+                <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon">
             }
             else
             {
-                <a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none"><img src="data:image/jpeg;base64,@Model.Picture" alt="icon" class="accountIcon" style="border-radius: 50%;"></a>
+                <img src="data:image/jpeg;base64,@Model.Picture" alt="icon" class="accountIcon" style="border-radius: 50%;">
             }
-            <span class="rightText"><a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none; color: black">@Model.Username</a> <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
-        </div>
+            <span class="rightText">@Model.Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            </div>
+        
     </div>
 }
 else
@@ -43,5 +49,10 @@ else
 }
 @RenderBody()
 
+<script>
+    document.querySelector('.hamburger').addEventListener('click', () => {
+        document.querySelector('.leftContent').classList.toggle('active');
+    });
+</script>
 </body>
 </html>

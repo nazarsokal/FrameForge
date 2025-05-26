@@ -1,0 +1,91 @@
+@using Entities
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>My Group</title>
+    <link rel="stylesheet" href="~/GroupsOverview_css/GroupsOverview.css">
+    @* <link rel="stylesheet" href="~/mainPage_css/mainPage.css"> *@
+</head>
+
+<body>
+    
+<div class="container">
+
+    <nav class="leftContent">
+        <ul class="leftNavMenu">
+            <li class="navButtons" id="activePage"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
+            <li class="navButtons"><a asp-controller="Exercise" asp-action="CreateExercise"> Створити Завдання </a></li>
+            <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+            <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
+        </ul>
+    </nav>
+    
+    <!-- Trigger Button -->
+    <button onclick="document.getElementById('createGroupModal').style.display='block'" class="open-modal-btn" id="addbtn">
+        Створити групу
+    </button>
+
+    <div class="groups">
+    <!-- Modal -->
+    <div id="createGroupModal" class="modal">
+        <div class="modal-content">
+            @* <span class="close" onclick="document.getElementById('createGroupModal').style.display='none'">&times;</span> *@
+            <h2>Створення групи</h2>
+            <form method="post" asp-action="SubmitGroup">
+                <label for="groupName">Назва групи:</label>
+                <input type="text" id="groupName" name="groupName" required />
+                <div class="buttonsModal">  
+                    <button type="button" class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                    <button class="submit" type="submit">Створити</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @foreach (var group in ViewBag.Groups as List<Group>)
+    {
+        var modalId = $"AssignStudentModal_{group.Id}";
+        <div class="group-card" style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; width: 300px; font-family: Arial, sans-serif;">
+            <h2 style="margin-top: 0;">Group Name: @group.GroupName</h2>
+            <p><strong>Teacher:</strong> @group.Teacher.Username</p>
+            <div>
+                <strong>Students:</strong>
+                <ul style="padding-left: 20px; margin-top: 4px;">
+                    @foreach (var student in group.Students)
+                    {
+                        <li>@student.Username; @student.StarsAmount; @student.MoneyAmount</li>
+                    }
+                </ul>
+            </div>
+            <a asp-action="CompletedTasksOverview" asp-route-groupId="@group.Id"><strong>Переглянути завдання групи</strong></a>
+            <div>
+                <button onclick="document.getElementById('@modalId').style.display='block'" class="open-modal-btn" id="buttonAddStudent">
+                    Добавити студента
+                </button>
+            </div>
+        </div>
+
+        <div id="@modalId" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h2 class="addStudentModal">Добавити Студента</h2>
+                <form method="post" asp-action="AssignStudent">
+                    <input type="hidden" name="groupId" value="@group.Id" />
+                    <label for="studentName">Ім'я Студента:</label>
+                    <input type="text" id="studentName" name="studentName" required />
+                    <div class="buttonsModal">
+                        <button type="button" class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
+                        <button type="submit">Добавити</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    </div>
+</div>
+</body>
+</html>

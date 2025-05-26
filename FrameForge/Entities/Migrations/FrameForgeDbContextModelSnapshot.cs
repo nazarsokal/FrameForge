@@ -51,76 +51,191 @@ namespace Entities.Migrations
                     b.ToTable("EnrolledLevels", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Student", b =>
+            modelBuilder.Entity("Entities.Exercise", b =>
                 {
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("ExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ExerciseDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ExerciseName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ExerciseRequirements")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ExerciseStartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ExererciseDifficulty")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<double>("MoneyReward")
+                        .HasColumnType("double");
+
+                    b.Property<double>("StarsReward")
+                        .HasColumnType("double");
+
+                    b.HasKey("ExerciseId");
+
+                    b.ToTable("Exercises", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.ExerciseSubmission", b =>
+                {
+                    b.Property<Guid>("SubmittedExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ExerciseName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("MoneyReward")
+                        .HasColumnType("double");
+
+                    b.Property<double>("StarsReward")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("StudentSubmittedId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("SubmittedExerciseId");
+
+                    b.ToTable("ExerciseSubmissions", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Groups", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.User", b =>
+                {
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("GoogleId")
-                        .HasColumnType("varchar(40)");
-
-                    b.Property<double>("MoneyAmount")
-                        .HasColumnType("double");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Picture")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("StarsAmount")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfUser")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("UserId");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Users", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            StudentId = new Guid("a20a1008-a76a-4a19-8edc-ff7c5ba60650"),
-                            Email = "TestUser@test.com",
-                            MoneyAmount = 100.45,
-                            Password = "TestPassword",
-                            StarsAmount = 0,
-                            Username = "TestUserName"
-                        });
+                    b.HasDiscriminator<string>("TypeOfUser").HasValue("User");
+
+                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Entities.Test", b =>
+            modelBuilder.Entity("Entities.Student", b =>
                 {
-                    b.Property<Guid>("TestID")
-                        .ValueGeneratedOnAdd()
+                    b.HasBaseType("Entities.User");
+
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<double>("MoneyAmount")
+                        .HasColumnType("double");
 
-                    b.Property<string>("AnswerVariants")
-                        .HasColumnType("longtext");
+                    b.Property<int>("StarsAmount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.HasIndex("GroupId");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.HasDiscriminator().HasValue("Student");
+                });
 
-                    b.HasKey("TestID");
+            modelBuilder.Entity("Entities.Teacher", b =>
+                {
+                    b.HasBaseType("Entities.User");
 
-                    b.ToTable("Tests");
+                    b.HasDiscriminator().HasValue("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.HasOne("Entities.Teacher", "Teacher")
+                        .WithMany("Groups")
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.Student", b =>
+                {
+                    b.HasOne("Entities.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Entities.Teacher", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }
