@@ -97,6 +97,7 @@
     flex-wrap: wrap;
     gap: 20px;
     align-items: flex-start;
+    margin-top: 28px;
 }
 
 .group-card {
