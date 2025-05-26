@@ -1,12 +1,55 @@
+
+
+@model Entities.Student?
+@{
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Level_5</title>
+    <link rel="stylesheet" href="~/CG_level5/moving_images.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div>
-    <h1>Level 5</h1>
+
+<div class="task">
+    <div class="taskCard">
+        <p id="smallTitle"><strong>Рух зображень</strong></p>   
+        <br>
+        <p><span class="mini-title"> Що таке Рух зображень?</span>
+            <br><br>
+            Рух зображень у комп’ютерній графіці — це коли картинки на екрані змінюються так, щоб здавалось, ніби вони рухаються. Це основа анімації в іграх, фільмах чи програмах.
+            <br><br>
+            Уяви, що в тебе є багато картинок, наприклад, персонаж, який біжить. Якщо швидко показувати ці картинки одну за одною, то здаватиметься, що персонаж рухається.
+            <br><br>
+            <img src="~/images/level5/moving_image.jpg" class="moving_image">
+            <br>
+            Рис.1. Створення рухомого зображення
+            <br><br>
+            <span class="mini-title">У комп’ютерній графіці це працює так:</span>
+            <br><br>
+            1.  Кадри: Комп’ютер показує багато зображень (кадрів) за секунду — зазвичай 30 або 60. Це називається частота кадрів (FPS).
+            <br><br>
+            2.  Трансформація: Зображення змінюють: рухають (зміщують), повертають, розтягують. Наприклад, щоб машинка їхала, її картинку зсувають вправо.
+            <br><br>
+            3.  Анімація: Є спеціальні програми, які автоматично створюють рух. Наприклад, ти кажеш: "персонаж іде з точки А в точку Б", і комп’ютер сам малює всі кадри між ними.
+            <br><br>
+            4.  Фізика: Іноді додають правила, щоб рух виглядав справжнім, як у житті. Наприклад, якщо м’ячик падає, він прискорюється через силу тяжіння.
+            <br><br><br>
+            
+        </p>
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5226153%2Fmod_resource%2Fcontent%2F2%2FЛабораторна%202.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a asp-controller="Algorithms" asp-action="AlgorithmsOverview">спробувати</a></p>
+    </div>
+
+</div>
+
+<div class="tests">
     <div class="taskCard">
 
         <form method="get" asp-controller="Tests" asp-action="StartTesting">
@@ -17,5 +60,6 @@
 
     </div>
 </div>
+
 </body>
 </html>
