@@ -9,4 +9,5 @@ public interface IUserService
     public Task<User> UpdateStudent(Student student);
     public User CreateStudent(Student student);
     public User DeleteStudent(int id);
+    public Task<List<Student>> GetStudentsFromGroup(Guid groupId);
 }

@@ -103,6 +103,13 @@ public class ExerciseController : Controller
         
         return View(user);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> CheckExercise(Guid exerciseId)
+    {
+        
+        return await CheckExercise(exerciseId);
+    }
     
     private User GetUserFromSession()
     {

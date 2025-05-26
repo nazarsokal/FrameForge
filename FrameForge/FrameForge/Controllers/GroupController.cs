@@ -9,12 +9,14 @@ public class GroupController : Controller
 {
     private readonly IGroupService _groupService;
     private readonly IUserService _userService;
+    private readonly IExerciseService _exerciseService;
     public Teacher? teacher;
 
-    public GroupController(IGroupService groupService, IUserService userService)
+    public GroupController(IGroupService groupService, IUserService userService, IExerciseService exerciseService)
     {
         _groupService = groupService;
         _userService = userService;
+        _exerciseService = exerciseService;
     }
     
     [Route("[action]")]
@@ -60,6 +62,14 @@ public class GroupController : Controller
         await _groupService.AssignStudent(groupId, student.UserId);
         
         return RedirectToAction(nameof(GroupsOverview), teacher);
+    }
+
+    public async Task<IActionResult> CompletedTasksOverview(Guid groupId)
+    {
+        var students = _userService.GetStudentsFromGroup(groupId);
+
+        var submittedExercises = await _exerciseService.GetSubmissions(Guid.Empty);
+        return await CompletedTasksOverview(groupId);
     }
     
     private Teacher getTeacherFromSession()

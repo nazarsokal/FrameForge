@@ -47,4 +47,9 @@ public class UserService : IUserService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<List<Student>> GetStudentsFromGroup(Guid groupId)
+    {
+        return await _context.Users.OfType<Student>().Where(s => s.GroupId == groupId).ToListAsync();
+    }
 }
