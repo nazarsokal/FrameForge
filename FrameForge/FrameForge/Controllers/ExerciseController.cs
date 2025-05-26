@@ -10,13 +10,15 @@ public class ExerciseController : Controller
     private readonly IAzureStorageService _azureStorageService;
     private readonly IExerciseService _exerciseService;
     private readonly IGroupService _groupService;
+    private readonly IUserService _userService;
     private Student student;
 
-    public ExerciseController(IAzureStorageService azureStorageService, IExerciseService exerciseService, IGroupService groupService)
+    public ExerciseController(IAzureStorageService azureStorageService, IExerciseService exerciseService, IGroupService groupService, IUserService userService)
     {
         _azureStorageService = azureStorageService;
         _exerciseService = exerciseService;
         _groupService = groupService;
+        _userService = userService;
     }
     
     [HttpGet]
@@ -114,6 +116,8 @@ public class ExerciseController : Controller
         var exercise = await _exerciseService.GetExercise(submittedExerciseId);
         var exerciseRequestFromAzure = await _azureStorageService.GetSubmittedTasks(submittedExerciseId, userId);
         
+        HttpContext.Session.SetString("submittedUserId", userId.ToString());
+        
         ViewBag.SubmittedExercises = exercise;
         ViewBag.ExerciseCode = exerciseRequestFromAzure;
         
@@ -129,6 +133,10 @@ public class ExerciseController : Controller
         
         var exercise = await _exerciseService.GetSubmission(submittedExerciseId);
         await _exerciseService.RateExercise(exercise.ExerciseId, feedback, Convert.ToDouble(moneyReward), int.Parse(starsReward));
+        
+        var submittedUserId = Guid.Parse(HttpContext.Session.GetString("submittedUserId"));
+        Student student = (Student) await _userService.GetUserById(submittedUserId);
+        await _userService.UpdateStudent(student);
         
         return RedirectToAction("ExercisesOverview", teacher);
     }

@@ -40,7 +40,7 @@
                     </div>
                     <a asp-controller="Leaderboard" asp-action="LeaderBoard" style="text-decoration: none;">
                         <div class="stat-card">
-                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@ViewBag.StudentsPlace</span></span>
+                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@(ViewBag.StudentsPlace+1)</span></span>
                         </div>
                     </a>
                 </div>
@@ -53,11 +53,14 @@
                 <div class="stats" id="completed-tasks">
                     @foreach (var task in submittedTasks)
                     {
-                        <div class="stat-card">
-                            <span>
-                                @task.ExerciseName: @task.StarsReward зірочок, @task.MoneyReward монет
-                            </span>
-                        </div>
+                        <a asp-controller="Exercise" asp-action="ReviewRatedTask" asp-route-exerciseId="@task.ExerciseId">
+                            <div class="stat-card">
+                                <span class="level-name">@task.ExerciseName</span>
+                                <span>
+                                    @task.StarsReward зірочок, @task.MoneyReward монет
+                                </span>
+                            </div>
+                        </a>
                     }
                 </div>
             </div>
