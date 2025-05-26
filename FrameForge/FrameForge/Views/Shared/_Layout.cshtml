@@ -17,13 +17,13 @@
         <div class="user-profile">
             @if (string.IsNullOrEmpty(@Model.Picture))
             {
-                <img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon">
+                <a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none"><img src="~/images/icons_mainPage/account.png" alt="icon" class="accountIcon"></a>
             }
             else
             {
-                <img src="data:image/jpeg;base64,@Model.Picture" alt="icon" class="accountIcon" style="border-radius: 50%;">
+                <a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none"><img src="data:image/jpeg;base64,@Model.Picture" alt="icon" class="accountIcon" style="border-radius: 50%;"></a>
             }
-            <span class="rightText">@Model.Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
+            <span class="rightText"><a asp-controller="UserPage" asp-action="UserPage" style="text-decoration: none; color: black">@Model.Username</a> <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
         </div>
     </div>
 }

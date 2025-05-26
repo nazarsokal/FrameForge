@@ -6,14 +6,14 @@ namespace FrameForge.Controllers;
 
 public class UserPageController : Controller
 {
-    private Student student;
+    private Student student = new Student();
     
     [HttpGet]
     [Route("[action]")]
     public IActionResult UserPage()
     {
         student = GetStudentFromSession();
-        return View(student);
+        return View("user_page", student);
     }
     
     private Student GetStudentFromSession()
