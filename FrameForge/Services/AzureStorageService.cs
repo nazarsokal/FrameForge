@@ -114,7 +114,7 @@ public class AzureStorageService : IAzureStorageService
 
         for (int i = 0; i < code.Count; i++)
         {
-            byte[] fileBytes = Encoding.UTF8.GetBytes(code[0]);
+            byte[] fileBytes = Encoding.UTF8.GetBytes(code[i]);
             
             if(i == 0) fileName = "index.html";
             else if (i == 1) fileName = "style.css";
@@ -136,7 +136,7 @@ public class AzureStorageService : IAzureStorageService
         // Prepare the directory client for UserTasks/{taskId}_{userId}
         ShareDirectoryClient rootDir   = _shareClient.GetRootDirectoryClient();
         ShareDirectoryClient folder    = rootDir.GetSubdirectoryClient("UserTasks");
-        string                   dirName = $"{taskId:N}_{userId:N}";
+        string                   dirName = $"{taskId}_{userId}";
         ShareDirectoryClient userDir   = folder.GetSubdirectoryClient(dirName);
 
         // DTO to return

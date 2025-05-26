@@ -56,6 +56,19 @@ public class ExerciseService : IExerciseService
         return await _context.ExerciseSubmissions.FirstOrDefaultAsync(x => x.ExerciseId == exerciseSubmissionId);
     }
 
+    public Task RateExercise(Guid exerciseId, string description, double moneyReward, double starsReward)
+    {
+        var exSubmission = _context.ExerciseSubmissions.FirstOrDefault(x => x.ExerciseId == exerciseId);
+        
+        exSubmission.Feedback = description;
+        exSubmission.MoneyReward = moneyReward;
+        exSubmission.StarsReward = starsReward;
+        exSubmission.Status = "Rated";
+        
+        _context.ExerciseSubmissions.Update(exSubmission);
+        return _context.SaveChangesAsync();
+    }
+
     private async Task<bool> CheckIfExerciseExists(Guid groupId, string exerciseName)
     {
         return await _context.Exercises.AnyAsync(e => e.GroupId == groupId && e.ExerciseName == exerciseName);

@@ -95,8 +95,8 @@ public class ExerciseController : Controller
         var user = GetUserFromSession();
         
         var groups = await _groupService.GetGroupByTeacherId(user.UserId);
-        var exercises = await _exerciseService.GetExercises(groupId);
-
+        var exercises = await _exerciseService.GetSubmissions(groupId);
+        
         ViewBag.GroupName = groups.Where(g => g.Id == groupId).Select(n => n.GroupName);
         ViewBag.Exercises = exercises;
         
@@ -116,6 +116,19 @@ public class ExerciseController : Controller
         ViewBag.ExerciseCode = exerciseRequestFromAzure;
         
         return View(teacher);
+    }
+
+    [HttpPost]
+    [Route("[action]")]
+    public async Task<IActionResult> RateExercise(Guid submittedExerciseId, string feedback,
+        string moneyReward, string starsReward)
+    {
+        Teacher teacher = (Teacher)GetUserFromSession();
+        
+        var exercise = await _exerciseService.GetSubmission(submittedExerciseId);
+        await _exerciseService.RateExercise(exercise.ExerciseId, feedback, Convert.ToDouble(moneyReward), int.Parse(starsReward));
+        
+        return RedirectToAction("ExercisesOverview", teacher);
     }
     
     private User GetUserFromSession()
