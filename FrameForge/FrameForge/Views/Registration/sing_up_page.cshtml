@@ -22,11 +22,11 @@
         <div class="box-1"></div>
         <div class="box-2"></div>
         <div class="box-3"></div>
-        <div class="box-login" style="height: 600px;">
+        <div class="box-login" style="height: 620px;">
             <br>
             <br>
                   
-            <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Sing Up</h1>
+            <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Реєстрація</h1>
             <form method="post" asp-controller="Registration" asp-action="Create">
                 <input asp-for="Name" type="text" placeholder="Username" name="name">
                 <br>
@@ -38,11 +38,11 @@
                 @Html.AntiForgeryToken()
                 <label>
                     <input asp-for="IsTeacher" type="checkbox" id="isTeacherCheckbox"/>
-                    Login as Teacher
+                    Ввійти як викладач
                 </label>
-                <p style="margin-left: 180px; center; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
+             
                 @* <a href="main_page.html">Sing Up</a> *@
-                <button type="submit">Sign Up</button>
+                <button type="submit">Зарейструватися</button>
 
                 <div class= "login-with">
 
@@ -58,13 +58,15 @@
                 </div>
             </form>
                     
-            <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Login</a></p>
+            <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Login" asp-action="Login">Ввійти</a></p>
         </div>
     </div>
     </body>
 <script>
     const checkbox = document.getElementById("isTeacherCheckbox");
     const link = document.getElementById("googleLoginLink");
+
+    link.href = `/GoogleOAuth/RedirectOnOAuthServer?isTeacher=${checkbox.checked}`;
 
     checkbox.addEventListener("change", () => {
         const isChecked = checkbox.checked;
