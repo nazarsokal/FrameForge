@@ -3,6 +3,7 @@
 @model Entities.Exercise
 
 @{
+    Layout = "_Layout";
     var groups = (List<Group>)ViewBag.Groups;
 }
 <!DOCTYPE html>
@@ -10,74 +11,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Exercise</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f9fc;
-            padding: 20px;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #444;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
-        button {
-            margin-top: 20px;
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="~/CreateExercise_css/CreateExercise.css">
+    <link rel="stylesheet" href="~/mainPage_css/mainPage.css">
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Create New Exercise</h2>
-    <form method="post">
+
+<div class="container">
+
+
+    <nav class="leftContent">
+        <ul class="leftNavMenu">
+            <li class="navButtons"><a asp-controller="Group" asp-action="GroupsOverview"> Мої Групи </a></li>
+            <li class="navButtons" id="activePage"><a asp-controller="Exercise" asp-action="CreateExercise"> Створити Завдання </a></li>
+            <li class="navButtons"><a href="#" target="_blank"> Тести </a></li>
+            <li class="navButtons"><a asp-controller="LeaderBoard" asp-action="Leaderboard"> Таблиця лідерів </a></li>
+        </ul>
+    </nav>
+    
+    <div class="form-container">
+        <h2>Create New Exercise</h2>
+        <form method="post">
         <label for="groupName">Виберіть групу</label>
         <select id="groupName" name="groupName">
             @foreach (var group in groups)
@@ -108,8 +62,8 @@
         <input type="number" id="stars" asp-for="StarsReward" min="0">
 
         <button type="submit">Create Exercise</button>
-    </form>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>

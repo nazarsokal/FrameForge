@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>title</title>
+    <title>My Group</title>
     <link rel="stylesheet" href="~/GroupsOverview_css/GroupsOverview.css">
     @* <link rel="stylesheet" href="~/mainPage_css/mainPage.css"> *@
 </head>
@@ -39,7 +39,7 @@
             <form method="post" asp-action="SubmitGroup">
                 <label for="groupName">Назва групи:</label>
                 <input type="text" id="groupName" name="groupName" required />
-                <div class="buttonsModal">
+                <div class="buttonsModal">  
                     <button type="button" class="close" onclick="document.getElementById('createGroupModal').style.display='none'">Назад</button>
                     <button class="submit" type="submit">Створити</button>
                 </div>
