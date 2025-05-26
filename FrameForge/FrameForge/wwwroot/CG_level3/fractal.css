@@ -4,9 +4,12 @@
     box-sizing: border-box;
 }
 
+/* це пизда*/
+
 body {
     margin: 0;
     overflow-x: hidden;
+    overflow-y: hidden;
     background: linear-gradient(45deg, #318ced, #ed31ab);
     background-repeat: no-repeat;
     min-height: 100vh;
