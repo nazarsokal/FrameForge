@@ -69,6 +69,11 @@ public class ExerciseService : IExerciseService
         return _context.SaveChangesAsync();
     }
 
+    public Task<List<ExerciseSubmission>> GetRatedSubmissions(Guid studentId)
+    {
+        return _context.ExerciseSubmissions.Where(x => x.StudentSubmittedId == studentId && x.Status == "Rated").ToListAsync();
+    }
+
     private async Task<bool> CheckIfExerciseExists(Guid groupId, string exerciseName)
     {
         return await _context.Exercises.AnyAsync(e => e.GroupId == groupId && e.ExerciseName == exerciseName);

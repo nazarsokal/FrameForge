@@ -9,6 +9,7 @@
     var isTeacher = Model?.GetType() == typeof(Teacher);
     
     var exercises = ViewBag.Exercises as Dictionary<string, List<Exercise>> ?? new Dictionary<string, List<Exercise>>();
+    var submittedExercises = ViewBag.SubmittedExercises as List<ExerciseSubmission> ?? new List<ExerciseSubmission>();
     var exercisesList = ViewBag.Exercises as List<Exercise> ?? new List<Exercise>();
     string groupName = ViewBag.GroupName as string ?? "";
 }
@@ -97,32 +98,38 @@
                     <ul class="bodyOfTask">
                         @foreach (var exercise in exercisesList)
                         {
-                            <li class="taskCard">
-                                <div class="TaskHeader">
-                                    <h3>@exercise.ExerciseName</h3>
-                                    <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
-                                        @exercise.ExererciseDifficulty
-                                    </span>
-                                </div>
-                                <div class="taskDiscription">
-                                    <p>@exercise.ExerciseRequirements</p>
-                                </div>
-                                <div class="points">
-                                    <div class="starPoint">
-                                        StarPoint: +@exercise.StarsReward
-                                        <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                            var exSubmitted = submittedExercises.FirstOrDefault(x => x.ExerciseId == exercise.ExerciseId);
+                            @if (exSubmitted == null)
+                            {
+                                <li class="taskCard">
+                                    <div class="TaskHeader">
+                                        <h3>@exercise.ExerciseName</h3>
+                                        <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
+                                            @exercise.ExererciseDifficulty
+                                        </span>
                                     </div>
-                                    <div class="moneyForTask">
-                                        Money For Task: +@exercise.MoneyReward
-                                        <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                    <div class="taskDiscription">
+                                        <p>@exercise.ExerciseRequirements</p>
                                     </div>
-                                </div>
-                                <a asp-controller="Exercise" asp-action="CompleteExercise" asp-route-exerciseId="@exercise.ExerciseId">
-                                    <div class="buttonTask">
-                                        <h3>Виконати завдання</h3>
+                                    <div class="points">
+                                        <div class="starPoint">
+                                            StarPoint: +@exercise.StarsReward
+                                            <img src="~/images/icons_mainPage/star.png" alt="star" class="imgStar"/>
+                                        </div>
+                                        <div class="moneyForTask">
+                                            Money For Task: +@exercise.MoneyReward
+                                            <img src="~/images/icons_mainPage/coin.png" alt="coin" class="imgCoin"/>
+                                        </div>
                                     </div>
-                                </a>
-                            </li>
+                                    <a asp-controller="Exercise" asp-action="CompleteExercise" asp-route-exerciseId="@exercise.ExerciseId">
+                                        <div class="buttonTask">
+                                            <h3>Виконати завдання</h3>
+                                        </div>
+                                    </a>
+                                </li>   
+                            }
+
+                            
                         }
                     </ul>
                 </div>

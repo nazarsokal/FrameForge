@@ -33,9 +33,11 @@ public class HomeController : Controller
                 if (studentGroup != null)
                 {
                     List<Exercise>? exercisesList = await _exerciseService.GetExercises(studentGroup.Id);
-
+                    List<ExerciseSubmission>? submittedExercises = await _exerciseService.GetSubmissions(user.UserId);
+                    
                     ViewBag.GroupName = studentGroup.GroupName;
                     ViewBag.Exercises = exercisesList;
+                    ViewBag.SubmittedExercises = submittedExercises;
                 }
                 else
                 {

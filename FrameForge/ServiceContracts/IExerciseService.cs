@@ -18,4 +18,5 @@ public interface IExerciseService
     
     public Task<ExerciseSubmission> GetSubmission(Guid exerciseSubmissionId);
     public Task RateExercise(Guid exerciseId, string description, double moneyReward, double starsReward);
+    public Task<List<ExerciseSubmission>> GetRatedSubmissions(Guid exerciseId);
 }
