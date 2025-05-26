@@ -5,6 +5,7 @@
     Layout = "_Layout";
     var enrolledLevels = ViewBag.EnrolledLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
     var completedLevels = ViewBag.CompletedLevels as List<LevelsToDisplay> ?? new List<LevelsToDisplay>();
+    var submittedTasks = ViewBag.completedExercises as List<ExerciseSubmission> ?? new List<ExerciseSubmission>();
 }
  
 <!DOCTYPE html>
@@ -50,7 +51,14 @@
             <div class="profile-section">
                 <h2>Виконані завдання</h2>
                 <div class="stats" id="completed-tasks">
-                    <!-- Populated by JavaScript -->
+                    @foreach (var task in submittedTasks)
+                    {
+                        <div class="stat-card">
+                            <span>
+                                @task.ExerciseName: @task.StarsReward зірочок, @task.MoneyReward монет
+                            </span>
+                        </div>
+                    }
                 </div>
             </div>
             

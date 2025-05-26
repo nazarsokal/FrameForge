@@ -10,17 +10,19 @@ public class UserPageController : Controller
 {
     private readonly LeaderboardService _leaderboardService;
     private readonly IProgressMapService _progressMapService;
+    private readonly IExerciseService _exerciseService;
     private Student student = new Student();
 
-    public UserPageController(LeaderboardService leaderboardService, IProgressMapService progressMapService)
+    public UserPageController(LeaderboardService leaderboardService, IProgressMapService progressMapService, IExerciseService exerciseService)
     {
         _leaderboardService = leaderboardService;
         _progressMapService = progressMapService;
+        _exerciseService = exerciseService;
     }
     
     [HttpGet]
     [Route("[action]")]
-    public IActionResult UserPage()
+    public async Task<IActionResult> UserPage()
     {
         List<LevelsToDisplay> completedLevelsToDisplay = new List<LevelsToDisplay>();
         List<LevelsToDisplay> enrolledLevelsToDisplay = new List<LevelsToDisplay>();
@@ -53,7 +55,9 @@ public class UserPageController : Controller
         }
         
         var studentsPlace = _leaderboardService.GetStudentsPlace(student);
+        var completedExercises = await _exerciseService.GetSubmissions(student.UserId);
         
+        ViewBag.completedExercises = completedExercises;
         ViewBag.StudentsPlace = studentsPlace;
         ViewBag.EnrolledLevels = enrolledLevelsToDisplay;
         ViewBag.CompletedLevels = completedLevelsToDisplay;

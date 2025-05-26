@@ -21,7 +21,7 @@ const userData = {
     ]
 };
 
-// Populate Completed Tasks
+/*// Populate Completed Tasks
 const completedTasksList = document.getElementById("completed-tasks");
 userData.completedTasks.forEach(task => {
     const div = document.createElement("div");
@@ -39,7 +39,7 @@ userData.completedTasks.forEach(task => {
         </a>
     `;
     completedTasksList.appendChild(div);
-});
+});*/
 
 // Populate Completed Levels
 const completedLevelsList = document.getElementById("completed-levels");
