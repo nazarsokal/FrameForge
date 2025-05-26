@@ -131,42 +131,44 @@ public class AzureStorageService : IAzureStorageService
         }
     }
 
-    public async Task<ExerciseRequest> GetSubmittedTasks(Guid exerciseSubmissionId, Guid userId)
+    public async Task<ExerciseRequest> GetSubmittedTasks(Guid taskId, Guid userId)
     {
-        string fileName = "";
-        ShareDirectoryClient rootDir = _shareClient.GetRootDirectoryClient();
-        ShareDirectoryClient folder = rootDir.GetSubdirectoryClient("UserTasks");
-        ExerciseRequest exerciseRequest = new ExerciseRequest();
-        
-        ShareDirectoryClient userDir = folder.GetSubdirectoryClient($"{exerciseSubmissionId.ToString()}_{userId.ToString()}");
-        var list = new List<string>() {"index.html", "style.css", "script.js"};
-        int i = 0;
-        foreach (var file in list)
-        {
-            ShareFileClient fileClient = userDir.GetFileClient(file);
-            var download = await fileClient.DownloadAsync();
-            using var reader = new StreamReader(download.Value.Content);
-            string content = await reader.ReadToEndAsync();
-            
-            if(i == 0)
-            {
-                exerciseRequest.Files[i].Name = "index.html";
-                exerciseRequest.Files[i].Content = content;
-            }
-            else if (i == 1)
-            {
-                exerciseRequest.Files[i].Name = "style.css";
-                exerciseRequest.Files[i].Content = content;
-            }
-            else if (i == 2)
-            {
-                exerciseRequest.Files[i].Name = "script.js";
-                exerciseRequest.Files[i].Content = content;
-            }
+        // Prepare the directory client for UserTasks/{taskId}_{userId}
+        ShareDirectoryClient rootDir   = _shareClient.GetRootDirectoryClient();
+        ShareDirectoryClient folder    = rootDir.GetSubdirectoryClient("UserTasks");
+        string                   dirName = $"{taskId:N}_{userId:N}";
+        ShareDirectoryClient userDir   = folder.GetSubdirectoryClient(dirName);
 
-            i++;
+        // DTO to return
+        var exerciseRequest = new ExerciseRequest
+        {
+            Files = new List<ExerciseFile>()  // make sure this property is a List<ExerciseFile>
+        };
+
+        // The exact same file names you used when uploading
+        var fileNames = new[] { "index.html", "style.css", "script.js" };
+
+        foreach (var name in fileNames)
+        {
+            ShareFileClient fileClient = userDir.GetFileClient(name);
+
+            // If the file doesn't exist, skip it (optional)
+            if (!await fileClient.ExistsAsync())
+                continue;
+
+            // Download and read the entire file
+            var download = await fileClient.DownloadAsync();
+            using var reader = new StreamReader(download.Value.Content, Encoding.UTF8);
+            string content = await reader.ReadToEndAsync();
+
+            // Add to your DTO
+            exerciseRequest.Files.Add(new ExerciseFile
+            {
+                Name    = name,
+                Content = content
+            });
         }
-        
+
         return exerciseRequest;
     }
 }

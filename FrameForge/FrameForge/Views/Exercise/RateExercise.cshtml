@@ -4,7 +4,7 @@
 @{
     Layout = "_Layout";
     var exercise = ViewBag.ExerciseSubmitted as Exercise ?? new Exercise();
-    
+    var exerciseCode = ViewBag.ExerciseCode as ExerciseRequest ?? new ExerciseRequest();
 }
 
 <!DOCTYPE html>
@@ -114,14 +114,22 @@
 </div>
 </body>
 <script>
-    var iFrame = document.getElementById('oc-editor'); // add an ID for the <iframe tag
+    var iFrame = document.getElementById('oc-editor');
     iFrame.contentWindow.postMessage({
         eventType: 'populateCode',
         language: 'html',
         files: [
             {
-                "name": "HelloWorld.py",
-                "content": "your code...."
+                "name": "@Html.Raw(@exerciseCode.Files[0].Name)",
+                "content": "@Html.Raw(@exerciseCode.Files[0].Content)"
+            },
+            {
+                "name": "@Html.Raw(@exerciseCode.Files[1].Name)",
+                "content": "@Html.Raw(@exerciseCode.Files[1].Content)"
+            },
+            {
+                "name": "@Html.Raw(@exerciseCode.Files[1].Name)",
+                "content": "@Html.Raw(@exerciseCode.Files[1].Content)"
             }
         ]
     }, "*");

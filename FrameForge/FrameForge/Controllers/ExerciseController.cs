@@ -108,8 +108,12 @@ public class ExerciseController : Controller
     public async Task<IActionResult> RateExercise(Guid submittedExerciseId, Guid userId)
     {
         Teacher teacher = (Teacher)GetUserFromSession();
-        var submittedExercises = await _exerciseService.GetSubmission(submittedExerciseId);
+        // var submittedExercises = await _exerciseService.GetSubmission(submittedExerciseId);
+        var exercise = await _exerciseService.GetExercise(submittedExerciseId);
         var exerciseRequestFromAzure = await _azureStorageService.GetSubmittedTasks(submittedExerciseId, userId);
+        
+        ViewBag.SubmittedExercises = exercise;
+        ViewBag.ExerciseCode = exerciseRequestFromAzure;
         
         return View(teacher);
     }

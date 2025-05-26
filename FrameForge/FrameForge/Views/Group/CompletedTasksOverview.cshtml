@@ -75,7 +75,7 @@
             <div class="card">
                 <h3>@exercise.ExerciseName</h3>
                 <p><strong>Дата подачі:</strong> @exercise.SubmissionDate.ToString("dd.MM.yyyy HH:mm")</p>
-                <a href="/Exercises/Details/@exercise.ExerciseId" class="button">Переглянути</a>
+                <a asp-controller="Exercise" asp-action="RateExercise" asp-route-submittedExerciseId="@exercise.ExerciseId" asp-route-userId="@submission.Key.UserId" class="button">Переглянути</a>
             </div>
         }
     }
