@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
 }
 
-.header{
+.header {
     height: 84px;
 }
 
@@ -36,11 +36,9 @@ h1 {
     font-size: 28px;
     margin-bottom: 20px;
     color: #333;
-    /*background: linear-gradient(135deg, #6e8efb, #a777e3);*/
     padding: 10px;
     border-radius: 50px;
     text-align: center;
-    /*color: white;*/
 }
 
 .label {
@@ -71,12 +69,8 @@ h1 {
     font-weight: bold;
     color: #333;
     margin: 20px 0 10px;
-    /*background: linear-gradient(45deg, #318ced, #ed31ab);*/
-    /*padding: 10px;*/
     border-radius: 50px;
-    /*color: white;*/
     transition: all 0.3s ease;
-    
 }
 
 #oc-editor {
@@ -154,11 +148,59 @@ button:hover {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
+.back-button {
+    position: fixed;
+    top: 73px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #ed31ab, #318ced);
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.arrow-icon {
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    transition: stroke 0.3s ease;
+}
+
+.back-button:hover .arrow-icon {
+    stroke: #fff;
+}
+
 /* Адаптивність для планшетів */
 @media (max-width: 1024px) {
     .containerTS {
         padding: 20px;
         margin-top: 80px;
+    }
+
+    .back-button {
+        position: fixed;
+        width: 44px;
+        height: 44px;
+        top: 70px;
+        left: 15px;
+    }
+
+    .arrow-icon {
+        width: 20px;
+        height: 20px;
     }
 
     h1 {
@@ -201,6 +243,19 @@ button:hover {
         margin-top: 70px;
     }
 
+    .back-button {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        top: 70px;
+        left: 10px;
+    }
+
+    .arrow-icon {
+        width: 18px;
+        height: 18px;
+    }
+
     h1 {
         font-size: 20px;
         padding: 6px;
@@ -240,6 +295,19 @@ button:hover {
     .containerTS {
         padding: 10px;
         margin-top: 60px;
+    }
+
+    .back-button {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        top: 8px;
+        left: 8px;
+    }
+
+    .arrow-icon {
+        width: 16px;
+        height: 16px;
     }
 
     h1 {
