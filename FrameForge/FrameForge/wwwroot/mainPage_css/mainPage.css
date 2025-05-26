@@ -9,7 +9,6 @@ body {
     overflow-x: hidden;
     background: linear-gradient(45deg, #318ced, #ed31ab);
     background-repeat: no-repeat;
-    /*background: darkslategray;*/
     min-height: 100vh;
 }
 
@@ -24,7 +23,10 @@ body {
     justify-content: space-between;
     width: 100%;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
-    transition: .5s; 
+    transition: .5s;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
 }
 
 .header:hover {
@@ -35,22 +37,24 @@ body {
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
 }
-.leftText a{
+
+.leftText a {
     text-decoration: none;
     color: black;
+    display: flex;
+    align-items: center;
 }
 
-/*Стилі для кнопки виходу з профілю*/
+/* Стилі для кнопки виходу з профілю */
 .logoutIcon {
     margin-left: 10px;
 }
 
-/*Стилі для кнопок реєстрації*/
+/* Стилі для кнопок реєстрації */
 .LoginRegButtons {
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
-    /*color: white;*/
-    color:  black;
+    color: black;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
@@ -62,9 +66,38 @@ body {
 }
 
 .LoginRegButtons:hover {
-   /* background: linear-gradient(135deg, #5a7be0, #9b66dc); */
     background: #f7e018;
     transform: scale(1.05);
+}
+
+/* Стилі для user-profile */
+.user-profile {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: .5s;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.rightText {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Стилі для іконок профілю */
+.accountIcon {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
 }
 
 /* Ліве навігаційне меню */
@@ -72,12 +105,16 @@ body {
     width: 20vw;
     background: #eeefff;
     padding: 20px;
-    height: 70vh;
-    position: absolute;
-    border-radius: 10px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 0 10px 10px 0;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
     transition: .5s;
-    z-index: 10;
+    z-index: 900;
+    overflow-y: auto;
+    margin-top: 90px;
 }
 
 .leftContent:hover {
@@ -93,22 +130,17 @@ body {
 .leftContent ul li {
     margin-bottom: 10px;
     padding: 10px;
-    background: transparent;
-    border-radius: 10px;
-    /* background-color:  lightskyblue;
-    color: #333; */
-    /* background: linear-gradient(135deg, #6e8efb, #a777e3);
-    color: #fff; */
     background-color: lightskyblue;
     color: #333;
+    border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     transition: .5s;
 }
 
-/*Стилі для кнопок навігації*/
 .navButtons {
     width: 100%;
 }
+
 .navButtons a {
     text-decoration: none;
     color: black;
@@ -118,37 +150,51 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-.leftContent ul li:hover{
+.leftContent ul li:hover {
     font-size: 35px;
-   /* font-size: 20px;*/
-   background: linear-gradient(135deg, #318ced, #ed31ab);
+    background: linear-gradient(135deg, #318ced, #ed31ab);
+}
+
+/* Стилі для назви групи */
+h2 {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 50px;
+    transition: background 0.5s;
+    margin-top: auto;
+    text-align: center;
 }
 
 /* Стилі для контейнера зі завданнями */
 .container {
-    /*display: flex;*/
     position: relative;
     width: 100%;
 }
 
+/* Контейнер для завдань */
 .task {
     flex-grow: 1;
     padding: 20px;
     margin-left: 20vw;
-    display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
 .bodyOfTask {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    flex-wrap: nowrap;
     list-style: none;
     color: white;
     gap: 20px;
     margin: 0;
     padding: 0;
+    overflow-x: auto;
+    align-items: flex-start;
 }
 
 .taskCard {
@@ -156,12 +202,20 @@ body {
     background: #eeefff;
     border: none;
     border-radius: 10px;
-    width: calc(33.33% - 13.33px);
     padding: 15px;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
+    transition: .5s;
     display: flex;
     flex-direction: column;
-    transition: .5s;
+    flex: 0 0 auto;
+    max-width: 500px;
+    min-width: 200px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    margin-left: 27px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .taskCard:hover {
@@ -169,17 +223,17 @@ body {
 }
 
 .taskHeader {
-    position: relative;
     background: linear-gradient(45deg, #318ced, #ed31ab);
     padding: 10px;
     border-radius: 50px;
     color: white;
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-h2 {
+h3 {
     background: transparent;
     padding: 10px 20px;
     border-radius: 10px;
@@ -187,80 +241,22 @@ h2 {
     color: #333;
     margin: 0;
     text-align: center;
-    display: block;
-    width: 100%;
     font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word;
 }
 
-h3{
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    color: #333;
+.taskDiscription {
+    margin-bottom: 10px;
+}
+
+.taskDiscription p {
     margin: 0;
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.buttonTask{
-    background: linear-gradient(45deg, #318ced, #ed31ab);
-    position: relative;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 30px;
-    padding: 5px 10px;
-    border-radius: 50px;
-    transition: .5s;
-    /*box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);*/
-}
-
-.buttonTask:hover{
-    /* background: linear-gradient(45deg, #ed31ab, #318ced);
-    */ background: #f7e018;
-}
-
-p {
-    margin: 2px 0;
     font-size: 14px;
     color: #333;
     font-family: 'Montserrat', sans-serif;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
-
-/* Стилі для іконок профілю */
-.accountIcon {
-    width: 40px;
-    height: auto;
-    margin-right: 10px;
-}
-
-.rightText {
-    display: flex;
-    align-items: center;
-    font-size: 25px;
-    color: white;
-    margin-right: 10px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.user-profile {
-    position: relative;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 30px;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 5px 10px;
-    border-radius: 50px;
-    transition: .5s;
-}
-
-.user-profile:hover {
-    background: rgba(255, 255, 255, 0.75);
-}
-
 
 /* Стилі для мітки рівня складності */
 .lvlMode {
@@ -281,27 +277,297 @@ p {
 }
 
 .lvlMode.easy {
-    background-color: green; /* Зелений для Легкого */
+    background-color: green;
 }
 
 .lvlMode.medium {
-    background-color: orange; /* Оранжевий для середнього*/
+    background-color: orange;
 }
 
 .lvlMode.hard {
-    background-color: red; /*Червоний для складного*/
+    background-color: red;
 }
 
-/*Стилі для Зірочок і монеток*/
-.imgStar, .imgCoin{
+/* Стилі для зірочок і монеток */
+.imgStar, .imgCoin {
     width: 16px;
     top: 100px;
 }
 
-.points{
+.points {
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     margin-top: 35px;
     margin-bottom: 10px;
+}
+
+/* Стилі для скролу завдань групи */
+.bodyOfTask::-webkit-scrollbar {
+    width: 10px;
+}
+
+.bodyOfTask::-webkit-scrollbar-track {
+    background: #eeefff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.bodyOfTask::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #318ced, #ed31ab);
+    border-radius: 10px;
+    border: 2px solid #eeefff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.bodyOfTask::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ed31ab, #318ced);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Стилі для кнопки гамбургер */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Адаптивність */
+
+/* Планшети (768px - 1024px) */
+@media (max-width: 1024px) {
+    .leftContent {
+        width: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .task {
+        margin-left: 25vw;
+        padding: 15px;
+    }
+
+    .header {
+        font-size: 9px;
+        padding: 8px;
+    }
+
+    .leftText {
+        font-size: 13px;
+    }
+
+    .rightText {
+        font-size: 20px;
+    }
+
+    .LoginRegButtons {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .taskCard {
+        min-width: 180px;
+        max-width: 400px;
+        padding: 10px;
+        margin-left: 20px;
+    }
+
+    .taskHeader {
+        padding: 8px;
+    }
+
+    h3 {
+        font-size: 14px;
+    }
+
+    .taskDiscription p {
+        font-size: 13px;
+    }
+
+    .points {
+        font-size: 14px;
+    }
+
+    .lvlMode {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    h2 {
+        font-size: 20px;
+        padding: 8px;
+    }
+}
+
+/* Мобільні пристрої (менше 768px) */
+@media (max-width: 768px) {
+    /* Меню виїжджає зліва */
+    .leftContent {
+        width: 70vw;
+        left: 0;
+        right: auto;
+        transform: translateX(-100%); /* Ховаємо меню ліворуч */
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0; /* Залишаємо радіус для лівого боку */
+    }
+
+    .leftContent.active {
+        transform: translateX(0); /* Показуємо меню */
+    }
+
+    .task {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+    }
+
+    .header {
+        font-size: 8px;
+        padding: 6px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .leftText {
+        font-size: 12px;
+    }
+
+    .rightText {
+        font-size: 18px;
+    }
+
+    .user-profile {
+        font-size: 20px;
+        padding: 4px 8px;
+    }
+
+    .accountIcon {
+        width: 30px;
+    }
+
+    .LoginRegButtons {
+        font-size: 11px;
+        padding: 6px 12px;
+        margin-left: 5px;
+    }
+
+    .bodyOfTask {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .taskCard {
+        min-width: 90%;
+        max-width: 100%;
+        margin: 10px 0;
+    }
+
+    .taskHeader {
+        padding: 6px;
+    }
+
+    h3 {
+        font-size: 13px;
+    }
+
+    .taskDiscription p {
+        font-size: 12px;
+    }
+
+    .points {
+        font-size: 13px;
+    }
+
+    .lvlMode {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+
+    h2 {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 14px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* Дуже маленькі екрани (менше 480px) */
+@media (max-width: 480px) {
+    .header {
+        padding: 5px;
+    }
+
+    .leftText {
+        font-size: 10px;
+    }
+
+    .rightText {
+        font-size: 16px;
+    }
+
+    .LoginRegButtons {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+    .user-profile {
+        font-size: 18px;
+        padding: 3px 6px;
+    }
+
+    .accountIcon {
+        width: 25px;
+    }
+
+    .taskCard {
+        min-width: 95%;
+        padding: 8px;
+    }
+
+    h3 {
+        font-size: 12px;
+    }
+
+    .taskDiscription p {
+        font-size: 11px;
+    }
+
+    .points {
+        font-size: 12px;
+    }
+
+    .lvlMode {
+        font-size: 8px;
+        padding: 2px 5px;
+    }
+
+    h2 {
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 12px;
+    }
 }

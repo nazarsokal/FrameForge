@@ -50,13 +50,13 @@
             @foreach (var group in exercises)
             {
                 <div class="task">
-                    <h1>@group.Key</h1>
+                    <h2>@group.Key</h2>
                     <ul class="bodyOfTask">
                         @foreach (var exercise in group.Value)
                         {
                             <li class="taskCard">
                                 <div class="TaskHeader">
-                                    <h2>@exercise.ExerciseName</h2>
+                                    <h3>@exercise.ExerciseName</h3>
                                     <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
                                         @exercise.ExererciseDifficulty
                                     </span>
@@ -93,13 +93,13 @@
             else
             {
                 <div class="task">
-                    <h1>@ViewBag.GroupName</h1>
+                    <h2>@ViewBag.GroupName</h2>
                     <ul class="bodyOfTask">
                         @foreach (var exercise in exercisesList)
                         {
                             <li class="taskCard">
                                 <div class="TaskHeader">
-                                    <h2>@exercise.ExerciseName</h2>
+                                    <h3>@exercise.ExerciseName</h3>
                                     <span class="lvlMode @exercise.ExererciseDifficulty.ToLower()">
                                         @exercise.ExererciseDifficulty
                                     </span>
@@ -130,5 +130,4 @@
         }
     </div>
 </body>
-
 </html>
