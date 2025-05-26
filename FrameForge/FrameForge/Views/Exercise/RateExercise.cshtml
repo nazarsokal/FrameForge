@@ -40,7 +40,9 @@
         frameborder="0"
         width="100%"
         height="450px"
-    ></iframe>
+        style="display: none;">
+        
+    </iframe>
     <button onclick="refreshCode()">Refresh</button>
 
     <form asp-action="RateExercise" method="post" asp-route-submittedExerciseId="@exercise.ExerciseId">
@@ -59,36 +61,12 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var iFrame = document.getElementById('oc-editor');
         console.log("I am here2");
-        iFrame.contentWindow.postMessage({
-            eventType: 'populateCode',
-            language: 'html',
-            files: [
-                {
-                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[0].Name)),
-                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[0].Content))
-                },
-                {
-                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[1].Name)),
-                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[1].Content))
-                },
-                {
-                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[2].Name)),
-                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[2].Content))
-                }
-            ]
-        }, "*");
     });
-    window.onload = function () {
-
-            console.log("I am here1");
-
-        
-    };
 
     function refreshCode() {
         var iFrame = document.getElementById('oc-editor');
+        iFrame.style.display = 'block';
         console.log("I am here2");
         iFrame.contentWindow.postMessage({
             eventType: 'populateCode',
@@ -109,9 +87,5 @@
             ]
         }, "*");
     };
-
 </script>
-
-
-
 </html>
