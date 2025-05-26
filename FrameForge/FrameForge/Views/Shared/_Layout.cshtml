@@ -24,7 +24,13 @@
                 <img src="data:image/jpeg;base64,@Model.Picture" alt="icon" class="accountIcon" style="border-radius: 50%;">
             }
             <span class="rightText">@Model.Username <a asp-controller="LogOut" asp-action="logOut"><img src="~/images/icons_mainPage/logout.png" width="30px" alt="logout" class="logoutIcon"></a></span>
-        </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            </div>
+        
     </div>
 }
 else
@@ -43,5 +49,10 @@ else
 }
 @RenderBody()
 
+<script>
+    document.querySelector('.hamburger').addEventListener('click', () => {
+        document.querySelector('.leftContent').classList.toggle('active');
+    });
+</script>
 </body>
 </html>
