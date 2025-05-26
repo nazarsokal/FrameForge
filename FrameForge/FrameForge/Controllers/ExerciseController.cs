@@ -33,12 +33,13 @@ public class ExerciseController : Controller
         List<Group> groupList = await _groupService.GetGroupByTeacherId(teacher.UserId);
         ViewBag.Groups = groupList;
         
-        return View();
+        return View(teacher);
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<ActionResult> CreateExercise(Exercise exercise, string groupName)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateExercise(Exercise exercise, string groupName)
     {
         Teacher teacher = (Teacher)GetUserFromSession();
         

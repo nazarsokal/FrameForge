@@ -1,10 +1,11 @@
 @using Entities
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model Entities.Exercise
+@* @model Entities.Exercise *@
 
 @{
     Layout = "_Layout";
     var groups = (List<Group>)ViewBag.Groups;
+    var exercise = ViewBag.Exercise as Exercise ?? new Exercise();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -32,37 +33,41 @@
     <div class="form-container">
         <h2>Create New Exercise</h2>
         <form method="post">
-        <label for="groupName">Виберіть групу</label>
-        <select id="groupName" name="groupName">
-            @foreach (var group in groups)
-            {
-                <option value="@group.GroupName">@group.GroupName</option>
-            }
-        </select>
-        <label>Exercise Name</label>
-        <input type="text" id="name" asp-for="ExerciseName" required>
+            @Html.AntiForgeryToken()
 
-        <label>Short Description</label>
-        <input type="text" id="shortDesc" asp-for="ExerciseDescription" required>
+            <label for="groupName">Виберіть групу</label>
+            <select id="groupName" name="groupName">
+                @foreach (var group in groups)
+                {
+                    <option value="@group.GroupName">@group.GroupName</option>
+                }
+            </select>
 
-        <label>Requirements</label>
-        <textarea id="requirements" asp-for="ExerciseRequirements" rows="6" required></textarea>
+            <label for="ExerciseName">Exercise Name</label>
+            <input type="text" id="ExerciseName" name="ExerciseName" required>
 
-        <label>Difficulty</label>
-        <select id="difficulty" asp-for="ExererciseDifficulty">
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-        </select>
+            <label for="ExerciseDescription">Short Description</label>
+            <input type="text" id="ExerciseDescription" name="ExerciseDescription" required>
 
-        <label for="money">Money Reward</label>
-        <input type="number" id="money" asp-for="MoneyReward" min="0">
+            <label for="ExererciseDifficulty">Requirements</label>
+            <textarea id="ExererciseDifficulty" name="ExererciseDifficulty" rows="6" required></textarea>
 
-        <label for="stars">Stars Reward</label>
-        <input type="number" id="stars" asp-for="StarsReward" min="0">
+            <label for="ExerciseDifficulty">Difficulty</label>
+            <select id="ExerciseDifficulty" name="ExerciseDifficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
 
-        <button type="submit">Create Exercise</button>
+            <label for="MoneyReward">Money Reward</label>
+            <input type="number" id="MoneyReward" name="MoneyReward" min="0">
+
+            <label for="StarsReward">Stars Reward</label>
+            <input type="number" id="StarsReward" name="StarsReward" min="0">
+
+            <button type="submit">Create Exercise</button>
         </form>
+
     </div>
 </div>
 </body>
