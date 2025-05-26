@@ -12,6 +12,10 @@ body {
     min-height: 100vh;
 }
 
+.header{
+    height: 84px;
+}
+
 .containerTS {
     max-width: 1000px;
     margin: auto;
