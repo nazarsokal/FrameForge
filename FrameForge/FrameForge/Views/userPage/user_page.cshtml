@@ -24,18 +24,18 @@
             <h2>Інформація про користувача</h2>
             <div class="user-balance">
                 <div class="user-photo">
-                    <img src="" alt="User Photo" class="profile-image">
+                    <img src="data:image/jpeg;base64,@Model.Picture" alt="User Photo" class="profile-image">
                 </div>
                 <div class="user-info">
                     <div class="stat-card">
                         <span>Монети: <span id="total-coins">@Model.MoneyAmount</span></span>
                         <img src="~/images/icons_mainPage/coin.png" alt="coin">
-                        <span>Username:</span>
+                        <span>Username: @Model.Username</span>
                     </div>
                     <div class="stat-card">
                         <span>Зірочки: <span id="total-stars">@Model.StarsAmount</span></span>
                         <img src="~/images/icons_mainPage/star.png" alt="star">
-                        <span>Email:</span>
+                        <span>Email: @Model.Email</span>
                     </div>
                     <a asp-controller="Leaderboard" asp-action="LeaderBoard" style="text-decoration: none;">
                         <div class="stat-card">
