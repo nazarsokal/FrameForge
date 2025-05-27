@@ -26,16 +26,19 @@ jobs:
       - name: Publish app
         run: dotnet publish FrameForge/FrameForge.sln -c Release -o ${{env.DOTNET_ROOT}}/publish
 
-      - name: Zip publish folder contents
+      - name: Zip published output
         run: |
-          cd ${{env.DOTNET_ROOT}}/publish
-          zip -r ../../publish.zip .  # zip contents only, place zip two levels up
+          cd ${{env.DOTNET_ROOT}}
+          zip -r publish.zip publish
 
-      - name: Upload zipped artifact
+      - name: List zip file
+        run: ls -la ${{env.DOTNET_ROOT}}/publish.zip
+
+      - name: Upload publish zip artifact
         uses: actions/upload-artifact@v4
         with:
-          name: publish
-          path: publish.zip
+          name: publish-zip
+          path: ${{env.DOTNET_ROOT}}/publish.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,17 +56,19 @@ jobs:
           name: publish-zip
           path: .
 
+      - name: List downloaded artifact
+        run: ls -la publish.zip
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9CDC522092A04DCE9FDFD0F7FC6F1824 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_440F1154EE924DCD8A5388DD736AFA86 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FF8D64F495D6446E8604E55DA80795B3 }}
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'FrameForge'
           slot-name: 'Production'
-          package: 'publish.zip'
+          package: publish.zip
