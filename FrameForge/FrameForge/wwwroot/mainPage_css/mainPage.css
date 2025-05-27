@@ -346,6 +346,10 @@ h3 {
 
 /* Адаптивність */
 
+/* ... Ваш попередній CSS код без змін до медіа-запитів ... */
+
+/* Адаптивність */
+
 /* Планшети (768px - 1024px) */
 @media (max-width: 1024px) {
     .leftContent {
@@ -415,16 +419,15 @@ h3 {
 @media (max-width: 768px) {
     /* Меню виїжджає зліва */
     .leftContent {
-        width: 70vw;
+        width: 50vw; /* або 250px */
         left: 0;
         right: auto;
-        transform: translateX(-100%); /* Ховаємо меню ліворуч */
+        transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         margin-top: 60px;
         z-index: 1100;
-        border-radius: 0 10px 10px 0; /* Залишаємо радіус для лівого боку */
+        border-radius: 0 10px 10px 0;
     }
-
     .leftContent.active {
         transform: translateX(0); /* Показуємо меню */
     }
@@ -508,7 +511,20 @@ h3 {
     }
 
     .hamburger {
-        display: flex;
+        display: flex; /* Активуємо бургер-меню */
+    }
+
+    /* Стилі для анімації бургер-меню при активації */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
     }
 }
 
@@ -569,5 +585,114 @@ h3 {
 
     .imgStar, .imgCoin {
         width: 12px;
+    }
+
+    .hamburger {
+        width: 25px;
+        height: 18px;
+    }
+
+    .hamburger span {
+        height: 2px;
+    }
+}
+
+/* Надзвичайно маленькі екрани (менше 320px) */
+@media (max-width: 320px) {
+    .header {
+        padding: 4px;
+    }
+
+    .leftText {
+        font-size: 9px;
+    }
+
+    .rightText {
+        font-size: 14px;
+    }
+
+    .LoginRegButtons {
+        font-size: 9px;
+        padding: 4px 8px;
+        margin-left: 3px;
+    }
+
+    .user-profile {
+        font-size: 16px;
+        padding: 2px 5px;
+    }
+
+    .accountIcon {
+        width: 20px;
+        margin-right: 5px;
+    }
+
+    .leftContent {
+        width: 80vw;
+        padding: 10px;
+        margin-top: 50px;
+    }
+
+    .task {
+        padding: 8px;
+    }
+
+    .taskCard {
+        min-width: 100%;
+        padding: 6px;
+        margin: 8px 0;
+    }
+
+    .taskHeader {
+        padding: 5px;
+        border-radius: 30px;
+    }
+
+    h3 {
+        font-size: 11px;
+    }
+
+    .taskDiscription p {
+        font-size: 10px;
+    }
+
+    .points {
+        font-size: 11px;
+        margin-top: 25px;
+    }
+
+    .lvlMode {
+        font-size: 7px;
+        padding: 2px 4px;
+        top: 2px;
+        right: 4px;
+    }
+
+    h2 {
+        font-size: 14px;
+        padding: 4px;
+        margin-top: 80px;
+    }
+
+    .imgStar, .imgCoin {
+        width: 10px;
+    }
+
+    .hamburger {
+        width: 20px;
+        height: 16px;
+    }
+
+    .hamburger span {
+        height: 2px;
+    }
+
+    .leftContent ul li {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .leftContent ul li:hover {
+        font-size: 16px; /* Зменшуємо розмір шрифту при ховері для маленьких екранів */
     }
 }
