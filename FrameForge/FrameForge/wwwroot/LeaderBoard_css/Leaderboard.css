@@ -38,7 +38,6 @@ h2:hover {
     align-items: center; 
     justify-content: flex-start;
     padding: 20px;
-    margin-top: 89px;
 }
 
 /* Обгортка таблиці */
@@ -137,4 +136,141 @@ td img{
 .leaderboard-wrapper::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(45deg, #ed31ab, #318ced); 
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); 
+}
+
+/* Медіа-запити для адаптивності */
+
+
+/* Планшети (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .leftContent {
+        width: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .content-container {
+        margin-left: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 500px;
+        max-height: 350px;
+    }
+
+    .content-container h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .leaderBoard th {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .leaderBoard td {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    td img {
+        height: 16px;
+        margin-right: 8px;
+    }
+}
+
+/* Мобільні пристрої (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .leftContent {
+        width: 70vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .content-container {
+        margin-left: 0;
+        padding: 10px;
+        margin-top: 60px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 90%;
+        max-height: 300px;
+    }
+
+    .content-container h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .leaderBoard th {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .leaderBoard td {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    td img {
+        height: 14px;
+        margin-right: 6px;
+    }
+}
+
+/* Дуже маленькі екрани (до 480px) */
+@media (max-width: 480px) {
+    .leftContent {
+        width: 70vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .content-container {
+        margin-left: 0;
+        padding: 8px;
+        margin-top: 50px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 95%;
+        max-height: 250px;
+    }
+
+    .content-container h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .leaderBoard th {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .leaderBoard td {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    td img {
+        height: 12px;
+        margin-right: 5px;
+    }
 }
