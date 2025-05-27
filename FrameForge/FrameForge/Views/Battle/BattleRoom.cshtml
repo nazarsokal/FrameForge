@@ -14,12 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Battle Room</title>
     <link rel="stylesheet" href="~/css/battle.css" />
-    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
     <script type="text/javascript" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 </head>
 <body>
 <div class="battle-container">
@@ -97,10 +95,10 @@
             console.error("Connection failed:", err);
         }
     });
+
     window.addEventListener("beforeunload", async () => {
         try {
             await connection.invoke("LeaveRoom", roomId);
-
         } catch (err) {
             console.warn("Помилка LeaveRoom:", err);
         }
@@ -117,8 +115,8 @@
     });
 
     connection.on("OpponentIsReady", (Id) => {
-        if(Id === player1Id) document.getElementById("player1Status").innerHTML = "Ready";
-        else if(Id === player2Id) document.getElementById("player2Status").innerHTML = "Ready";
+        if (Id === player1Id) document.getElementById("player1Status").innerHTML = "Ready";
+        else if (Id === player2Id) document.getElementById("player2Status").innerHTML = "Ready";
     });
 
     connection.on("AllAreReady", () => {
@@ -131,12 +129,12 @@
     connection.on("Student", (student) => {
         if (student.studentId.toString() === player1Id) {
             document.getElementById("player1Name").innerHTML = student.username;
-            if(student.photoUrl) {
+            if (student.photoUrl) {
                 document.getElementById("player1Photo").src = 'data:image/jpeg;base64,' + student.picture;
             }
         } else if (student.studentId.toString() === player2Id) {
             document.getElementById("player2Name").innerHTML = student.username;
-            if(student.photoUrl) {
+            if (student.photoUrl) {
                 document.getElementById("player2Photo").src = 'data:image/jpeg;base64,' + student.picture;
             }
         }
@@ -155,6 +153,10 @@
         if (answersSubmittedCount === 2) {
             clearTimeout(answerTimeoutId);
             document.getElementById("correctAnswer").innerHTML = `Correct answer: ${questions[currentQuestionIndex - 1].Answer}`;
+            // Reprocess LaTeX in the correct answer
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise(['#correctAnswer']).catch(err => console.error('MathJax typesetting error:', err));
+            }
             setTimeout(() => {
                 answersSubmittedCount = 0;
                 showQuestion();
@@ -165,14 +167,15 @@
     function startBattle() {
         showQuestion();
     }
+
     async function BackToLobby() {
         await connection.invoke("LeaveRoom", roomId);
         window.location.href = '/Battle/BattleLobby';
     }
+
     connection.on("OpponentLeft", (room) => {
         console.log("Opponent left:", room);
-        if(room.status !== 2) {
-            // Створення модального вікна
+        if (room.status !== 2) {
             const modal = document.createElement("div");
             modal.style.position = "fixed";
             modal.style.top = "0";
@@ -215,12 +218,10 @@
             dialog.appendChild(okButton);
             modal.appendChild(dialog);
             document.body.appendChild(modal);
-        }
-        else {
+        } else {
             window.location.href = "/Battle/BattleLobby";
         }
     });
-
 
     async function submitAnswer(roomId, variant) {
         console.log("Room ID:", roomId);
@@ -230,11 +231,9 @@
                 hasAnswered = true;
                 await connection.invoke("SubmitAnswer", roomId, variant, currentQuestionIndex);
                 console.log("Answer submitted successfully.");
-
             }
         } catch (err) {
             console.error("Failed to submit answer:", err);
-
         }
     }
 
@@ -278,7 +277,7 @@
 
         answerVariants.forEach(variant => {
             const button = document.createElement('button');
-            button.textContent = variant;
+            button.innerHTML = variant; // Use innerHTML to allow LaTeX rendering
 
             button.onclick = () => {
                 clearTimeout(answerTimeoutId);
@@ -294,6 +293,13 @@
 
             answersContainer.appendChild(button);
         });
+
+        // Reprocess LaTeX after adding question and answers
+        if (typeof MathJax !== 'undefined') {
+            MathJax.typesetPromise(['#currentQuestion', '#answersContainer']).catch(err => {
+                console.error('MathJax typesetting error:', err);
+            });
+        }
 
         currentQuestionIndex++;
     }
@@ -328,6 +334,7 @@
 
         battleResult.innerHTML = resultMessage + battleResult.innerHTML;
     }
+
     function endBattleRequest(roomId) {
         const formData = new FormData();
         formData.append("roomId", roomId);
@@ -347,9 +354,6 @@
                 console.error('Error:', error);
             });
     }
-
-
-
 </script>
 </body>
 </html>
