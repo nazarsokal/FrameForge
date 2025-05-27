@@ -46,7 +46,7 @@ public class GroupController : Controller
         
         await _groupService.AddGroup(group);
         
-        return RedirectToAction(nameof(GroupsOverview), teacher);
+        return RedirectToAction(nameof(GroupsOverview));
     }
 
     [Route("[action]")]
