@@ -4,25 +4,30 @@ public class BattleSingleton
 {
    
     private readonly Dictionary<Guid, bool> _readyClients = new();
-    private readonly Queue<Guid> RoomsWrittenToHistory = new();
     private readonly object _lock = new();
+
+    private readonly HashSet<Guid> RoomsWrittenToHistory = new();
 
     public bool CheckRoom(Guid roomId)
     {
         lock (_lock)
         {
-            if (RoomsWrittenToHistory.Contains(roomId)) return false;
-            else return true;
+            return RoomsWrittenToHistory.Contains(roomId);
         }
     }
+
     public void AddRoomToHistory(Guid roomId)
     {
         lock (_lock)
         {
-            RoomsWrittenToHistory.Enqueue(roomId);
-            if (RoomsWrittenToHistory.Count > 10) RoomsWrittenToHistory.Dequeue();
+            RoomsWrittenToHistory.Add(roomId); // HashSet автоматично не додає дублікати
+            if (RoomsWrittenToHistory.Count > 1000)
+            {
+                // Якщо хочете обмежити обʼєм — реалізуйте очищення старих записів іншим способом
+            }
         }
     }
+    
     public void Add(Guid connectionId)
     {
         lock (_lock)
@@ -46,7 +51,7 @@ public class BattleSingleton
             return _readyClients.TryGetValue((Guid)connectionId, out var ready) && ready ;
         }
     }
-
+    
     public void Remove(Guid connectionId)
     {
         lock (_lock)
@@ -54,7 +59,4 @@ public class BattleSingleton
             _readyClients.Remove(connectionId);
         }
     }
-    
-
-
 }
