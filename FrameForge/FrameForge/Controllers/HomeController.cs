@@ -63,6 +63,6 @@ public class HomeController : Controller
             return View(user);
         }
 
-        return View();
+        return RedirectToAction("Login", "Login");
     }
 }
