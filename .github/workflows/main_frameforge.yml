@@ -24,7 +24,7 @@ jobs:
         run: dotnet build FrameForge/FrameForge.sln --configuration Release
 
       - name: Publish app to folder
-        run: dotnet publish FrameForge/FrameForge/FrameForge.csproj -c Release -o FrameForge/publish --self-contained --runtime linux-x64
+        run: dotnet publish FrameForge/FrameForge.csproj -c Release -o FrameForge/publish --self-contained --runtime linux-x64
 
       - name: List published files
         run: ls -R FrameForge/publish
