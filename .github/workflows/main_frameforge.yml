@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - FrameForge
+name: Build and deploy ASP.NET Core app to Azure Web App - FrameForge
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -25,18 +25,23 @@ jobs:
 
       - name: Publish app to folder
         run: dotnet publish FrameForge/FrameForge.sln -c Release -o FrameForge/publish
-      
+
+      - name: List published files
+        run: ls -R FrameForge/publish
+
       - name: Create ZIP archive of published app
         run: |
           cd FrameForge/publish
-          zip -r ../../publish.zip ./*
+          zip -r ../../publish.zip .
       
+      - name: List ZIP contents
+        run: unzip -l publish.zip
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: publish.zip
-
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,8 +50,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read # This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
