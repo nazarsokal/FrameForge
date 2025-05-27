@@ -9,14 +9,23 @@
 <html>
 <head>
     <title>title</title>
+    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
     <style>
         @Html.Raw(@Model.AlgorithmCss);
     </style>
 </head>
 <body>
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+
 @Html.Raw(@Model.AlgorithmHtml);
 </body>
 <script>
     @Html.Raw(@Model.AlgorithmJs);
+
+    function goBack() {
+        window.history.back();
+    }
 </script>
 </html>
