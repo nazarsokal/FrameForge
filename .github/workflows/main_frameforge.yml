@@ -29,6 +29,9 @@ jobs:
       - name: Zip the published app
         run: zip -r publish.zip publish
 
+      - name: List publish folder contents
+        run: ls -la FrameForge/publish
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
