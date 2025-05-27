@@ -50,7 +50,11 @@ body {
     padding: 0;
     min-height: 100vh;
     /*background: linear-gradient(180deg, #6b73ff, #000dff);*/
-    background: deepskyblue;
+    /*background: deepskyblue;*/
+}
+
+.Islands{
+    margin-top: 89px;
 }
 
 /* Стилі для островів */
@@ -65,13 +69,13 @@ body {
 }
 .islandSecondLvl {
     position: relative;
-/*    margin-top: 100px;*/
+    /*    margin-top: 100px;*/
     margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
     /*width: 300px;*/
     width: 230px;
-/*    margin-left: 1100px;*/
+    /*    margin-left: 1100px;*/
     margin-left: 990px;
     transition: transform 0.3s ease;
 }
@@ -81,7 +85,7 @@ body {
     margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-/*    width: 280px;*/
+    /*    width: 280px;*/
     width: 240px;
     /*margin-left: 400px;*/
     margin-left: 500px;
@@ -111,7 +115,7 @@ body {
 .firstIsland a:not(.completed):not(.in-progress) .islandFirstLvl,
 .secondIsland a:not(.completed):not(.in-progress) .islandSecondLvl,
 .thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl,
-.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl, 
+.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl,
 .fifthIsland a:not(.completed):not(.in-progress) .islandFifthLvl {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) grayscale(100%) !important;
     cursor: not-allowed;
@@ -128,7 +132,7 @@ body {
 .firstIsland a.in-progress .islandFirstLvl,
 .secondIsland a.in-progress .islandSecondLvl,
 .thirdIsland a.in-progress .islandThirdLvl,
-.fourthIsland a.in-progress .islandFourthLvl, 
+.fourthIsland a.in-progress .islandFourthLvl,
 .fifthIsland a.in-progress .islandFifthLvl {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3)) hue-rotate(30deg) brightness(1.2) !important;
 }
@@ -137,16 +141,16 @@ body {
 .firstIsland a:not(.completed):not(.in-progress) .islandFirstLvl:hover,
 .secondIsland a:not(.completed):not(.in-progress) .islandSecondLvl:hover,
 .thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl:hover,
-.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl:hover, 
+.fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl:hover,
 .firstIsland a:not(.completed):not(.in-progress) .islandFifthLvl:hover{
-    transform: none; 
+    transform: none;
 }
 
 /*Видалив значок  локації для закритих островів*/
 .firstIsland a:not(.completed):not(.in-progress) .islandLocationFirst,
 .secondIsland a:not(.completed):not(.in-progress) .islandLocationSecond,
 .thirdIsland a:not(.completed):not(.in-progress) .islandLocationThird,
-.fourthIsland a:not(.completed):not(.in-progress) .islandLocationFourth, 
+.fourthIsland a:not(.completed):not(.in-progress) .islandLocationFourth,
 .fifthIsland a:not(.completed):not(.in-progress) .islandLocationFifth
 {
     visibility: hidden;
@@ -169,7 +173,17 @@ body {
     transition: transform 0.3s ease;
 }
 .islandLocationSecond {
-    top: 50%;
+    top: 40%;
+    left: 87%;
+}
+
+.islandLocationFourth {
+    margin-top: 30px;
+    left: 90%;
+}
+
+.islandLocationFifth {
+    top: 40%;
     left: 85%;
 }
 
@@ -194,13 +208,13 @@ body {
 
 .firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted, .fifthIsland.shifted {
     transform: translateX(-150px);
-    
+
 }
 
 
 .firstIsland.zoomed, .secondIsland.zoomed, .thirdIsland.zoomed, .fourthIsland.zoomed, .fifthIsland.zoomed {
     transform: scale(1.2);
-    
+
     /*Стилі для активих островів, хз який вибрати*/
     /*filter: drop-shadow(5px 5px 10px rgba(255, 255, 0, 0.5));*/
     /*filter: drop-shadow(5px 5px 10px rgba(128, 0, 128, 0.5));*/
