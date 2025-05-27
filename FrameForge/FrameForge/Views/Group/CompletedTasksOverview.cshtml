@@ -1,0 +1,43 @@
+@using Entities
+@model Entities.User
+
+@{
+    Layout = "_Layout";
+    var submittedTasks = ViewBag.UsersExercises as Dictionary<Student, List<ExerciseSubmission>> ?? new Dictionary<Student, List<ExerciseSubmission>>();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Completed Exerceses</title>
+    <link rel="stylesheet" href="~/CompletedTasksOverview_css/CompletedTasksOverview.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+
+<div class="card-container">
+    @foreach (var submission in submittedTasks)
+    {
+        <p>
+            <h1>@submission.Key.Username</h1></p>
+        @foreach (var exercise in submission.Value)
+        {
+            <div class="card">
+                <h3>@exercise.ExerciseName</h3>
+                <p><strong>Дата подачі:</strong> @exercise.SubmissionDate.ToString("dd.MM.yyyy HH:mm")</p>
+                <a asp-controller="Exercise" asp-action="RateExercise" asp-route-submittedExerciseId="@exercise.ExerciseId" asp-route-userId="@submission.Key.UserId" class="button">Переглянути</a>
+            </div>
+        }
+    }
+</div>
+</body>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</html>

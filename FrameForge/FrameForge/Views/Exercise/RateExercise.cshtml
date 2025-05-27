@@ -1,0 +1,98 @@
+@using Entities
+@model Entities.User
+
+@{
+    Layout = "_Layout";
+    var exercise = ViewBag.SubmittedExercises as Exercise ?? new Exercise();
+    var exerciseCode = ViewBag.ExerciseCode as ExerciseRequest ?? new ExerciseRequest();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise Submission</title>
+    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+<div class="containerTS">
+    <h1>Exercise Rating</h1>
+
+    <label class="label">Task Name:</label>
+    <div class="description">@exercise.ExerciseName</div>
+
+    <label class="label">Task Description:</label>
+    <div class="description">
+        @exercise.ExerciseDescription
+    </div>
+
+    <div class="requirements">Task Requirements</div>
+    <div class="description">
+        @exercise.ExerciseRequirements
+    </div>
+
+    <label class="label">Your Code:</label>
+
+    <iframe
+        id="oc-editor"
+        src="https://onecompiler.com/embed/html?listenToEvents=true"
+        sandbox="allow-scripts allow-same-origin"
+        frameborder="0"
+        width="100%"
+        height="450px"
+        style="display: none;">
+    </iframe>
+    <button onclick="refreshCode()">Refresh</button>
+
+    <form asp-action="RateExercise" method="post" asp-route-submittedExerciseId="@exercise.ExerciseId">
+        <label for="moneyReward">Нагорода Монеток</label>
+        <input type="number" id="moneyReward" name="moneyReward" min="0" max="@exercise.MoneyReward">
+
+        <label for="starsReward">Нагорода зірочок</label>
+        <input type="number" id="starsReward" name="starsReward" min="0" max="@exercise.StarsReward">
+
+        <label for="feedback">Відгук</label>
+        <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("I am here2");
+    });
+
+    function refreshCode() {
+        var iFrame = document.getElementById('oc-editor');
+        iFrame.style.display = 'block';
+        console.log("I am here2");
+        iFrame.contentWindow.postMessage({
+            eventType: 'populateCode',
+            language: 'html',
+            files: [
+                {
+                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[0].Name)),
+                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[0].Content))
+                },
+                {
+                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[1].Name)),
+                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[1].Content))
+                },
+                {
+                    "name": @Html.Raw(Json.Serialize(exerciseCode.Files[2].Name)),
+                    "content": @Html.Raw(Json.Serialize(exerciseCode.Files[2].Content))
+                }
+            ]
+        }, "*");
+    };
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</html>

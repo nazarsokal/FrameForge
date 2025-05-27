@@ -22,26 +22,45 @@ namespace FrameForge.Controllers
         [HttpPost]
         [Route("[action]")]
 
-        public IActionResult LoginWithLoginAndPassword(InputLoginData? ld)
+        public async Task<IActionResult> LoginWithLoginAndPassword(InputLoginData? ld)
         {
             if (ld != null) 
             {
-                Student? student = _registrationService.GetStudent(ld.Username, ld.Password);
-                if (student != null)
+                if (ld.IsTeacher)
                 {
-                     string userString = JsonSerializer.Serialize(student);
-                     HttpContext.Session.SetString("Student", userString);
-                     return RedirectToAction("Index", "Home");
+                    Teacher? user = await _registrationService.GetTeacher(ld.Username, ld.Password);
+                    
+                    if (user != null)
+                    {
+                        string userString = JsonSerializer.Serialize(user);
+                        HttpContext.Session.SetString("UserType", "Teacher");
+                        HttpContext.Session.SetString("Teacher", userString);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
-                    return NotFound();
+                    Student? user = await _registrationService.GetStudent(ld.Username, ld.Password);
+                    
+                    if (user != null)
+                    {
+                        string userString = JsonSerializer.Serialize(user);
+                        HttpContext.Session.SetString("UserType", "Student");
+                        HttpContext.Session.SetString("Student", userString);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             else
             {
                 return NotFound();
             }
+            
+            return View("login_page");
         }
     }
 }

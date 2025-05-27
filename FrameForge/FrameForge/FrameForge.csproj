@@ -15,10 +15,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="wwwroot\css\" />
+      <Folder Include="wwwroot\images\level4\" />
       <Folder Include="wwwroot\images\users\" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Storage.Files.Shares" Version="12.22.0" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -31,6 +35,10 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.3" />
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\ProgressMap\CG_IntroductionLevel\IntroductionLevel_js\script.js" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,41 @@
+﻿@using Entities
+
+@model Entities.TestQuestionModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Правильна відповідь</title>
+    <link rel="stylesheet" href="~/Tests_css/test-styles.css" />
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        </div>
+        <h1>Правильна відповідь!</h1>
+        <div class="success-message">
+            <p>Ви правильно відповіли на питання:</p>
+            <p><strong>@Html.Raw(Model.Question)</strong></p>
+        </div>
+        <div class="button-container">
+            <form method="post" asp-controller="Tests" asp-action="NextTest">
+                <input type="hidden" name="counter" value="@ViewBag.Counter" />
+                <button type="submit">Наступне питання</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

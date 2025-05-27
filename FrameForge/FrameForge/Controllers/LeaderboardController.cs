@@ -9,7 +9,7 @@ namespace FrameForge.Controllers
     public class LeaderboardController : Controller
     {
         LeaderboardService _leaderboardService;
-        Student _student;
+        User _student;
         public LeaderboardController(LeaderboardService leaderboardService)
         {
             _leaderboardService = leaderboardService;
@@ -18,17 +18,28 @@ namespace FrameForge.Controllers
         public IActionResult Leaderboard()
         {
             ViewBag.StudentsLists = _leaderboardService.GetAllSorted();
-            _student = GetStudentFromSession();
+            _student = GetUserFromSession();
             return View(_student);
         }
-        
-        private Student GetStudentFromSession()
+
+        private User GetUserFromSession()
         {
-            var studentJson = HttpContext.Session.GetString("Student");
-            if (studentJson != null) _student = JsonSerializer.Deserialize<Student>(studentJson);
-            if(_student == null) throw new NullReferenceException("Student is null");
-        
-            return _student;
+            User user = new User();
+            var userType = HttpContext.Session.GetString("UserType");
+            if (userType == "Teacher")
+            {
+                var userJson = HttpContext.Session.GetString("Teacher");
+                Teacher teacher = JsonSerializer.Deserialize<Teacher>(userJson);
+                return teacher;
+            }
+            else
+            {
+                var userJson = HttpContext.Session.GetString("Student");
+                Student st = JsonSerializer.Deserialize<Student>(userJson);
+                return st;
+            }
+
+            return user;
         }
     }
 }

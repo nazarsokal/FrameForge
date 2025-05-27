@@ -1,3 +1,4 @@
+using Entities.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities;
@@ -9,26 +10,40 @@ public class FrameForgeDbContext : DbContext
         
     }
     
-    public DbSet<Student> Students { get; set; }
-    public DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<EnrolledLevels> LevelsEnrolled { get; set; }
+    public virtual DbSet<Group> Groups { get; set; }
+    public virtual DbSet<Exercise> Exercises { get; set; }
+    public virtual DbSet<ExerciseSubmission> ExerciseSubmissions { get; set; }
+    public virtual DbSet<Algorithm> Algorithms { get; set; }
+    public virtual DbSet<Test> Tests { get; set; }
+    public DbSet<BattleRoom> BattleRooms { get; set; }
+    public DbSet<BattleHistory> BattleHistory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Student>().ToTable("Student");
+        modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<EnrolledLevels>().ToTable("EnrolledLevels");
+        modelBuilder.Entity<Group>().ToTable("Groups");
+        modelBuilder.Entity<Exercise>().ToTable("Exercises");
+        modelBuilder.Entity<Test>().ToTable("Tests");
+        modelBuilder.Entity<Algorithm>().ToTable("Algorithms");
+        modelBuilder.Entity<ExerciseSubmission>().ToTable("ExerciseSubmissions");
         
-        //Seed data to Students
-        modelBuilder.Entity<Student>().HasData(new Student() 
-            {StudentId = Guid.NewGuid(), Username = "TestUserName", Email = "TestUser@test.com", Password = "TestPassword", MoneyAmount = 100.45});
+        modelBuilder.Entity<User>()
+            .HasDiscriminator<string>("TypeOfUser")
+            .HasValue<Student>("Student")
+            .HasValue<Teacher>("Teacher");
+        
+        modelBuilder.Entity<Group>()
+            .HasOne(g => g.Teacher)
+            .WithMany(t => t.Groups)
+            .HasForeignKey(g => g.TeacherId);
 
-        // Fluent API
-        modelBuilder.Entity<Student>().Property(temp => temp.Email)
-            .HasColumnType("varchar(40)");
+        modelBuilder.Entity<Student>()
+            .HasOne(s => s.Group)
+            .WithMany(g => g.Students)
+            .HasForeignKey(s => s.GroupId);
         
-        modelBuilder.Entity<Student>().Property(temp => temp.Password)
-            .HasColumnType("nvarchar(200)");
-        
-        modelBuilder.Entity<Student>().Property(temp => temp.GoogleId)
-            .HasColumnType("varchar(40)");
     }
 }

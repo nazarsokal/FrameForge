@@ -22,6 +22,62 @@ namespace Entities.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Entities.BattleHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("Player1Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Player2Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("WinnerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BattleHistory");
+                });
+
+            modelBuilder.Entity("Entities.BattleRoom", b =>
+                {
+                    b.Property<Guid>("roomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Player1Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Player1Score")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("Player2Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Player2Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Questions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("roomId");
+
+                    b.ToTable("BattleRooms");
+                });
+
             modelBuilder.Entity("Entities.EnrolledLevels", b =>
                 {
                     b.Property<Guid>("LevelsEnrolledKey")
@@ -57,44 +113,189 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("ExerciseDescription")
                         .IsRequired()
-                        .HasColumnType("varchar(40)");
-
-                    b.Property<string>("GoogleId")
-                        .HasColumnType("varchar(40)");
-
-                    b.Property<double>("MoneyAmount")
-                        .HasColumnType("double");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Picture")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("StarsAmount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
+                    b.Property<string>("ExerciseName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
-                    b.HasKey("StudentId");
+                    b.Property<string>("ExerciseRequirements")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.ToTable("Student", (string)null);
+                    b.Property<DateTime>("ExerciseStartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ExererciseDifficulty")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<double>("MoneyReward")
+                        .HasColumnType("double");
 
                     b.HasData(
                         new
                         {
-                            StudentId = new Guid("afbfb446-a78a-406d-8ce1-3d2522e8bd1e"),
+                            StudentId = new Guid("a20a1008-a76a-4a19-8edc-ff7c5ba60650"),
                             Email = "TestUser@test.com",
                             MoneyAmount = 100.45,
                             Password = "TestPassword",
                             StarsAmount = 0,
                             Username = "TestUserName"
                         });
+                });
+
+            modelBuilder.Entity("Entities.ExerciseSubmission", b =>
+                {
+                    b.Property<Guid>("SubmittedExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ExerciseName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("MoneyReward")
+                        .HasColumnType("double");
+
+                    b.Property<double>("StarsReward")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("StudentSubmittedId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("SubmittedExerciseId");
+
+                    b.ToTable("ExerciseSubmissions", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Groups", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Picture")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TypeOfUser")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users", (string)null);
+
+                    b.HasDiscriminator<string>("TypeOfUser").HasValue("User");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Entities.Student", b =>
+                {
+                    b.HasBaseType("Entities.User");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<double>("MoneyAmount")
+                        .HasColumnType("double");
+
+                    b.Property<int>("StarsAmount")
+                        .HasColumnType("int");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasDiscriminator().HasValue("Student");
+                });
+
+            modelBuilder.Entity("Entities.Teacher", b =>
+                {
+                    b.HasBaseType("Entities.User");
+
+                    b.HasDiscriminator().HasValue("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.HasOne("Entities.Teacher", "Teacher")
+                        .WithMany("Groups")
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.Student", b =>
+                {
+                    b.HasOne("Entities.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Entities.Group", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Entities.Teacher", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

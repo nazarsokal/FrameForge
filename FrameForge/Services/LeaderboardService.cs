@@ -16,10 +16,20 @@ namespace Services
         }
         public List<Student> GetAllSorted()
         {
-            List<Student> all = _dbContext.Students.ToList();
+            List<Student> all = _dbContext.Users.OfType<Student>().ToList();
             all.Sort((x, y) => y.StarsAmount.CompareTo(x.StarsAmount));
             return all;
 
+        }
+
+        public int GetStudentsPlace(Student student)
+        {
+            var allStudents = _dbContext.Users.OfType<Student>().ToList();
+            allStudents.Sort((x, y) => y.StarsAmount.CompareTo(x.StarsAmount));
+            
+            var indexOfStudent = allStudents.IndexOf(student);
+            
+            return indexOfStudent;
         }
 
     }

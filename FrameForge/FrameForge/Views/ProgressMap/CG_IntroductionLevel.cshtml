@@ -1,44 +1,74 @@
-@model Entities.MoneyStarsResult
-
+@model Entities.Student?
 @{
-    var stars = RandomStars();
-    var money = RandomMoney();
-}
-
-@functions {
-    public int RandomStars()
-    {
-        Random rnd = new Random();
-        return rnd.Next(0, 4);
-    }
-
-    public double RandomMoney()
-    {
-        Random rnd = new Random();
-        return rnd.Next(10, 21);
-    }
+    ViewData["Title"] = "Frame Forge";
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
-    <title>Complete Level</title>
+    <title>Level_2</title>
+    <link rel="stylesheet" href="~/CG_level2/bezier_curve.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div>
-    <h1>Introduction to Cg</h1>
-    <form method="post" asp-controller="ProgressMap" asp-action="CompleteLevel">
-        @Html.AntiForgeryToken()
+<div class="task">
+    <div class="taskCardFractal">
+        <p id="smallTitle"><strong>Вступ до комп’ютерної графіки</strong></p>
+        <br>
+        <p><span class="mini-title"> Що таке комп’ютерна графіка?</span>
+            <br><br>
+            Комп’ютерна графіка — це розділ інформатики, який вивчає способи створення, редагування та відображення зображень за допомогою комп’ютера. Вона дозволяє створювати все — від простих фігур до вражаючих 3D-світів і фотореалістичних сцен.
+            <br><br>
+            Уяви, що твій комп’ютер — це художник: він «малює» за допомогою точок, ліній, форм, кольору та світла. Але не пензлем, а математичними формулами, пікселями, векторами та алгоритмами.
 
-        <input type="hidden" name="Stars" value="@stars" />
-        <input type="hidden" name="Money" value="@money" />
-        <input type="hidden" name="LevelName" value="@ViewBag.LevelName" />
+            <br><br>
+            <span class="mini-title">Базові поняття комп’ютерної графіки:</span>
+            <br><br>
+            Комп’ютерна графіка буває растрова та векторна. Растрове зображення складається з пікселів (точок), і кожна точка має свій колір — як у фотографії. Векторна графіка базується на геометричних фігурах — лініях, кривих, багатокутниках — і легко масштабується без втрати якості.
+            <br><br>
+            Інше важливе поняття — це 3D-графіка. Вона дозволяє моделювати об'єкти у тривимірному просторі, додавати їм текстури, освітлення та анімацію. Це основа сучасних відеоігор, анімаційних фільмів і візуалізацій.
+            <br><br>
+            <img src="~/images/level1/893840098.jpg" class="bezier_curve_image">
+            <br>
+            Рис.1. Приклад використання комп'ютерної графіки
+            <br><br>
+            <img src="~/images/level1/image2.jpeg" class="bezier_curve_image">
+            <br>
+            Рис.2. Інноваційні рішення в комп'ютерній графіці
+            <br><br>
 
-        <p>Stars: @stars</p>
-        <p>Money: @money</p>
-
-        <button type="submit">Complete Level</button>
-    </form>
+            <span class="mini-title">Де використовується комп’ютерна графіка?</span>
+            <br><br>
+            У кіноіндустрії комп’ютерна графіка дозволяє створювати неймовірні спецефекти. Завдяки їй можна зобразити фантастичних істот, вибухи, магію чи цілі віртуальні світи, які виглядають реалістично, хоча насправді не існують.
+            <br><br>
+            Відеоігри — ще одна яскрава сфера, де без графіки не обійтися. Кожен персонаж, об’єкт чи ландшафт у грі створений із допомогою комп’ютерної графіки. У сучасних іграх графіка настільки деталізована, що іноді її складно відрізнити від реального відео.
+            <br><br>
+            В медицині графіка допомагає моделювати анатомію людини, будувати тривимірні зображення органів, які отримують із МРТ або КТ, і навіть симулювати операції для навчання майбутніх лікарів.
+            <br><br>
+            Архітектори використовують графіку для створення 3D-моделей будівель та інтер’єрів. Це дозволяє замовнику заздалегідь побачити, як виглядатиме майбутній дім, ще до початку будівництва.
+            <br><br>
+            У вебдизайні та рекламі графіка відіграє ключову роль. Саме вона формує перше враження користувача від сайту чи бренду, привертає увагу до товарів та створює емоційний зв’язок із продуктом.
+            <br><br>
+            У науці та освіті вона використовується для створення інтерактивних візуалізацій, симуляцій природних явищ, графіків, моделей молекул, що робить складні процеси зрозумілими та наочними.
+        </p>
+        <br><br><br>
+        <p>Для більш детальної інформації натисни <a href="https://vns.lpnu.ua/pluginfile.php?file=%2F5226153%2Fmod_resource%2Fcontent%2F2%2FЛабораторна%201.pdf">сюди</a></p>
+        <p>Випробуй себе сам - <a asp-controller="Algorithms" asp-action="AlgorithmsOverview">спробувати</a></p>
+    </div>
 </div>
+
+<div class="tests">
+    <div class="taskCardFractal">
+        <form method="get" asp-controller="Tests" asp-action="StartTesting">
+            <input type="hidden" name="title" value="CG_IntroductionLevel">
+            <button type="submit">Start Testing</button>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/ProgressMap/CG_IntroductionLevel/IntroductionLevel_js/script.js"></script>
 </body>
 </html>

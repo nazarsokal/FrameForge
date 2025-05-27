@@ -12,38 +12,54 @@
             <link href="~/login_css/login_page.css" rel="stylesheet">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         </head>
-        <body>
-            <div class="container">
-                <div class="box-1"></div>
-                <div class="box-2"></div>
-                <div class="box-3"></div>
-                <div class="box-login">
-                    <br>
-                    <br>
+    <body>
+    <div class="container">
+        <div class="box-1"></div>
+        <div class="box-2"></div>
+        <div class="box-3"></div>
+        <div class="box-login">
+            <br>
+            <br>
                   
-                    <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">LOGIN</h1>
-                    <form method="POST" asp-controller="Login" asp-action="LoginWithLoginAndPassword">
-                        <input asp-for="Username" type="text" placeholder="Username" name="username">
-                        <br>
-                        <input asp-for="Password" type="password" placeholder="Password" name="password">
-                        <br>
-                        <p style="margin-left: 180px; font-family: 'Montserrat', sans-serif;">Forgot Password ?</p>
-                        @* <a href="main_page.html">Login</a> *@
-                        
-                        <button type="submit">Login</button>
+            <h1 style="text-align: center; font-family: 'Montserrat', sans-serif;">Ввійти</h1>
+            <form method="POST" asp-controller="Login" asp-action="LoginWithLoginAndPassword">
+                <input asp-for="Username" type="text" placeholder="Username" name="username">
+                <br>
+                <input asp-for="Password" type="password" placeholder="Password" name="password">
+                <br>
+                <label>
+                    <input asp-for="IsTeacher" type="checkbox" id="isTeacherCheckbox"/>
+                    Ввійти як викладач
+                </label>
+              
+                @* <a href="main_page.html">Login</a> *@
+                <button type="submit">Ввійти</button>
+                <div class= "login-with">
 
-                        <div class= "login-with">
+                    <ul>
+                        <li><i class="fa fa-facebook"></i></li>
+                        <a id="googleLoginLink" style="text-decoration: none; color: black;"><li><i class="fa fa-google"></i></li></a>
+                        <li><i class="fa fa-twitter"></i></li>
+                    </ul>
 
-                            <ul>
-                                <li><i class="fa fa-facebook"></i></li>
-                                <a asp-controller="GoogleOAuth" asp-action="RedirectOnOAuthServer" style="text-decoration: none; color: black;"><li><i class="fa fa-google"></i></li></a>
-                                <li><i class="fa fa-twitter"></i></li>
-                            </ul>
-
-                        </div>
-                    </form>
-                    <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Registration" asp-action="Registration">Sign Up</a></p>
                 </div>
-            </div>
-        </body>
+            </form>
+            <p style="text-align: center; font-family: 'Montserrat', sans-serif;"><a asp-controller="Registration" asp-action="Registration">Зарейструватися</a></p>
+        </div>
+    </div>
+    </body>
+        <script>
+            const checkbox = document.getElementById("isTeacherCheckbox");
+            const link = document.getElementById("googleLoginLink");
+
+            link.href = `/GoogleOAuth/RedirectOnOAuthServer?isTeacher=${checkbox.checked}`;
+            
+            checkbox.addEventListener("change", () => {
+                const isChecked = checkbox.checked;
+                if (isChecked) {
+                    link.href = `/GoogleOAuth/RedirectOnOAuthServer?isTeacher=${isChecked}`;
+                }
+        
+            });
+        </script>
     </html>

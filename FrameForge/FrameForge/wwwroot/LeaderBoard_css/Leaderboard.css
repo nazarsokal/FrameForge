@@ -3,8 +3,29 @@
     background: #f7e018;
 }
 
+html{
+    overflow: hidden;
+}
+
+/* Стилі для h2 */
+.content-container h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px; 
+    font-weight: bold; 
+    color: #333; 
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, text-shadow 0.3s ease; 
+}
+
+h2:hover {
+    transform: scale(1.05); 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+}
 /* Основний контейнер */
-.container {
+.containerTS {
     display: flex;
     min-height: calc(100vh - 80px); 
 }
@@ -15,19 +36,20 @@
     display: flex;
     flex-direction: column;
     align-items: center; 
-    justify-content: center;
+    justify-content: flex-start;
     padding: 20px;
 }
 
 /* Обгортка таблиці */
 .leaderboard-wrapper {
     max-width: 600px; 
+    max-height: 400px;
     width: 100%;
     background: #eeefff;
     border-radius: 10px;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.7);
     transition: box-shadow 0.5s;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .leaderboard-wrapper:hover {
@@ -39,15 +61,21 @@
     width: 100%;
     border-collapse: collapse;
     font-family: 'Montserrat', sans-serif;
-    color: #333;
 }
+
+
 
 .leaderBoard thead {
     background: linear-gradient(45deg, #318ced, #ed31ab);
-    color: white;
+    color: black;
+    position: sticky;
+    z-index:1;
+    top: 0;
+    /*Треба пофіксити білу лінію яка з'являється справа при додаванні цих двох рядків (z-index і top)*/
+    margin: 1000px;
 }
 
-.leaderBoard th {
+.leaderBoard th {  
     padding: 15px;
     font-size: 16px;
     text-align: center;
@@ -66,9 +94,183 @@
 .leaderBoard td {
     padding: 12px;
     font-size: 14px;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .leaderBoard td:first-child {
     font-weight: 500;
+}
+
+/*!*Стилі для іконки акаунта в таблиці*!
+.accountIconLeaderboard{
+    !*Якщо злетать іконки, то просто height заново вводити*!
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+}*/
+
+/*Стилі для іконки акаунта в таблиці*/
+td img{
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.leaderboard-wrapper::-webkit-scrollbar {
+    width: 10px; 
+}
+
+.leaderboard-wrapper::-webkit-scrollbar-track {
+    background: #eeefff; 
+    border-radius: 10px; 
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #318ced, #ed31ab); 
+    border-radius: 10px;
+    border: 2px solid #eeefff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.leaderboard-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ed31ab, #318ced); 
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); 
+}
+
+/* Медіа-запити для адаптивності */
+
+
+/* Планшети (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .leftContent {
+        width: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .content-container {
+        margin-left: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 500px;
+        max-height: 350px;
+    }
+
+    .content-container h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .leaderBoard th {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .leaderBoard td {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    td img {
+        height: 16px;
+        margin-right: 8px;
+    }
+}
+
+/* Мобільні пристрої (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .leftContent {
+        width: 70vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .content-container {
+        margin-left: 0;
+        padding: 10px;
+        margin-top: 60px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 90%;
+        max-height: 300px;
+    }
+
+    .content-container h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .leaderBoard th {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .leaderBoard td {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    td img {
+        height: 14px;
+        margin-right: 6px;
+    }
+}
+
+/* Дуже маленькі екрани (до 480px) */
+@media (max-width: 480px) {
+    .leftContent {
+        width: 70vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .content-container {
+        margin-left: 0;
+        padding: 8px;
+        margin-top: 50px;
+    }
+
+    .leaderboard-wrapper {
+        max-width: 95%;
+        max-height: 250px;
+    }
+
+    .content-container h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .leaderBoard th {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .leaderBoard td {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    td img {
+        height: 12px;
+        margin-right: 5px;
+    }
 }

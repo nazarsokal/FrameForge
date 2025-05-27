@@ -1,0 +1,93 @@
+@using Entities
+@model Entities.Student
+
+@{
+    Layout = "_Layout";
+    
+    Exercise exercise = ViewBag.Exercise as Exercise ?? new Exercise(); 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise Submission</title>
+    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
+    <link rel="stylesheet" href="~/Exercise/CompleteExercise_css/CompleteExercise.css">
+</head>
+<body>
+
+<button class="back-button" onclick="goBack()" aria-label="Go back">
+    <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon"  width="24" height="24" viewBox="0 0 24 24" fill="none">
+</button>
+
+<div class="containerTS">
+    <h1>Exercise Submission</h1>
+
+    <label class="label">Task Name:</label>
+    <div class="description">@exercise.ExerciseName</div>
+
+    <label class="label">Task Description:</label>
+    <div class="description">
+        @exercise.ExerciseDescription
+    </div>
+
+    <div class="requirements">Task Requirements</div>
+    <div class="description">
+        @exercise.ExerciseRequirements
+    </div>
+
+    <label class="label">Your Code:</label>
+
+    <iframe
+        id="oc-editor"
+        src="https://onecompiler.com/embed/html?codeChangeEvent=true"
+        sandbox="allow-scripts allow-same-origin"
+        frameborder="0"
+        style="width: 100%; height: 450px"
+        >
+    </iframe>
+
+    <button type="submit" onclick="submitForm()">Submit</button>
+</div>
+</body>
+<script>
+    var code = "";
+    
+    window.onmessage = function (e) {
+        if (e.data && e.data.language) {
+            console.log(e.data)
+            code = e.data;
+        }
+    };
+
+    function submitForm() {
+        var ex = @Html.Raw(Json.Serialize(exercise));
+        console.log(code);
+        fetch("/Exercise/CompleteExercise", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                exercise: ex,
+                action: code.action,
+                files: code.files,
+                language: code.language,
+                result: code.result,
+                stdin: code.stdin,
+                _id: code._id
+            })
+        })
+        .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                }
+            });
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+    
+</script>
+</html>
