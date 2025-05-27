@@ -47,7 +47,7 @@ public class RegistrationController : Controller
 
                 await _registrationService.RegisterUser(teacher);
                 HttpContext.Session.SetString("UserType", "Teacher");
-                HttpContext.Session.SetString("Student", JsonSerializer.Serialize(teacher));
+                HttpContext.Session.SetString("Teacher", JsonSerializer.Serialize(teacher));
             }
             else
             {
