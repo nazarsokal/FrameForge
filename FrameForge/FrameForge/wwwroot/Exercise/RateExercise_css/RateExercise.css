@@ -244,6 +244,7 @@ button:hover {
     }
 
     .back-button {
+        display: none;
         position: fixed;
         width: 40px;
         height: 40px;
@@ -252,6 +253,7 @@ button:hover {
     }
 
     .arrow-icon {
+        display: none;
         width: 18px;
         height: 18px;
     }
@@ -298,6 +300,7 @@ button:hover {
     }
 
     .back-button {
+        display: none;
         position: fixed;
         width: 36px;
         height: 36px;
@@ -306,6 +309,7 @@ button:hover {
     }
 
     .arrow-icon {
+        display: none;
         width: 16px;
         height: 16px;
     }
