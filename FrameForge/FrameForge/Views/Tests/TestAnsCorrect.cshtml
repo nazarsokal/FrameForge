@@ -14,6 +14,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Правильна відповідь</title>
     <link rel="stylesheet" href="~/Tests_css/test-styles.css" />
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
 </head>
 <body>
     <div class="success-container">
@@ -25,7 +28,7 @@
         <h1>Правильна відповідь!</h1>
         <div class="success-message">
             <p>Ви правильно відповіли на питання:</p>
-            <p><strong>@Model.Question</strong></p>
+            <p><strong>@Html.Raw(Model.Question)</strong></p>
         </div>
         <div class="button-container">
             <form method="post" asp-controller="Tests" asp-action="NextTest">

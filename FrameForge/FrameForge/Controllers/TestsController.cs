@@ -66,9 +66,9 @@ namespace FrameForge.Controllers
             var tests = JsonSerializer.Deserialize<List<TestQuestionModel>>(testsJson);
             
             var currentTest = tests[counter];
-            bool isCorrect = answer == currentTest.Answer;
+            bool isCorrect = answer == currentTest.Answer.Replace("\n", "");
             
-            // Оновлюємо каунтер в сесії
+            // Оновлюємо каунтер в сесіїr
             counter++;
             HttpContext.Session.SetInt32("Counter", counter);
             ViewBag.Counter = counter;
