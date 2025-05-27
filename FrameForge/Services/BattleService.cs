@@ -201,4 +201,5 @@ public class BattleService : IBattleService
         _context.BattleRooms.Remove(room);
         return room;
     }
+    
 }
