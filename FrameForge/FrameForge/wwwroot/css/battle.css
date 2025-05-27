@@ -1,471 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* General Reset and Base Styles */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
 }
 
 body {
-    background: linear-gradient(45deg, #318ced, #ed31ab);
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    color: #333;
-}
-
-.battle-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.battle-header {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #e9e9fc;
+    color: #1e1e2f;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 24px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* Battle Container */
+.battle-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.battle-container:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Header */
 .battle-header h1 {
-    font-size: 32px;
-    color: #333;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #3d3d66;
+    margin: 0 0 16px;
+    user-select: none;
 }
 
+/* Players Section */
 .players-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .player {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 0 10px;
+    flex: 1 1 45%;
+    background-color: #f6f6ff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #dcdcf5;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.player.status {
-    margin-top: 10px;
-    font-style: italic;
+.player:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .player h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #3d3d66;
+    margin: 0 0 12px;
 }
 
-.score {
-    font-size: 20px;
-    font-weight: bold;
-    color: #318ced;
-    margin: 10px 0;
-}
-
+.score,
 .status {
-    font-style: italic;
-    color: #666;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5a5a85;
+    margin-top: 8px;
 }
 
+/* Ready Button */
 .ready {
     text-align: center;
-    margin: 20px 0;
 }
 
 #readyButton {
-    padding: 12px 30px;
-    font-size: 18px;
-    background: linear-gradient(45deg, #318ced, #ed31ab);
-    color: white;
+    background: linear-gradient(90deg, #4b6cf6, #a855f7);
+    color: #ffffff;
     border: none;
-    border-radius: 50px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(104, 68, 240, 0.4);
 }
 
-#readyButton:hover {
-    background: #f7e018;
-    transform: scale(1.05);
+#readyButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(104, 68, 240, 0.6);
 }
 
+#readyButton:focus {
+    outline: 2px solid #4b6cf6;
+    outline-offset: 2px;
+}
+
+#readyButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Question Section */
 .question-container {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    background-color: #f6f6ff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #dcdcf5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
 }
 
 #currentQuestion {
-    font-size: 20px;
-    margin-bottom: 20px;
-    line-height: 1.5;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3d3d66;
+    margin: 0;
 }
 
 .answers-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
 }
 
 .answers-container button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #007bff;
-    color: white;
+    background: #ffffff;
+    border: 1px solid #c3c3f3;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(99, 99, 168, 0.1);
 }
 
-.answers-container button:hover {
-    background: #0056b3;
+.answers-container button:hover:not(:disabled) {
+    background: #f0f1ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(104, 68, 240, 0.2);
+}
+
+.answers-container button:focus {
+    outline: 2px solid #4b6cf6;
+    outline-offset: 2px;
 }
 
 .answers-container button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
+    box-shadow: none;
 }
 
-#correctAnswer {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(40, 167, 69, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    color: #28a745;
+/* Timer */
+#timerBar {
+    width: 100%;
+    height: 24px;
+    background: #f0f0fb;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 16px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.timer {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+#timerProgress {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #6a82fb, #a855f7);
+    border-radius: 12px 0 0 12px;
+    transition: width 1s linear;
+    animation: timerGlow 2s ease-in-out infinite;
 }
 
+@keyframes timerGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(106, 130, 251, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(168, 85, 247, 1);
+    }
+}
+
+/* Battle Result */
 .battle-result {
     text-align: center;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 5px;
-    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #3d3d66;
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    user-select: none;
+}
+
+.battle-result.show {
+    display: flex;
 }
 
 .winner {
-    font-size: 32px;
-    font-weight: bold;
-    color: #28a745;
-    margin: 20px 0;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #4b2ed2;
 }
 
-.draw {
-    color: #f7e018;
+.winner.draw {
+    color: #6b7280;
 }
 
 .final-scores {
-    font-size: 24px;
-    margin: 20px 0;
-    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 12px;
 }
 
 .battle-result button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #28a745;
-    color: white;
+    background: linear-gradient(90deg, #4b6cf6, #a855f7);
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(104, 68, 240, 0.4);
 }
 
 .battle-result button:hover {
-    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(104, 68, 240, 0.6);
 }
 
-/* Стилі для Battle Lobby */
-.available-rooms {
-    margin-top: 20px;
+.battle-result button:focus {
+    outline: 2px solid #4b6cf6;
+    outline-offset: 2px;
 }
 
-.available-rooms h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.available-rooms ul {
-    list-style: none;
-    padding: 0;
-}
-
-.available-rooms li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.available-rooms button {
-    padding: 5px 15px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.available-rooms button:hover {
-    background: #0056b3;
-}
-
-.room-info {
-    flex: 1;
-}
-
-.room-info h3 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.room-info p {
-    color: #666;
-    font-size: 14px;
-}
-
-.join-button {
-    padding: 8px 20px;
-    background: linear-gradient(45deg, #318ced, #ed31ab);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.join-button:hover {
-    background: #f7e018;
-    transform: scale(1.05);
-}
-
-/* Адаптивність */
-@media (max-width: 1024px) {
-    .battle-container {
-        max-width: 90%;
-        margin: 15px auto;
-    }
-
-    .player h3 {
-        font-size: 22px;
-    }
-
-    .score {
-        font-size: 18px;
-    }
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+
     .battle-container {
-        margin: 10px;
-        padding: 15px;
+        padding: 20px;
+    }
+
+    .battle-header h1 {
+        font-size: 2rem;
     }
 
     .players-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
 
-    .answers-container {
-        grid-template-columns: 1fr;
+    .player {
+        flex: 1 1 100%;
     }
 
-    .battle-header h1 {
-        font-size: 24px;
-    }
-
-    .player h3 {
-        font-size: 20px;
-    }
-
-    .winner {
-        font-size: 24px;
-    }
-
-    .final-scores {
-        font-size: 18px;
-    }
-
-    .available-rooms li {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-
-    .join-button {
+    #readyButton,
+    .battle-result button {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
     }
 
-    #readyButton {
-        width: 100%;
-        max-width: 300px;
+    .question-container {
+        padding: 20px;
+    }
+
+    #currentQuestion {
+        font-size: 1.4rem;
+    }
+
+    .answers-container button {
+        font-size: 0.95rem;
+        padding: 10px 16px;
     }
 }
 
 @media (max-width: 480px) {
-    .battle-container {
-        margin: 5px;
-        padding: 10px;
-    }
-
     .battle-header h1 {
-        font-size: 20px;
-    }
-
-    .player {
-        padding: 15px;
+        font-size: 1.8rem;
     }
 
     .player h3 {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
-    .score {
-        font-size: 16px;
-    }
-
-    .question-container {
-        padding: 15px;
-    }
-
-    #currentQuestion {
-        font-size: 16px;
-    }
-
-    .answers-container button {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .battle-result {
-        padding: 20px;
-    }
-
-    .winner {
-        font-size: 20px;
-    }
-
-    .final-scores {
-        font-size: 16px;
-    }
-
-    .battle-result button {
-        width: 100%;
-        max-width: 250px;
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    .available-rooms h2 {
-        font-size: 20px;
-    }
-
-    .room-info h3 {
-        font-size: 16px;
-    }
-
-    .room-info p {
-        font-size: 12px;
-    }
-}
-
-/* Підтримка високих екранів */
-@media (min-height: 1000px) {
-    .battle-container {
-        margin: 50px auto;
-    }
-
-    .players-container {
-        margin-bottom: 50px;
-    }
-
-    .question-container {
-        padding: 40px;
-    }
-
-    #currentQuestion {
-        font-size: 24px;
-    }
-
-    .answers-container {
-        gap: 20px;
-    }
-
-    .answers-container button {
-        padding: 20px;
-        font-size: 18px;
-    }
-}
-
-/* Підтримка темної теми */
-@media (prefers-color-scheme: dark) {
-    .battle-container {
-        background: rgba(0, 0, 0, 0.8);
-        color: #fff;
-    }
-
-    .player {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .player h3 {
-        color: #fff;
-    }
-
-    .score {
-        color: #318ced;
-    }
-
+    .score,
     .status {
-        color: #ccc;
+        font-size: 1rem;
     }
 
-    .question-container {
-        background: rgba(255, 255, 255, 0.1);
+    #readyButton,
+    .battle-result button {
+        font-size: 0.95rem;
     }
-
-    .answers-container button {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-    }
-
-    .answers-container button:hover {
-        background: #f7e018;
-        color: #000;
-    }
-
-    .battle-result {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .available-rooms li {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .room-info h3 {
-        color: #fff;
-    }
-
-    .room-info p {
-        color: #ccc;
-    }
-} 
+}
