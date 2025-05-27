@@ -12,6 +12,9 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      DOTNET_ROOT: ${{ runner.tool_cache }}/dotnet
+
     steps:
       - uses: actions/checkout@v4
 
@@ -21,24 +24,24 @@ jobs:
           dotnet-version: '8.0'
 
       - name: Build solution
-        run: dotnet build FrameForge/FrameForge.sln --configuration Release
+        run: dotnet build FrameForge/FrameForge/FrameForge.csproj --configuration Release
 
-      - name: Publish app
-        run: dotnet publish FrameForge/FrameForge.sln -c Release -o ${{env.DOTNET_ROOT}}/publish
+      - name: Publish project
+        run: dotnet publish FrameForge/FrameForge/FrameForge.csproj -c Release -o ${{ env.DOTNET_ROOT }}/publish
 
-      - name: Zip published output
+      - name: Show publish folder contents
+        run: ls -la ${{ env.DOTNET_ROOT }}/publish
+
+      - name: Zip published output (flatten)
         run: |
-          cd ${{env.DOTNET_ROOT}}
-          zip -r publish.zip publish
+          cd ${{ env.DOTNET_ROOT }}/publish
+          zip -r ../publish.zip .
 
-      - name: List zip file
-        run: ls -la ${{env.DOTNET_ROOT}}/publish.zip
-
-      - name: Upload publish zip artifact
+      - name: Upload artifact for deploy job
         uses: actions/upload-artifact@v4
         with:
           name: publish-zip
-          path: ${{env.DOTNET_ROOT}}/publish.zip
+          path: ${{ env.DOTNET_ROOT }}/publish.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,14 +53,13 @@ jobs:
       contents: read
 
     steps:
-      - name: Download publish zip artifact
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: publish-zip
-          path: .
 
-      - name: List downloaded artifact
-        run: ls -la publish.zip
+      - name: Show files after download
+        run: ls -la
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -71,4 +73,4 @@ jobs:
         with:
           app-name: 'FrameForge'
           slot-name: 'Production'
-          package: publish.zip
+          package: 'publish.zip'
