@@ -24,7 +24,7 @@ jobs:
         run: dotnet build FrameForge/FrameForge.sln --configuration Release
 
       - name: Publish app to folder
-        run: dotnet publish FrameForge/FrameForge.sln -c Release -o FrameForge/publish
+        run: dotnet publish FrameForge/FrameForge/FrameForge.csproj -c Release -o FrameForge/publish --self-contained --runtime linux-x64
 
       - name: List published files
         run: ls -R FrameForge/publish
@@ -33,7 +33,7 @@ jobs:
         run: |
           cd FrameForge/publish
           zip -r ../../publish.zip .
-      
+
       - name: List ZIP contents
         run: unzip -l publish.zip
 
@@ -58,6 +58,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+
+      - name: Extract and inspect ZIP
+        run: |
+          unzip publish.zip -d extracted_zip
+          ls -R extracted_zip
 
       - name: Login to Azure
         uses: azure/login@v2
