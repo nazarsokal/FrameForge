@@ -14,6 +14,7 @@ public interface IBattleService
     Task<List<BattleRoom>> GetAvailableRooms();
     Task EndBattle(Guid roomId);
     Task<BattleRoom> LeaveRoom(Guid roomId);
+    Task<BattleRoom> DeleteRoom(BattleRoom room);
 }
 
 public class BattleResult
