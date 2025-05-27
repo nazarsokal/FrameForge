@@ -24,16 +24,19 @@ jobs:
         run: dotnet build FrameForge/FrameForge.sln --configuration Release
 
       - name: Publish app to folder
-        run: dotnet publish FrameForge/FrameForge.sln -c Release -o ./publish
-
+        run: dotnet publish FrameForge/FrameForge.sln -c Release -o FrameForge/publish
+      
       - name: Create ZIP archive of published app
-        run: zip -r publish.zip ./publish/*
-
+        run: |
+          cd FrameForge/publish
+          zip -r ../../publish.zip ./*
+      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: publish.zip
+
 
   deploy:
     runs-on: ubuntu-latest
