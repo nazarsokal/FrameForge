@@ -80,13 +80,13 @@ public class ProgressMapController : Controller
             await _service.SetNextLevel(studentCompleted, availableLevels[index+1]);
         }
         
-        studentCompleted.MoneyAmount += moneyResult.Money;
-        studentCompleted.StarsAmount += moneyResult.Stars;
+        // studentCompleted.MoneyAmount += moneyResult.Money;
+        // studentCompleted.StarsAmount += moneyResult.Stars;
         
-        var studentUpdated =  await _userService.UpdateStudent(studentCompleted);
+        //var studentUpdated =  await _userService.UpdateStudent(studentCompleted);
         
-        string userString = JsonSerializer.Serialize(studentUpdated);
-        HttpContext.Session.SetString("Student", userString);
+        //string userString = JsonSerializer.Serialize(studentUpdated);
+        //HttpContext.Session.SetString("Student", userString);
         
         return RedirectToAction("Map");
     }
