@@ -43,7 +43,7 @@ public class BattleService : IBattleService
         var room = new BattleRoom
         {
             roomId = Guid.NewGuid(),
-            Player1Id = player.StudentId,
+            Player1Id = player.UserId,
             Questions = GetRandom20Tests(),
             Status = BattleStatus.WaitingForPlayer,
             Player1Score = 0,
@@ -63,7 +63,7 @@ public class BattleService : IBattleService
         if (room == null || room.Status != BattleStatus.WaitingForPlayer)
             throw new InvalidOperationException("Room is not available");
 
-        room.Player2Id = player.StudentId;
+        room.Player2Id = player.UserId;
         room.Status = BattleStatus.InProgress;
         await _context.SaveChangesAsync();
 
@@ -144,7 +144,7 @@ public class BattleService : IBattleService
             {
                 if (room.Player2Id == null)
                 {
-                    room.Player2Id = curStudent.StudentId;
+                    room.Player2Id = curStudent.UserId;
                     await _context.SaveChangesAsync();                    
                     return room;
                 }

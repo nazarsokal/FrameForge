@@ -12,9 +12,9 @@ public class BattleController : Controller
 {
     private readonly IBattleService _battleService;
     private BattleSingleton _battlesingleton;
-    private IStudentService _studentService;
+    private IUserService _studentService;
 
-    public BattleController(IBattleService battleService, BattleSingleton battlesingleton, IStudentService studentService)
+    public BattleController(IBattleService battleService, BattleSingleton battlesingleton, IUserService studentService)
     {
         _battleService = battleService;
         _battlesingleton = battlesingleton;
@@ -38,9 +38,14 @@ public class BattleController : Controller
     
     [HttpPost]
     [Route("[action]")]
-    public IActionResult ExecuteBattle(BattleRoom room)
+    public async Task<IActionResult> ExecuteBattle(BattleRoom room)
     {
+        var student1 = (Student)await _studentService.GetUserById(room.Player1Id);
+        var student12 = (Student)await _studentService.GetUserById((Guid)room.Player2Id);
+
         ViewBag.Room = room;
+        ViewBag.Student = student1;
+        ViewBag.Student2 = student12;
         return View("BattleRoom", room);
     }
     
@@ -54,8 +59,8 @@ public class BattleController : Controller
         {
             _battlesingleton.AddRoomToHistory(roomId);
             var room = await _battleService.GetRoomStatus(roomId);
-            var player1 = await _studentService.GetStudentById(room.Player1Id);
-            var player2 = await _studentService.GetStudentById((Guid)room.Player2Id);
+            var player1 = (Student)await _studentService.GetUserById(room.Player1Id);
+            var player2 = (Student)await _studentService.GetUserById((Guid)room.Player2Id);
             player1.MoneyAmount += room.Player1Score;
             player2.MoneyAmount += room.Player2Score;
             await _studentService.UpdateStudent(player1);
@@ -70,7 +75,7 @@ public class BattleController : Controller
     [Route("[action]")]
     public async Task<IActionResult> GetStudentById(Guid id)
     {
-        var student = await _studentService.GetStudentById(id);
+        var student = (Student)await _studentService.GetUserById(id);
         return Ok(student);
     }
     

@@ -1,7 +1,10 @@
+@using Entities
 @model Entities.BattleRoom
 
 @{
     Layout = null;
+    var st1 = ViewBag.Student as Student ?? new Student();
+    var st2 = ViewBag.Student2 as Student ?? new Student();
 }
 
 <!DOCTYPE html>
@@ -24,14 +27,14 @@
 
     <section class="players-container" aria-label="Players info">
         <article class="player player1" aria-labelledby="player1Name">
-            <img id="player1Photo" src="~/images/default-avatar.png" alt="Player 1 photo" />
-            <h3 id="player1Name">Waiting...</h3>
+            <img id="player1Photo" src="data:image/jpeg;base64,@st1.Picture" alt="Player 1 photo" />
+            <h3 id="player1Name">@st1.Username</h3>
             <div class="score">Score: <span id="player1Score">0</span></div>
             <div class="status"><span id="player1Status"></span></div>
         </article>
         <article class="player player2" aria-labelledby="player2Name">
-            <img id="player2Photo" src="~/images/default-avatar.png" alt="Player 2 photo" />
-            <h3 id="player2Name">Waiting...</h3>
+            <img id="player2Photo" src="data:image/jpeg;base64,@st2.Picture" alt="Player 2 photo" />
+            <h3 id="player2Name">@st2.Username</h3>
             <div class="score">Score: <span id="player2Score">0</span></div>
             <div class="status"><span id="player2Status"></span></div>
         </article>

@@ -9,10 +9,10 @@ namespace Services.Hubs;
 public class BattleHub : Hub
 {
     private readonly IBattleService _battleService;
-    private readonly IStudentService _studentService;
+    private readonly IUserService _studentService;
     private readonly BattleSingleton _battleSingleton;
 
-    public BattleHub(IBattleService battleService, IStudentService studentService, BattleSingleton battleSingleton)
+    public BattleHub(IBattleService battleService, IUserService studentService, BattleSingleton battleSingleton)
     {
         _battleService = battleService;
         _studentService = studentService;
@@ -26,7 +26,7 @@ public class BattleHub : Hub
             return;
         var student = JsonSerializer.Deserialize<Student>(studentString);
         var room = await _battleService.CreateRoom(student);
-        _battleSingleton.Add(student.StudentId);
+        _battleSingleton.Add(student.UserId);
         await Groups.AddToGroupAsync(Context.ConnectionId, room.roomId.ToString());
         await Clients.Caller.SendAsync("BattleRoomCreated", room);
     }
@@ -39,7 +39,7 @@ public class BattleHub : Hub
 
         var student = JsonSerializer.Deserialize<Student>(studentString);
         var room = await _battleService.JoinRoom(Guid.Parse(roomId), student);
-        _battleSingleton.Add(student.StudentId);
+        _battleSingleton.Add(student.UserId);
 
         await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
         await Clients.Group(roomId).SendAsync("PlayerJoined", room);
@@ -59,7 +59,7 @@ public class BattleHub : Hub
                 return;
             }
 
-            var student = await _studentService.GetStudentById(guid);
+            var student = await _studentService.GetUserById(guid);
             if (student != null)
             {
                 await Clients.Caller.SendAsync("Student", student);
@@ -82,11 +82,11 @@ public class BattleHub : Hub
             return;
     
         var student = JsonSerializer.Deserialize<Student>(studentString);
-        var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.StudentId, answer, questionIndex - 1);
+        var result = await _battleService.SubmitAnswer(Guid.Parse(roomId), student.UserId, answer, questionIndex - 1);
         
         await Clients.Group(roomId).SendAsync("AnswerSubmitted", new
         {
-            PlayerId = student.StudentId,
+            PlayerId = student.UserId,
             PlayerName = student.Username,
             IsCorrect = result.IsCorrect,
             Player1score = result.CurrentPlayer1Score,
@@ -108,7 +108,7 @@ public class BattleHub : Hub
             return;
 
         var student = JsonSerializer.Deserialize<Student>(studentString);
-        _battleSingleton.SetReady(student.StudentId);
+        _battleSingleton.SetReady(student.UserId);
         var curRoom = await _battleService.GetRoomStatus(Guid.Parse(roomId));
         if (_battleSingleton.IsReady(curRoom.Player1Id) && _battleSingleton.IsReady(curRoom.Player2Id))
         {
@@ -161,7 +161,7 @@ public class BattleHub : Hub
 
         // 🔍 Фільтрація: виключаємо кімнати, де студент вже є Player1
         var filteredRooms = rooms
-            .Where(room => room.Player1Id != student.StudentId)
+            .Where(room => room.Player1Id != student.UserId)
             .ToList();
 
         await Clients.Caller.SendAsync("AvailableRooms", filteredRooms);
