@@ -1,4 +1,3 @@
-/* Existing styles from main page */
 *,
 *::before,
 *::after {
@@ -16,7 +15,6 @@ body {
 /* Стилі для хедера */
 .header {
     background: linear-gradient(45deg, #318ced, #ed31ab);
-    font-size: 10px;
     color: white;
     padding: 10px;
     display: flex;
@@ -38,19 +36,18 @@ body {
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
 }
-.leftText a{
+
+.leftText a {
     text-decoration: none;
     color: black;
     display: flex;
     align-items: center;
 }
 
-/*Стилі для кнопки виходу з профілю*/
 .logoutIcon {
     margin-left: 10px;
 }
 
-/*Стилі для кнопок реєстрації*/
 .LoginRegButtons {
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
@@ -70,7 +67,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Стилі для user-profile */
 .user-profile {
     display: flex;
     align-items: center;
@@ -93,14 +89,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Стилі для іконок профілю */
 .accountIcon {
     width: 40px;
     height: auto;
     margin-right: 10px;
 }
 
-/* Ліве навігаційне меню */
 .leftContent {
     width: 20vw;
     background: #eeefff;
@@ -137,7 +131,6 @@ body {
     transition: .5s;
 }
 
-/*Стилі для кнопок навігації*/
 .navButtons {
     width: 100%;
 }
@@ -151,13 +144,11 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-.leftContent ul li:hover{
-    font-size: 35px;
+.leftContent ul li:hover {
     background: linear-gradient(135deg, #318ced, #ed31ab);
 }
 
-/* Стилі для назви групи */
-h2 {
+h2, .head {
     background: linear-gradient(135deg, #6e8efb, #a777e3);
     display: flex;
     align-items: center;
@@ -171,13 +162,11 @@ h2 {
     text-align: center;
 }
 
-/* Стилі для контейнера зі завданнями */
 .container {
     position: relative;
     width: 100%;
 }
 
-/* Контейнер для завдань */
 .task {
     flex-grow: 1;
     padding: 20px;
@@ -260,7 +249,6 @@ h3 {
     hyphens: auto;
 }
 
-/* Стилі для мітки рівня складності */
 .lvlMode {
     position: absolute;
     top: 3px;
@@ -279,24 +267,22 @@ h3 {
 }
 
 .lvlMode.easy {
-    background-color: green; /* Зелений для Легкого */
+    background-color: green;
 }
 
 .lvlMode.medium {
-    background-color: orange; /* Оранжевий для середнього*/
+    background-color: orange;
 }
 
 .lvlMode.hard {
-    background-color: red; /*Червоний для складного*/
+    background-color: red;
 }
 
-/*Стилі для Зірочок і монеток*/
-.imgStar, .imgCoin{
+.imgStar, .imgCoin {
     width: 16px;
-    top: 100px;
 }
 
-.points{
+.points {
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
@@ -304,7 +290,6 @@ h3 {
     margin-bottom: 10px;
 }
 
-/* Стилі для скролу завдань групи */
 .bodyOfTask::-webkit-scrollbar {
     width: 10px;
 }
@@ -327,7 +312,6 @@ h3 {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Стилі для кнопки гамбургер */
 .hamburger {
     display: none;
     cursor: pointer;
@@ -345,6 +329,7 @@ h3 {
     border-radius: 2px;
     transition: all 0.3s ease;
 }
+
 
 /* Popup styles (integrated) */
 .popup {
@@ -466,13 +451,21 @@ h3 {
     transform: scale(1.2);
 }
 
-/* Адаптивність (combined) */
-/* Планшети (768px - 1024px) */
-@media (max-width: 1024px) {
+/* Медіа-запити з чіткими межами */
+
+/* Десктопи (1025px і більше) */
+@media (min-width: 1025px) {
+    .header {
+        font-size: 10px;
+    }
+}
+
+/* Планшети (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
     .leftContent {
         width: 25vw;
         padding: 15px;
-        margin-top: 90px;
+        margin-top: 70px;
     }
 
     .task {
@@ -481,20 +474,20 @@ h3 {
     }
 
     .header {
-        font-size: 16px;
+        font-size: 9px;
         padding: 8px;
     }
 
     .leftText {
-        font-size: 20px;
+        font-size: 13px;
     }
 
     .rightText {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .LoginRegButtons {
-        font-size: 18px;
+        font-size: 12px;
         padding: 8px 15px;
     }
 
@@ -510,11 +503,11 @@ h3 {
     }
 
     h3 {
-        font-size: 22px;
+        font-size: 14px;
     }
 
     .taskDiscription p {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .points {
@@ -526,8 +519,8 @@ h3 {
         padding: 4px 8px;
     }
 
-    h2 {
-        font-size: 24px;
+    h2, .head {
+        font-size: 20px;
         padding: 8px;
     }
 
@@ -547,12 +540,10 @@ h3 {
     }
 }
 
-/* Мобільні пристрої (менше 768px) */
-@media (max-width: 768px) {
+/* Мобільні пристрої (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
     .leftContent {
-        width: 40vw;
-        left: 0;
-        right: auto;
+        width: 70vw;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         margin-top: 60px;
@@ -571,7 +562,7 @@ h3 {
     }
 
     .header {
-        font-size: 10px;
+        font-size: 8px;
         padding: 6px;
         flex-direction: row;
         justify-content: space-between;
@@ -579,24 +570,24 @@ h3 {
     }
 
     .leftText {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .rightText {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .user-profile {
-        font-size: 22px;
+        font-size: 20px;
         padding: 4px 8px;
     }
 
     .accountIcon {
-        width: 40px;
+        width: 30px;
     }
 
     .LoginRegButtons {
-        font-size: 20px;
+        font-size: 11px;
         padding: 6px 12px;
         margin-left: 5px;
     }
@@ -617,11 +608,11 @@ h3 {
     }
 
     h3 {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .taskDiscription p {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .points {
@@ -633,7 +624,7 @@ h3 {
         padding: 3px 6px;
     }
 
-    h2 {
+    h2, .head {
         font-size: 18px;
         padding: 6px;
     }
@@ -658,11 +649,11 @@ h3 {
     .popup-close {
         font-size: 20px;
     }
-    
+
     .slide h2 {
         font-size: 14px;
     }
-    
+
     .slide p {
         font-size: 12px;
     }
@@ -674,32 +665,32 @@ h3 {
     }
 }
 
-/* Дуже маленькі екрани (менше 480px) */
+/* Дуже маленькі екрани (до 480px) */
 @media (max-width: 480px) {
     .header {
         padding: 5px;
     }
 
     .leftText {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .rightText {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .LoginRegButtons {
-        font-size: 20px;
+        font-size: 10px;
         padding: 5px 10px;
     }
 
     .user-profile {
-        font-size: 22px;
+        font-size: 18px;
         padding: 3px 6px;
     }
 
     .accountIcon {
-        width: 30px;
+        width: 25px;
     }
 
     .taskCard {
@@ -708,11 +699,11 @@ h3 {
     }
 
     h3 {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .taskDiscription p {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .points {
@@ -724,13 +715,36 @@ h3 {
         padding: 2px 5px;
     }
 
-    h2 {
+    h2, .head {
         font-size: 16px;
         padding: 5px;
     }
 
     .imgStar, .imgCoin {
         width: 12px;
+    }
+
+    .leftContent {
+        width: 70vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .task {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+    }
+
+    .hamburger {
+        display: flex;
     }
 
     .slide {
@@ -756,7 +770,7 @@ h3 {
     }
 
     .info-icon {
-        font-size: 50px;
+        font-size: 24px;
         bottom: 8px;
         right: 8px;
     }
