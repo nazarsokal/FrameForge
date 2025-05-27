@@ -3,6 +3,7 @@ const connection = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect()
     .build();
 
+
     document.addEventListener('DOMContentLoaded', () => {
 
     // Підключення до хабу
@@ -20,6 +21,7 @@ const connection = new signalR.HubConnectionBuilder()
         console.log("Received rooms:", rooms);
         updateRoomsList(rooms);
     });
+    
 
  
 
@@ -30,33 +32,65 @@ const connection = new signalR.HubConnectionBuilder()
     if (createRoomButton) {
         createRoomButton.addEventListener('click', () => {
             connection.invoke("CreateBattleRoom")
-                .catch(err => console.error(err));
+                    .catch(err => console.error(err));
         });
     } else {
         console.error('Create room button not found');
     }
 });
+window.addEventListener("beforeunload", async () => {
+    const roomId = localStorage.getItem("roomId"); // або інший спосіб отримати roomId
+    if (!roomId) return;
 
-function updateRoomsList(rooms) {
+    const data = new FormData();
+    data.append("roomId", roomId);
+
+    navigator.sendBeacon("/Battle/EndBattleOnClose", data);
+});
+
+
+async function updateRoomsList(rooms) {
     const roomsList = document.getElementById('availableRooms');
     if (!roomsList) {
         console.error('Available rooms list not found');
         return;
     }
-    
+
     roomsList.innerHTML = '';
-    
-    rooms.forEach(room => {
-        const li = document.createElement('li');
-        li.textContent = `Room ${room.roomId}`;
-        const joinButton = document.createElement('button');
-        joinButton.textContent = 'Join';
-        joinButton.onclick = () => joinRoom(room.roomId);
-        li.appendChild(joinButton);
-        roomsList.appendChild(li);
-    });
+
+    for (const room of rooms) {
+        try {
+            const st = await getStudentById(room.player1Id);
+            const li = document.createElement('li');
+            li.textContent = `${st.username}'s room`;
+
+            const joinButton = document.createElement('button');
+            joinButton.textContent = 'Join';
+            joinButton.onclick = () => joinRoom(room.roomId);
+
+            li.appendChild(joinButton);
+            roomsList.appendChild(li);
+        } catch (err) {
+            console.error(`Не вдалося завантажити студента ${room.player1Id}`, err);
+        }
+    }
 }
 
+async function getStudentById(studentId) {
+    try {
+        const response = await fetch(`/Battle/GetStudentById?id=${studentId}`);
+        if (!response.ok) {
+            throw new Error("Помилка при запиті студента");
+        }
+
+        const student = await response.json();
+        console.log("Отримано студента:", student);
+        return student;
+    } catch (error) {
+        console.error("Помилка:", error);
+        return null;
+    }
+}
 async function joinRoom(roomId) {
     try {
         await connection.invoke("JoinBattleRoom", roomId);
@@ -70,6 +104,9 @@ async function joinRoom(roomId) {
 connection.on("BattleRoomCreated", (room) => {
     console.log("Battle room created:", room);
     document.getElementById('createRoomContainer').innerHTML = 'Waiting for player...';
+    localStorage.setItem("roomId", room.roomId);
+    console.log("created room id:",localStorage.getItem("roomId"));
+
 
 });
 
