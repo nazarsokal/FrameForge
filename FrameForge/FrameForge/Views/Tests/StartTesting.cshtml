@@ -57,7 +57,7 @@
                     @foreach (var variant in Model.AnswerVariants)
                     {
                         <div class="variant">
-                            <input type="radio" name="answer" id="@variant" value="@variant" required>
+                            <input type="radio" name="answer" id="@Html.Raw(Guid.NewGuid())" value="@variant" required>
                             <label for="@variant">@Html.Raw(variant)</label>
                         </div>
                     }
