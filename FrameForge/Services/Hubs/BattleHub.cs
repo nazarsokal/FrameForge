@@ -151,7 +151,20 @@ public class BattleHub : Hub
     }
     public async Task GetAvailableRooms()
     {
+        var studentString = Context.GetHttpContext().Session.GetString("Student");
+        if (string.IsNullOrEmpty(studentString))
+            return;
+
+        var student = JsonSerializer.Deserialize<Student>(studentString);
+
         var rooms = await _battleService.GetAvailableRooms();
-        await Clients.Caller.SendAsync("AvailableRooms", rooms);
+
+        // 🔍 Фільтрація: виключаємо кімнати, де студент вже є Player1
+        var filteredRooms = rooms
+            .Where(room => room.Player1Id != student.StudentId)
+            .ToList();
+
+        await Clients.Caller.SendAsync("AvailableRooms", filteredRooms);
     }
+
 }
