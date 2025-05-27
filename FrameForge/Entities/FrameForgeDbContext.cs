@@ -1,3 +1,4 @@
+using Entities.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities;
@@ -16,6 +17,8 @@ public class FrameForgeDbContext : DbContext
     public virtual DbSet<ExerciseSubmission> ExerciseSubmissions { get; set; }
     public virtual DbSet<Algorithm> Algorithms { get; set; }
     public virtual DbSet<Test> Tests { get; set; }
+    public DbSet<BattleRoom> BattleRooms { get; set; }
+    public DbSet<BattleHistory> BattleHistory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,6 +45,5 @@ public class FrameForgeDbContext : DbContext
             .WithMany(g => g.Students)
             .HasForeignKey(s => s.GroupId);
         
-
     }
 }

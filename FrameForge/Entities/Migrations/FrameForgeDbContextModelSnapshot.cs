@@ -22,6 +22,62 @@ namespace Entities.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Entities.BattleHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("Player1Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Player2Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("WinnerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BattleHistory");
+                });
+
+            modelBuilder.Entity("Entities.BattleRoom", b =>
+                {
+                    b.Property<Guid>("roomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Player1Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Player1Score")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("Player2Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Player2Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Questions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("roomId");
+
+                    b.ToTable("BattleRooms");
+                });
+
             modelBuilder.Entity("Entities.EnrolledLevels", b =>
                 {
                     b.Property<Guid>("LevelsEnrolledKey")
@@ -51,9 +107,9 @@ namespace Entities.Migrations
                     b.ToTable("EnrolledLevels", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Exercise", b =>
+            modelBuilder.Entity("Entities.Student", b =>
                 {
-                    b.Property<Guid>("ExerciseId")
+                    b.Property<Guid>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -82,12 +138,16 @@ namespace Entities.Migrations
                     b.Property<double>("MoneyReward")
                         .HasColumnType("double");
 
-                    b.Property<double>("StarsReward")
-                        .HasColumnType("double");
-
-                    b.HasKey("ExerciseId");
-
-                    b.ToTable("Exercises", (string)null);
+                    b.HasData(
+                        new
+                        {
+                            StudentId = new Guid("a20a1008-a76a-4a19-8edc-ff7c5ba60650"),
+                            Email = "TestUser@test.com",
+                            MoneyAmount = 100.45,
+                            Password = "TestPassword",
+                            StarsAmount = 0,
+                            Username = "TestUserName"
+                        });
                 });
 
             modelBuilder.Entity("Entities.ExerciseSubmission", b =>

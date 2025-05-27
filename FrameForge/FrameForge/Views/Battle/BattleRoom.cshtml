@@ -1,0 +1,350 @@
+@using Entities
+@model Entities.BattleRoom
+
+@{
+    Layout = null;
+    var st1 = ViewBag.Student as Student ?? new Student();
+    var st2 = ViewBag.Student2 as Student ?? new Student();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Battle Room</title>
+    <link rel="stylesheet" href="~/css/battle.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+<div class="battle-container">
+    <header class="battle-header">
+        <h1>Battle Room</h1>
+    </header>
+
+    <section class="players-container" aria-label="Players info">
+        <article class="player player1" aria-labelledby="player1Name">
+            <img id="player1Photo" src="data:image/jpeg;base64,@st1.Picture" alt="Player 1 photo" />
+            <h3 id="player1Name">@st1.Username</h3>
+            <div class="score">Score: <span id="player1Score">0</span></div>
+            <div class="status"><span id="player1Status"></span></div>
+        </article>
+        <article class="player player2" aria-labelledby="player2Name">
+            <img id="player2Photo" src="data:image/jpeg;base64,@st2.Picture" alt="Player 2 photo" />
+            <h3 id="player2Name">@st2.Username</h3>
+            <div class="score">Score: <span id="player2Score">0</span></div>
+            <div class="status"><span id="player2Status"></span></div>
+        </article>
+    </section>
+
+    <section id="ready" aria-live="polite" aria-atomic="true">
+        <button id="readyButton" type="button">Ready</button>
+    </section>
+
+    <section class="question-container" id="question-container" aria-live="polite">
+        <div id="currentQuestion" role="heading" aria-level="2"></div>
+        <div id="timerBar" aria-label="Timer">
+            <div id="timerProgress"></div>
+        </div>
+        <div class="answers-container" id="answersContainer" role="list"></div>
+        <div id="correctAnswer" role="alert"></div>
+    </section>
+
+    <section id="battleResult" class="battle-result" aria-live="polite">
+        <div id="player1result"></div>
+        <div id="player2result"></div>
+        <button type="button" onclick="BackToLobby()">Back to Lobby</button>
+    </section>
+
+    <input type="hidden" id="currentPlayerId" value="@ViewBag.CurrentPlayerId" />
+    <input type="hidden" id="roomId" value="@Model.roomId" />
+</div>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/battleHub")
+        .withAutomaticReconnect()
+        .build();
+
+    const player1Id = "@ViewBag.Room.Player1Id.ToString()";
+    const player2Id = "@ViewBag.Room.Player2Id.ToString()";
+    const roomId = "@ViewBag.Room.roomId.ToString()";
+
+    let battleTimer;
+    let currentQuestionIndex = 0;
+    const questionsJson = @Html.Raw(Json.Serialize(ViewBag.Room.Questions));
+    const questions = JSON.parse(questionsJson);
+
+    let answersSubmittedCount = 0;
+    let answerTimeoutId = null;
+    let hasAnswered = false;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            await connection.start();
+            connection.invoke("JoinGroup", roomId);
+            await connection.invoke("GetStudent", player1Id);
+            await connection.invoke("GetStudent", player2Id);
+        } catch (err) {
+            console.error("Connection failed:", err);
+        }
+    });
+    window.addEventListener("beforeunload", async () => {
+        try {
+            await connection.invoke("LeaveRoom", roomId);
+
+        } catch (err) {
+            console.warn("Помилка LeaveRoom:", err);
+        }
+        await connection.stop();
+    });
+
+    connection.onreconnected(() => {
+        BackToLobby();
+    });
+
+    document.getElementById("readyButton").addEventListener("click", async () => {
+        await connection.invoke("SetReady", roomId);
+        document.getElementById("ready").innerHTML = "Waiting for the opponent...";
+    });
+
+    connection.on("OpponentIsReady", (Id) => {
+        if(Id === player1Id) document.getElementById("player1Status").innerHTML = "Ready";
+        else if(Id === player2Id) document.getElementById("player2Status").innerHTML = "Ready";
+    });
+
+    connection.on("AllAreReady", () => {
+        document.getElementById("player1Status").innerHTML = "";
+        document.getElementById("player2Status").innerHTML = "";
+        document.getElementById("ready").innerHTML = "";
+        startBattle();
+    });
+
+    connection.on("Student", (student) => {
+        if (student.studentId.toString() === player1Id) {
+            document.getElementById("player1Name").innerHTML = student.username;
+            if(student.photoUrl) {
+                document.getElementById("player1Photo").src = 'data:image/jpeg;base64,' + student.picture;
+            }
+        } else if (student.studentId.toString() === player2Id) {
+            document.getElementById("player2Name").innerHTML = student.username;
+            if(student.photoUrl) {
+                document.getElementById("player2Photo").src = 'data:image/jpeg;base64,' + student.picture;
+            }
+        }
+    });
+
+    connection.on("AnswerSubmitted", (result) => {
+        console.log("Answer submitted:", result);
+        document.getElementById("player1Score").innerHTML = result.player1score;
+        document.getElementById("player2Score").innerHTML = result.player2score;
+
+        const message = result.isCorrect ? `${result.playerName}'s answer is correct!` : `${result.playerName}'s answer is incorrect!`;
+        if (result.playerId.toString() === player1Id) document.getElementById("player1result").innerHTML = message;
+        else if (result.playerId.toString() === player2Id) document.getElementById("player2result").innerHTML = message;
+
+        answersSubmittedCount++;
+        if (answersSubmittedCount === 2) {
+            clearTimeout(answerTimeoutId);
+            document.getElementById("correctAnswer").innerHTML = `Correct answer: ${questions[currentQuestionIndex - 1].Answer}`;
+            setTimeout(() => {
+                answersSubmittedCount = 0;
+                showQuestion();
+            }, 5000);
+        }
+    });
+
+    function startBattle() {
+        showQuestion();
+    }
+    async function BackToLobby() {
+        await connection.invoke("LeaveRoom", roomId);
+        window.location.href = '/Battle/BattleLobby';
+    }
+    connection.on("OpponentLeft", (room) => {
+        console.log("Opponent left:", room);
+        if(room.status !== 2) {
+            // Створення модального вікна
+            const modal = document.createElement("div");
+            modal.style.position = "fixed";
+            modal.style.top = "0";
+            modal.style.left = "0";
+            modal.style.width = "100%";
+            modal.style.height = "100%";
+            modal.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+            modal.style.display = "flex";
+            modal.style.alignItems = "center";
+            modal.style.justifyContent = "center";
+            modal.style.zIndex = "9999";
+
+            const dialog = document.createElement("div");
+            dialog.style.backgroundColor = "#fff";
+            dialog.style.padding = "30px";
+            dialog.style.borderRadius = "8px";
+            dialog.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+            dialog.style.textAlign = "center";
+
+            const message = document.createElement("p");
+            message.textContent = "Your opponent left.";
+            message.style.fontSize = "18px";
+            message.style.marginBottom = "20px";
+
+            const okButton = document.createElement("button");
+            okButton.textContent = "OK";
+            okButton.style.padding = "10px 20px";
+            okButton.style.fontSize = "16px";
+            okButton.style.backgroundColor = "#007bff";
+            okButton.style.color = "#fff";
+            okButton.style.border = "none";
+            okButton.style.borderRadius = "4px";
+            okButton.style.cursor = "pointer";
+
+            okButton.onclick = function () {
+                window.location.href = "/Battle/BattleLobby";
+            };
+
+            dialog.appendChild(message);
+            dialog.appendChild(okButton);
+            modal.appendChild(dialog);
+            document.body.appendChild(modal);
+        }
+        else {
+            window.location.href = "/Battle/BattleLobby";
+        }
+    });
+
+
+    async function submitAnswer(roomId, variant) {
+        console.log("Room ID:", roomId);
+        console.log("Selected answer:", variant);
+        try {
+            if (!hasAnswered) {
+                hasAnswered = true;
+                await connection.invoke("SubmitAnswer", roomId, variant, currentQuestionIndex);
+                console.log("Answer submitted successfully.");
+
+            }
+        } catch (err) {
+            console.error("Failed to submit answer:", err);
+
+        }
+    }
+
+    function showQuestion() {
+        document.getElementById("player1result").innerHTML = "";
+        document.getElementById("player2result").innerHTML = "";
+        document.getElementById("correctAnswer").innerHTML = "";
+
+        if (currentQuestionIndex >= questions.length) {
+            endBattle();
+            return;
+        }
+
+        const question = questions[currentQuestionIndex];
+        const questionElement = document.getElementById('currentQuestion');
+        const answersContainer = document.getElementById('answersContainer');
+        const answerVariants = JSON.parse(question.AnswerVariants);
+
+        questionElement.innerHTML = question.Question;
+        answersContainer.innerHTML = '';
+
+        const timerProgress = document.getElementById("timerProgress");
+        timerProgress.style.width = "100%";
+        let timeLeft = 10;
+
+        hasAnswered = false;
+
+        const timerInterval = setInterval(() => {
+            timeLeft--;
+            timerProgress.style.width = `${(timeLeft / 10) * 100}%`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+            }
+        }, 1000);
+
+        if (answerTimeoutId !== null) clearTimeout(answerTimeoutId);
+
+        answerTimeoutId = setTimeout(() => {
+            submitAnswer(document.getElementById('roomId').value, '');
+        }, 10000);
+
+        answerVariants.forEach(variant => {
+            const button = document.createElement('button');
+            button.textContent = variant;
+
+            button.onclick = () => {
+                clearTimeout(answerTimeoutId);
+                clearInterval(timerInterval);
+                submitAnswer(document.getElementById('roomId').value, variant);
+
+                Array.from(document.getElementById('answersContainer').children).forEach(btn => {
+                    btn.disabled = true;
+                });
+
+                button.style.backgroundColor = 'yellow';
+            };
+
+            answersContainer.appendChild(button);
+        });
+
+        currentQuestionIndex++;
+    }
+
+    function endBattle() {
+        clearInterval(battleTimer);
+        const player1Score = parseInt(document.getElementById("player1Score").innerHTML);
+        const player2Score = parseInt(document.getElementById("player2Score").innerHTML);
+        const player1Name = document.getElementById("player1Name").innerHTML;
+        const player2Name = document.getElementById("player2Name").innerHTML;
+
+        document.getElementById("question-container").style.display = "none";
+        const battleResult = document.getElementById("battleResult");
+        battleResult.classList.add("show");
+        endBattleRequest(roomId);
+
+        let resultMessage = "";
+        if (player1Score > player2Score) {
+            resultMessage = `<div class="winner">${player1Name} переміг!</div>`;
+        } else if (player2Score > player1Score) {
+            resultMessage = `<div class="winner">${player2Name} переміг!</div>`;
+        } else {
+            resultMessage = `<div class="winner draw">Нічия!</div>`;
+        }
+
+        resultMessage += `
+            <div class="final-scores">
+                <div>${player1Name}: ${player1Score} очків</div>
+                <div>${player2Name}: ${player2Score} очків</div>
+            </div>
+        `;
+
+        battleResult.innerHTML = resultMessage + battleResult.innerHTML;
+    }
+    function endBattleRequest(roomId) {
+        const formData = new FormData();
+        formData.append("roomId", roomId);
+
+        fetch('/Battle/EndBattle', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Battle ended successfully.');
+                } else {
+                    console.error('Failed to end battle');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+
+</script>
+</body>
+</html>
