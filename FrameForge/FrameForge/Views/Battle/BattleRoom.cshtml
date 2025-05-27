@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Battle Room</title>
     <link rel="stylesheet" href="~/css/battle.css" />
+    <link rel="stylesheet" href="~/Exercise/RateExercise_css/RateExercise.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
     <script type="text/javascript" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -24,6 +26,9 @@
     <header class="battle-header">
         <h1>Battle Room</h1>
     </header>
+    <button class="back-button" aria-label="Go back" onclick="location.href='@Url.Action("BattleLobby", "Battle")'">
+        <img src="~/images/icons_RateExercise/arrow.png" alt="Arrow" class="arrow-icon" width="24" height="24">
+    </button>
 
     <section class="players-container" aria-label="Players info">
         <article class="player player1" aria-labelledby="player1Name">
