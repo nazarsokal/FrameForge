@@ -148,7 +148,7 @@ public class BattleHub : Hub
         // Видалення зі сінглтона, якщо використовується
         _battleSingleton.Remove(room.Player1Id);
         _battleSingleton.Remove((Guid)room.Player2Id);
-    }
+    }                    
     public async Task GetAvailableRooms()
     {
         var studentString = Context.GetHttpContext().Session.GetString("Student");
