@@ -9,38 +9,35 @@
             case 'firstIsland':
                 return {
                     title: 'Перший рівень',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque mollitia quisquam quo sequi similique! Earum hic\n' +
-                        '    iure odio sit. Ex rerum soluta voluptas. Culpa eaque hic illum molestiae optio tenetur voluptate voluptatum? Aut\n' +
-                        '    consequuntur distinctio enim eveniet exercitationem illum incidunt inventore ipsam iure, maxime officiis\n',
+                    description: 'Вступ до Компютерної графіки\n',
                     link: '/ProgressMap/ViewLevel?levelName=CG_IntroductionLevel'
                 };
             case 'secondIsland':
                 return {
                     title: 'Другий рівень',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci aliquam, debitis dignissimos dolor\n' +
-                        '    dolores ex excepturi explicabo fugiat ipsum iusto laborum magnam molestias nihil obcaecati perferendis quibusdam\n' +
-                        '    recusandae rerum sed totam. Aliquam consequuntur eligendi eos eum illo minus nihil totam vitae? Consectetur cum ea,\n' +
-                        '    est id incidunt ipsum minima, necessitatibus neque nihil nobis obcaecati odit tempore temporibus ut veniam.',
+                    description: 'Криві Безьє. \n' +
+                        '    Задання та побудова кривих\n',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level2'
                 };
             case 'thirdIsland':
                 return {
                     title: 'Третій рівень',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad, deserunt ea esse iusto magni natus placeat\n' +
-                        '    praesentium tempore. Accusantium alias dolorem illo inventore itaque iusto necessitatibus perspiciatis porro\n' +
-                        '    veritatis',
+                    description: 'Фрактали. \n' +
+                        '    Класифікація фракталів та їх особливості\n',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level3'
                 };
             case 'fourthIsland':
                 return {
                     title: 'Четвертий рівень',
-                    description: 'Опис четвертого рівня',
+                    description: 'Колірні моделі. \n' +
+                    'Основні колірні моделі, та задання кольору з їх допомогою',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level4'
                 };
             case 'fifthIsland':
                 return {
                     title: "П'ятий рівень",
-                    description: "Опис п'ятого рівня",
+                    description: "Рухомі зображення. \n" +
+                    'Створення рухомих зображень за допомогою Афінних перетворень',
                     link: '/ProgressMap/ViewLevel?levelName=CG_Level5'
                 }
         }
@@ -80,12 +77,12 @@
                 sidebar.classList.add('active');
 
                 //Зміщення островів
-                islands.forEach(island => {
-                    const islandRect = island.getBoundingClientRect();
-                    if (islandRect.right > window.innerWidth - 320) {
-                        island.classList.add('shifted');
-                    }
-                });
+                // islands.forEach(island => {
+                //     const islandRect = island.getBoundingClientRect();
+                //     if (islandRect.right > window.innerWidth - 320) {
+                //         island.classList.add('shifted');
+                //     }
+                // });
 
                 islands.forEach(island => {
                     island.classList.remove('zoomed');

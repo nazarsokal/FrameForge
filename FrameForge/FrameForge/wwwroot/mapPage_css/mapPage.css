@@ -1,47 +1,17 @@
-/*a {*/
-/*    text-decoration: none;*/
-/*    margin-right: 10px;*/
-/*    font-size: 24px;*/
-/*}*/
-
-/*!* Styling for completed levels *!*/
-/*a.completed,*/
-/*a.completed:visited,*/
-/*a.completed:hover,*/
-/*a.completed:active {*/
-/*    color: green !important;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*!* Styling for in-progress levels *!*/
-/*a.in-progress,*/
-/*a.in-progress:visited,*/
-/*a.in-progress:hover,*/
-/*a.in-progress:active {*/
-/*    color: lightblue !important;*/
-/*}*/
-
-/*!* Styling for uncompleted (not completed or in progress) levels *!*/
-/*a:not(.completed):not(.in-progress) {*/
-/*    color: lightgray !important;*/
-/*}*/
-
-#activeWeb1{
+#activeWeb1 {
     background-color: #f7e018;
 }
 
 .leftContent {
     z-index: 10;
 }
-/*.leftContent{*/
-/*    z-index: 10;*/
-/*}*/
-.container{
 
+.container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    width: 100%;
     padding: 20px;
 }
 
@@ -49,55 +19,49 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    /*background: linear-gradient(180deg, #6b73ff, #000dff);*/
-    /*background: deepskyblue;*/
 }
 
-.Islands{
+.Islands {
     margin-top: 89px;
 }
 
 /* Стилі для островів */
 .islandFirstLvl {
     position: relative;
-    /*width: 300px;*/
     width: 230px;
-    margin-left: 500px;
+    margin-left: 30vw;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
     margin-top: 50px;
     transition: transform 0.3s ease;
 }
+
 .islandSecondLvl {
     position: relative;
-    /*    margin-top: 100px;*/
     margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    /*width: 300px;*/
     width: 230px;
-    /*    margin-left: 1100px;*/
-    margin-left: 990px;
+    margin-left: 70vw;
     transition: transform 0.3s ease;
 }
+
 .islandThirdLvl {
     position: relative;
-    /*margin-top: 50px;*/
     margin-top: 20px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-    /*    width: 280px;*/
     width: 240px;
-    /*margin-left: 400px;*/
-    margin-left: 500px;
+    margin-left: 30vw;
     transition: transform 0.3s ease;
 }
+
 .islandFourthLvl {
     position: relative;
     margin-top: 60px;
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
     width: 200px;
-    margin-left: 1000px;
+    margin-left: 70vw;
     transition: transform 0.3s ease;
 }
 
@@ -107,7 +71,7 @@ body {
     z-index: 1;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
     width: 230px;
-    margin-left: 550px;
+    margin-left: 30vw;
     transition: transform 0.3s ease;
 }
 
@@ -142,56 +106,44 @@ body {
 .secondIsland a:not(.completed):not(.in-progress) .islandSecondLvl:hover,
 .thirdIsland a:not(.completed):not(.in-progress) .islandThirdLvl:hover,
 .fourthIsland a:not(.completed):not(.in-progress) .islandFourthLvl:hover,
-.firstIsland a:not(.completed):not(.in-progress) .islandFifthLvl:hover{
+.fifthIsland a:not(.completed):not(.in-progress) .islandFifthLvl:hover {
     transform: none;
 }
 
-/*Видалив значок  локації для закритих островів*/
+/*Видалив значок локації для закритих островів*/
 .firstIsland a:not(.completed):not(.in-progress) .islandLocationFirst,
 .secondIsland a:not(.completed):not(.in-progress) .islandLocationSecond,
 .thirdIsland a:not(.completed):not(.in-progress) .islandLocationThird,
 .fourthIsland a:not(.completed):not(.in-progress) .islandLocationFourth,
-.fifthIsland a:not(.completed):not(.in-progress) .islandLocationFifth
-{
+.fifthIsland a:not(.completed):not(.in-progress) .islandLocationFifth {
     visibility: hidden;
 }
 
-
-/*тут при збільшуванні острова додається тінь*/
-/*.islandFirstLvl:hover {*/
-/*    filter: drop-shadow(8px 8px 15px rgba(0, 0, 0, 0.4));*/
-/*    transform: scale(1.1);*/
-/*}*/
-
 .islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth, .islandLocationFifth {
     position: absolute;
-    top: 35%;
-    left: 80%;
+    top: 45%;
+    left: 35vw;
     z-index: 2;
     width: 40px;
     height: auto;
     transition: transform 0.3s ease;
 }
+
 .islandLocationSecond {
     top: 40%;
-    left: 87%;
+    left: 75vw;
 }
 
 .islandLocationFourth {
-    margin-top: 30px;
-    left: 90%;
+    top: 50%;
+    left: 75vw;
 }
 
 .islandLocationFifth {
-    top: 40%;
-    left: 85%;
+    top: 45%;
+    left: 35vw;
 }
 
-/*.islandLocation:hover {*/
-/*    transform: scale(1.1);*/
-/*}*/
-
-/*тут на вибір, або точка розширяється з островом або вони окремо розширяються*/
 .islandFirstLvl:hover, .islandSecondLvl:hover, .islandThirdLvl:hover, .islandFourthLvl:hover, .islandFifthLvl:hover {
     transform: scale(1.1);
 }
@@ -206,20 +158,13 @@ body {
     transition: transform 0.3s ease;
 }
 
-.firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted, .fifthIsland.shifted {
-    transform: translateX(-150px);
-
-}
-
+/*.firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted, .fifthIsland.shifted {*/
+/*    transform: translateX(150px);*/
+/*}*/
 
 .firstIsland.zoomed, .secondIsland.zoomed, .thirdIsland.zoomed, .fourthIsland.zoomed, .fifthIsland.zoomed {
     transform: scale(1.2);
-
-    /*Стилі для активих островів, хз який вибрати*/
-    /*filter: drop-shadow(5px 5px 10px rgba(255, 255, 0, 0.5));*/
-    /*filter: drop-shadow(5px 5px 10px rgba(128, 0, 128, 0.5));*/
     filter: drop-shadow(5px 5px 10px rgba(0, 128, 0, 0.6));
-
     transform-origin: left center;
 }
 
@@ -246,7 +191,6 @@ body {
     right: 0;
 }
 
-/* розташування елементів на модальному вікні */
 .modalWindowContent {
     display: flex;
     flex-direction: column;
@@ -281,14 +225,15 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 20px;
-    padding: 10px;
+    font-size: 28px;
+    padding: 6px;
     border-radius: 50px;
     transition: background 0.5s;
     margin-top: auto;
     text-align: center;
 }
-a{
+
+a {
     text-decoration: none;
 }
 
@@ -296,12 +241,222 @@ a{
     background: #f7e018;
 }
 
-.startLvlButton{
-    position: absolute;
-}
-
-/*Стилі для іконки виконаного лвла*/
-.complete{
+.complete {
     width: 40px;
     margin-bottom: 10px;
+}
+
+/* Адаптивність */
+@media (max-width: 1024px) {
+    .leftContent {
+        width: 25vw;
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .Islands {
+        margin-top: 70px;
+    }
+
+    .islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl {
+        width: 150px;
+    }
+
+    
+    .islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth, .islandLocationFifth {
+        width: 30px;
+    }
+
+    .modalWindow {
+        width: 250px;
+    }
+
+    .modalWindowContent h1 {
+        font-size: 20px;
+    }
+
+    .modalWindowContent p {
+        font-size: 14px;
+    }
+
+    .acceptButton {
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    .close-btn {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .leftContent {
+        width: 70vw;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 60px;
+        z-index: 1100;
+    }
+
+    .leftContent.active {
+        transform: translateX(0);
+    }
+
+    .Islands {
+        margin-top: 70px;
+    }
+
+    .islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl {
+        width: 120px;
+    }
+
+    .islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth, .islandLocationFifth {
+        width: 30px;
+    }
+    .islandFirstLvl, .islandThirdLvl, .islandFifthLvl {
+        
+       margin-left: 20vw;
+       
+    }
+
+    .islandSecondLvl,  .islandFourthLvl {
+        margin-left: 60vw;
+    }
+    
+    .islandLocationFirst, .islandLocationThird, .islandLocationFifth {
+       left: 30vw;
+    }
+
+    .islandLocationThird {
+        left: 25vw;
+    }
+
+    .islandLocationSecond, .islandLocationFourth {
+        left: 67vw;
+    }
+
+    .modalWindow {
+        width: 200px;
+        right: -200px;
+    }
+
+    .modalWindowContent h1 {
+        font-size: 18px;
+    }
+
+    .modalWindowContent p {
+        font-size: 12px;
+    }
+
+    .acceptButton {
+        font-size: 16px;
+        padding: 6px;
+    }
+ 
+    /*.firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted, .fifthIsland.shifted {*/
+    /*    transform: translateX(100px);*/
+    /*}*/
+    .close-btn {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .leftContent {
+        margin-top: 50px;
+    }
+
+    .Islands {
+        margin-top: 60px;
+    }
+
+    .islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl {
+        width: 100px;
+    }
+
+    
+    .islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth, .islandLocationFifth {
+        width: 20px;
+    }
+
+    .modalWindow {
+        width: 150px;
+        right: -150px;
+    }
+    /*.firstIsland.shifted, .secondIsland.shifted, .thirdIsland.shifted, .fourthIsland.shifted, .fifthIsland.shifted {*/
+    /*    transform: translateX(80px);*/
+    /*}*/
+    .modalWindowContent h1 {
+        font-size: 16px;
+    }
+
+    .modalWindowContent p {
+        font-size: 10px;
+    }
+
+    .acceptButton {
+        font-size: 14px;
+        padding: 4px;
+    }
+
+    .close-btn {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .leftContent {
+        margin-top: 40px;
+    }
+
+    .leftContent {
+        margin-top: 50px;
+    }
+
+    .Islands {
+        margin-top: 60px;
+    }
+
+    .islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl {
+        width: 50px;
+    }
+
+   
+    /*.Islands {*/
+    /*    margin-top: 40px;*/
+    /*}*/
+    
+    /*.islandFirstLvl, .islandSecondLvl, .islandThirdLvl, .islandFourthLvl, .islandFifthLvl {*/
+    /*    width: 100px;*/
+    /*    margin-top: 15px;*/
+    /*}*/
+    
+    /*.islandLocationFirst, .islandLocationSecond, .islandLocationThird, .islandLocationFourth, .islandLocationFifth {*/
+    /*    width: 15px;*/
+    /*    top: 50%;*/
+    /*    left: 92%;*/
+    /*}*/
+
+    .modalWindow {
+        width: 120px;
+        right: -120px;
+    }
+
+    .modalWindowContent h1 {
+        font-size: 14px;
+    }
+
+    .modalWindowContent p {
+        font-size: 9px;
+    }
+
+    .acceptButton {
+        font-size: 12px;
+        padding: 3px;
+    }
+
+    .close-btn {
+        font-size: 14px;
+    }
 }
