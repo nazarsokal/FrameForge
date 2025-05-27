@@ -29,18 +29,22 @@
                 </div>
                 <div class="user-info">
                     <div class="stat-card">
+                        <span>Username: @Model.Username</span>
+                    </div>
+                    <div class="stat-card">
+                        <span>Email: @Model.Email</span>
+                    </div>
+                    <div class="stat-card">
                         <span>Монети: <span id="total-coins">@Model.MoneyAmount</span></span>
                         <img src="~/images/icons_mainPage/coin.png" alt="coin">
-                        <span>Username: @Model.Username</span>
                     </div>
                     <div class="stat-card">
                         <span>Зірочки: <span id="total-stars">@Model.StarsAmount</span></span>
                         <img src="~/images/icons_mainPage/star.png" alt="star">
-                        <span>Email: @Model.Email</span>
                     </div>
                     <a asp-controller="Leaderboard" asp-action="LeaderBoard" style="text-decoration: none;">
                         <div class="stat-card">
-                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@(ViewBag.StudentsPlace+1)</span></span>
+                            <span>Місце в таблиці лідерів: <span id="leaderboard-position">@(ViewBag.StudentsPlace + 1)</span></span>
                         </div>
                     </a>
                 </div>
