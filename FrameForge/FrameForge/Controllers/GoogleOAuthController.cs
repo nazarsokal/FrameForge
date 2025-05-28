@@ -25,7 +25,7 @@ public class GoogleOAuthController : Controller
     public IActionResult RedirectOnOAuthServer(bool isTeacher)
     {
         string scope = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
-        string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
+        string redirectUrl = $"https://fforge-dwccfchyechramhd.westeurope-01.azurewebsites.net/GoogleOAuth/Code";
         var codeVerifier = $"{Guid.NewGuid()}{Guid.NewGuid()}";
         
         HttpContext.Session.SetString("isTeacher", isTeacher.ToString());
@@ -43,7 +43,7 @@ public class GoogleOAuthController : Controller
         string? codeVerifier = HttpContext.Session.GetString("codeVerifier");
         bool isTeacher = Convert.ToBoolean(HttpContext.Session.GetString("isTeacher"));
         
-        string redirectUrl = $"http://localhost:5118/GoogleOAuth/Code";
+        string redirectUrl = $"https://fforge-dwccfchyechramhd.westeurope-01.azurewebsites.net/GoogleOAuth/Code";
         var tokenResult = await _googleOAuthService.ExchangeCodeOnToken(code, codeVerifier, redirectUrl);
 
         if (!isTeacher)

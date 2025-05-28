@@ -18,6 +18,7 @@ body {
 }
 
 .container {
+    margin-left: 10%;
     position: relative;
     width: 100%;
 }

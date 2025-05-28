@@ -12,7 +12,7 @@ public class AlgorithmsController : Controller
     private readonly IMemoryCache _memoryCache;
     private readonly IAlgorithmsService _algorithmsService;
     private List<Algorithm>? _algorithms;
-    private Student student;
+    private User student;
 
     public AlgorithmsController(IAzureStorageService azureStorageService, IMemoryCache memoryCache, IAlgorithmsService algorithmsService)
     {
@@ -26,7 +26,7 @@ public class AlgorithmsController : Controller
     {
         var algorithms = await GetAlgorithmsAsync();
         ViewBag.Algorithms = algorithms;
-        student = GetStudentFromSession();
+        student = GetUserFromSession();
         return View("Algorithms", student);
     }
 
@@ -53,12 +53,23 @@ public class AlgorithmsController : Controller
         });
     }
     
-    private Student GetStudentFromSession()
+    private User GetUserFromSession()
     {
-        var studentJson = HttpContext.Session.GetString("Student");
-        if (studentJson != null) student = JsonSerializer.Deserialize<Student>(studentJson);
-        if(student == null) throw new NullReferenceException("Student is null");
-        
-        return student;
+        User user = new User();
+        var userType = HttpContext.Session.GetString("UserType");
+        if (userType == "Teacher")
+        {
+            var userJson = HttpContext.Session.GetString("Teacher");
+            Teacher teacher = JsonSerializer.Deserialize<Teacher>(userJson);
+            return teacher;
+        }
+        else
+        {
+            var userJson = HttpContext.Session.GetString("Student");
+            Student st = JsonSerializer.Deserialize<Student>(userJson);
+            return st;
+        }
+
+        return user;
     }
 }

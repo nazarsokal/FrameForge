@@ -11,13 +11,15 @@ public class UserPageController : Controller
     private readonly LeaderboardService _leaderboardService;
     private readonly IProgressMapService _progressMapService;
     private readonly IExerciseService _exerciseService;
+    private readonly IUserService _userService;
     private Student student = new Student();
 
-    public UserPageController(LeaderboardService leaderboardService, IProgressMapService progressMapService, IExerciseService exerciseService)
+    public UserPageController(LeaderboardService leaderboardService, IProgressMapService progressMapService, IExerciseService exerciseService, IUserService userService)
     {
         _leaderboardService = leaderboardService;
         _progressMapService = progressMapService;
         _exerciseService = exerciseService;
+        _userService = userService;
     }
     
     [HttpGet]
@@ -27,6 +29,7 @@ public class UserPageController : Controller
         List<LevelsToDisplay> completedLevelsToDisplay = new List<LevelsToDisplay>();
         List<LevelsToDisplay> enrolledLevelsToDisplay = new List<LevelsToDisplay>();
         student = GetStudentFromSession();
+        student = (Student)await _userService.GetUserById(student.UserId);
         
         var completedLevels = _progressMapService.GetUsersEnrolledLevelsCompleted(student);
         var enrolledLevels = _progressMapService.GetUsersEnrolledLevelsInProgress(student);
